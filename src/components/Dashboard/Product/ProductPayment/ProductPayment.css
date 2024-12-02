@@ -1,0 +1,201 @@
+/* || PAYMENT SECTION */
+.payment__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+}
+
+.payment__h3 {
+  color: var(--color-primary);
+}
+
+.payment__section * {
+  scroll-margin-top: 20rem;
+}
+
+.payment__blockquote {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-left: 4px solid var(--color-primary);
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: normal;
+  color: var(--color-primary);
+  background-color: rgba(201, 190, 255, 0.2);
+}
+
+/* PAYMENT-ACCOUNT SUB-SECTION */
+.payment__account-p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.payment__account-input {
+  width: min(20rem, 100%);
+  border: 4px solid var(--color-outline);
+  border-radius: 8px;
+  padding: 0.25rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  color: var(--color-on-surface);
+  background-color: transparent;
+}
+
+.payment__account-input:is(:hover, :focus) {
+  filter: brightness(140%);
+  outline: none;
+}
+
+/* PAYMENT-TOKEN SUB-SECTION */
+.payment__token-icon {
+  width: 4rem;
+  border-radius: 1rem;
+}
+
+.payment__token-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.payment__token-item {
+  position: relative;
+  border: 0.25rem solid var(--color-outline);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  background-color: rgba(201, 190, 255, 0.1);
+}
+
+.payment__token-item:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.payment__token-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.payment__token-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: bold;
+}
+
+.payment__token-item:has(> .payment__token-input:checked) {
+  filter: brightness(160%);
+}
+
+/* PAYMENT-METHOD SUB-SECTION */
+.payment__method-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-weight: bold;
+}
+
+.payment__method-summary {
+  position: relative;
+  border: 0.25rem solid var(--color-outline);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  background-color: rgba(201, 190, 255, 0.1);
+}
+
+.payment__method-summary:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.payment__method-details[open] .payment__method-summary {
+  margin-bottom: 1rem;
+}
+
+.payment__method-details:has(.payment__method-input:checked)>.payment__method-summary {
+  filter: brightness(160%);
+}
+
+.payment__method-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.payment__method-label {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border: 0.25rem solid var(--color-outline);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  background-color: rgba(201, 190, 255, 0.1);
+}
+
+.payment__method-label:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.payment__method-input:checked+.payment__method-label {
+  filter: brightness(160%);
+}
+
+.payment__method-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment__method-icon {
+  width: 2.5rem;
+  bottom: 1rem;
+}
+
+.payment__method-input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* PAYMENT-METHOD SUB-SECTION */
+.payment__confirm-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-inline: 1rem;
+  font-weight: bold;
+}
+
+.payment__confirm-p {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment__confirm-span {
+  color: var(--color-primary);
+}
+
+.payment__confirm-button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.payment__confirm-button:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.payment__confirm-button:active {
+  filter: brightness(140%);
+}

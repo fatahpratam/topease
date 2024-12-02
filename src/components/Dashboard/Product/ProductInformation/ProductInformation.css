@@ -1,0 +1,36 @@
+/* || INFO SECTION */
+.info__h2 {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.info__img {
+  max-width: 12.5rem;
+}
+
+.info__column {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.info__div {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.info__hr {
+  border: 0.1rem solid var(--color-on-surface);
+  border-radius: 0.1rem;
+}
+
+.info__link {
+  color: var(--color-primary);
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.info__link:is(:hover, :focus) {
+  text-decoration: underline;
+}

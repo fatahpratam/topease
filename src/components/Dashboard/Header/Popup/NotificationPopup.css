@@ -1,0 +1,22 @@
+.notification {
+  display: none;
+  position: absolute;
+  top: 4.5rem;
+  right: 0;
+}
+
+.notification__container {
+  min-width: 22.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 0px 16px var(--color-shadow);
+  color: var(--color-on-surface);
+  background-color: var(--color-surface);
+}
+
+.show {
+  display: block;
+}

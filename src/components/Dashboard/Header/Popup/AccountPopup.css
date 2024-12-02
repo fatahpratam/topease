@@ -1,0 +1,63 @@
+.account {
+  display: none;
+  position: absolute;
+  top: 4.5rem;
+  right: 0;
+}
+
+.account__container {
+  min-width: 12.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 0px 16px var(--color-shadow);
+  color: var(--color-on-surface);
+  background-color: var(--color-surface);
+}
+
+.account__h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.account__img {
+  width: 2.5rem;
+  border-radius: 1.25rem;
+}
+
+.account__link {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.account__button {
+  cursor: pointer;
+  border: none;
+  border-radius: 1rem;
+  padding-block: 0.25rem;
+  font-weight: bold;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+}
+
+.account__button:is(:hover, :focus),
+.account__link:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.account__button:active,
+.account__link:active {
+  filter: brightness(140%);
+}
+
+.show {
+  display: block;
+}

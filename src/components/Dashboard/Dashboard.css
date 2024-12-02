@@ -1,0 +1,10 @@
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+}
+
+.dashboard__div {
+  flex-grow: 1;
+}
