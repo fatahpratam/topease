@@ -6,7 +6,7 @@ export default function ProductInformation({ product }) {
   return (
     <div className="product__container info">
       <h2 className="info__h2">Top Up {product.name}</h2>
-      <img src={product.imageUrl} alt={product.name} className="info__img" />
+      <img src={product.imgUrl} alt={product.name} className="info__img" />
       <div className="info__column">
         <div className="info__div">
           {product.rating.star}

@@ -4,8 +4,8 @@ import { infoIcon } from "../../../../assets/icons/index.js";
 import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
 
-export default function ProductPayment({ product, nominalOptions }) {
-  const [nominalOptionId, setNominalOptionId] = useState(nominalOptions[0].id);
+export default function ProductPayment({ product }) {
+  const [nominalOptionId, setNominalOptionId] = useState(product.nominalOptions[0].id);
   const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
   const formRef = useRef();
 
@@ -28,6 +28,9 @@ export default function ProductPayment({ product, nominalOptions }) {
     console.log(objData);
   };
 
+  console.log(nominalOptionId);
+
+
   return (
     <form
       className="product__container payment"
@@ -46,7 +49,7 @@ export default function ProductPayment({ product, nominalOptions }) {
         </blockquote>
         <NominalOptionList
           nominalOptionId={nominalOptionId}
-          nominalOptions={nominalOptions}
+          nominalOptions={product.nominalOptions}
           handleNominalId={handleNominalId}
         />
       </section>
@@ -61,7 +64,7 @@ export default function ProductPayment({ product, nominalOptions }) {
       <section className="payment__section">
         <h3 className="payment__h3">Konfirmasi Pembayaran</h3>
         <PaymentConfirmation
-          nominalOption={findBy(nominalOptions, 'id', nominalOptionId)}
+          nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId)}
           paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
         />
       </section>
@@ -191,6 +194,9 @@ function PaymentConfirmation({ nominalOption, paymentMethod }) {
 
   const totalAdmin = nominalOption.adminAmount + paymentMethod.adminAmount;
   const totalAmount = nominalOption.idrAmount + totalAdmin;
+
+  console.log(nominalOption);
+  console.log(paymentMethod);
 
   return (
     <div className="payment__confirm-section">

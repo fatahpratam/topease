@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
 import './index.css'
 import { Dashboard, Home, Login, Register, Product } from './components/index.js';
+import { StorageProvider } from "./contexts/StorageProvider.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <StorageProvider>
+      <RouterProvider router={router} />
+    </StorageProvider>
   </StrictMode>
 )

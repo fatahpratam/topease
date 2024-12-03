@@ -1,20 +1,20 @@
 import './Login.css';
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { useStorage } from '../../hooks/index.js';
+import { useStorage } from "../../contexts/StorageProvider.jsx";
 
 export default function Login() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const { getRemember, setRemember } = useStorage();
+  const { remember, toggleRemember } = useStorage();
+
+  console.log(remember);
 
   const handleSubmit = event => {
     event.preventDefault();
   };
 
-  const handleRemember = () => {
-    setRemember(!getRemember());
-  };
+  const handleRemember = () => { };
   return (
     <div className="login">
       <div className="login__container">
@@ -50,8 +50,11 @@ export default function Login() {
                 type="checkbox"
                 id="remember"
                 className="login__input-checkbox"
-                defaultChecked={getRemember()}
-                onClick={handleRemember}
+                checked={remember}
+                onChange={() => {
+                  console.log(remember);
+                  toggleRemember();
+                }}
               />
               <label htmlFor="remember" className="login__label">Remember me</label>
             </p>

@@ -61,7 +61,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  padding: 0.5rem;
 }
 
 .payment__token-item {
@@ -88,6 +87,7 @@
   align-items: center;
   gap: 0.25rem;
   font-weight: bold;
+  text-align: center;
 }
 
 .payment__token-item:has(> .payment__token-input:checked) {

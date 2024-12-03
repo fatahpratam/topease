@@ -50,7 +50,7 @@ function HomeList({ title, text, list }) {
   )
 }
 
-function HomeItem({ id, name, rating, imageUrl, discount, sold }) {
+function HomeItem({ id, name, rating, imgUrl, discount, sold }) {
   const navigate = useNavigate();
   const isDiscount = () => {
     if (discount !== 0)
@@ -64,7 +64,7 @@ function HomeItem({ id, name, rating, imageUrl, discount, sold }) {
       className="home__li"
       onClick={() => navigate(`../product/${id}`)}
     >
-      <img src={imageUrl} alt={name} className="home__img" />
+      <img src={imgUrl} alt={name} className="home__img" />
       <h3 className="home__h3">{name}</h3>
       <p className="home__tag">
         <span className="home__span home__span--rating">
