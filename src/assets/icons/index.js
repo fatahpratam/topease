@@ -8,3 +8,4 @@ export { default as starIcon } from "./star.svg";
 export { default as shoppingCartIcon } from "./shoppingCart.svg";
 export { default as starVariantIcon } from "./starVariant.svg";
 export { default as infoIcon } from "./info.svg";
+export { default as infoErrorVariant } from "./infoErrorVariant.svg";

@@ -1,1 +1,1 @@
-export { default as useStorage } from "./useStorage.js";
+export { useErrorBlockQuote } from "./useErrorBlockQuote.js";

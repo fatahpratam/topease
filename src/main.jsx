@@ -1,9 +1,10 @@
+import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
-import './index.css'
 import { Dashboard, Home, Login, Register, Product } from './components/index.js';
-import { StorageProvider } from "./contexts/StorageProvider.jsx";
+import { NotFound } from "./components/Error/index.js";
+import { StorageProvider } from "./contexts/index.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +19,9 @@ const router = createBrowserRouter(
           <Route index element={<Navigate to='../home' />} />
           <Route path=':id' element={<Product />} />
         </Route>
+        <Route path='*' element={<NotFound />} />
       </Route>
+      <Route path='*' element={<Navigate to='dashboard/notfound' />} />
     </Route>
   )
 );

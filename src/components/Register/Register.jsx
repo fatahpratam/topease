@@ -1,24 +1,28 @@
 import './Register.css';
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useStorage } from "../../hooks/index.js";
+import { useStorage } from "../../contexts/index.js";
+import { ErrorBlockQuote } from "../Error/index.js";
+import { useErrorBlockQuote } from "../../hooks/index.js";
 
 export default function Register() {
-  const nameRef = useRef();
-  const emailRef = useRef();
+  const formRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const { setLoginInfo, isLoginInfoExist } = useStorage();
   const navigate = useNavigate();
+  const { register, login } = useStorage();
+  const { errorMessage, triggerError } = useErrorBlockQuote();
 
   const handleSubmit = e => {
     e.preventDefault();
-    setLoginInfo(
-      nameRef.current.value,
-      emailRef.current.value,
-      passwordRef.current.value
-    )
-    navigate('/dashboard/home')
+    const data = new FormData(formRef.current);
+    const { name, email, password } = Object.fromEntries(data);
+    if (register(name, email, password)) {
+      login(email, password);
+      navigate('../dashboard/home');
+    } else {
+      triggerError('Nama atau email sudah terpakai.');
+    }
   };
 
   const handlePasswordValidity = e => {
@@ -36,16 +40,21 @@ export default function Register() {
     <div className="register">
       <div className="register__container">
         <h1 className="register__h1">Daftar</h1>
-        <p className="register__p">Isilah data berikut untuk membuat akun TopEase baru.</p>
-        <form onSubmit={handleSubmit} className='register__form'>
+        <p className="register__p">Isilah data berikut untuk membuat akun<Link className='register__link' to='../dashboard/home'>TopEase</Link>baru.</p>
+        <form
+          onSubmit={handleSubmit}
+          className='register__form'
+          ref={formRef}
+        >
+          <ErrorBlockQuote message={errorMessage} />
           <p>
             <label htmlFor="name" className="register__label">Nama*</label>
             <input
               type="text"
               className="register__input-text"
               id="name"
+              name='name'
               placeholder='Nama'
-              ref={nameRef}
               autoFocus
               required
             />
@@ -56,8 +65,8 @@ export default function Register() {
               type="email"
               className="register__input-text"
               id="email"
+              name='email'
               placeholder='Email'
-              ref={emailRef}
               required
             />
           </p>
@@ -67,6 +76,7 @@ export default function Register() {
               type="password"
               className="register__input-text"
               id="password"
+              name='password'
               placeholder='Kata sandi'
               ref={passwordRef}
               onChange={handlePasswordValidity}
@@ -110,7 +120,10 @@ export default function Register() {
               <Link to='#' className="register__link">Syarat dan Ketentuan</Link>.*
             </label>
           </p>
-          <button className="register__button" type="submit">Daftar</button>
+          <button
+            className="register__button"
+            type="submit"
+          >Daftar</button>
           <hr />
           <p className="register__p">
             Sudah punya akun?

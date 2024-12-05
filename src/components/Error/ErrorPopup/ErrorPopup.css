@@ -1,0 +1,9 @@
+.error-popup {
+  position: fixed;
+  bottom: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 0px 16px var(--color-shadow);
+  color: var(--color-error);
+  background-color: var(--color-on-error);
+}

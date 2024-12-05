@@ -2,16 +2,16 @@ import './Header.css';
 import { Link, useNavigate } from "react-router-dom";
 import { searchIcon, notificationIcon, accountCircleIcon } from "../../../assets/icons/index.js";
 import { AccountPopup, NotificationPopup } from "./Popup/index.js";
-import { useStorage } from "../../../hooks/index.js";
+import { useStorage } from "../../../contexts/index.js";
 
 export default function Header() {
-  const { getLoginInfo, isLoginInfoExist } = useStorage();
   const navigate = useNavigate();
+  const { isLoggedIn, loginInfo, logout } = useStorage();
 
   const clearPopup = ({ target }) => {
-    const whiteList = !target.closest('.header__button')
-      && !target.closest('.account')
-      && !target.closest('.notification')
+    const whiteList = !target?.closest('.header__button')
+      && !target?.closest('.account')
+      && !target?.closest('.notification')
     if (whiteList) {
       const showList = [...document.querySelectorAll('.show')];
       showList?.forEach(element => element.classList.remove('show'));
@@ -28,7 +28,7 @@ export default function Header() {
   }
 
   const handleAccountPopup = () => {
-    if (isLoginInfoExist()) {
+    if (isLoggedIn()) {
       const showList = [...document.querySelectorAll('.show:not(.account)')];
       showList?.forEach(element => element.classList.remove('show'));
       const element = document.querySelector('.account');
@@ -69,7 +69,7 @@ export default function Header() {
           />
           <p className='header__button-text'>Notifikasi</p>
         </button>
-        <NotificationPopup />
+        <NotificationPopup isLoggedIn={isLoggedIn()} />
         <button
           className="header__button"
           onClick={handleAccountPopup}
@@ -80,13 +80,16 @@ export default function Header() {
             className='header__button-icon'
           />
           <p className='header__button-text'>
-            {isLoginInfoExist() ? 'Akun' : 'Masuk'}
+            {isLoggedIn() ? 'Akun' : 'Masuk'}
           </p>
         </button>
         <AccountPopup
-          username={getLoginInfo()?.name}
+          username={loginInfo.name}
           imgUrl={accountCircleIcon}
-          onLogoutClicked={() => { }}
+          onLogoutClicked={() => {
+            clearPopup({});
+            logout();
+          }}
         />
       </div>
     </div>

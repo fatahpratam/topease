@@ -13,7 +13,7 @@ export default function AccountPopup({ username, imgUrl, onLogoutClicked }) {
         <Link className='account__link' to='#'>Pengaturan</Link>
         <button
           className="account__button"
-          onClick={onLogoutClicked()}
+          onClick={onLogoutClicked}
         >Keluar</button>
       </div>
     </div>

@@ -24,6 +24,7 @@
   padding: 0.25rem;
   font-size: 0.8rem;
   font-weight: normal;
+  line-height: 0;
   color: var(--color-primary);
   background-color: rgba(201, 190, 255, 0.2);
 }

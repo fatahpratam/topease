@@ -1,36 +1,51 @@
 import './Login.css';
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { useStorage } from "../../contexts/StorageProvider.jsx";
+import { Link, useNavigate } from "react-router-dom";
+import { useStorage } from "../../contexts/index.js";
+import { ErrorBlockQuote } from "../Error/index.js";
+import { useErrorBlockQuote } from "../../hooks/index.js";
 
 export default function Login() {
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
-  const { remember, toggleRemember } = useStorage();
-
-  console.log(remember);
+  const formRef = useRef();
+  const navigate = useNavigate();
+  const { remember, toggleRemember, login } = useStorage();
 
   const handleSubmit = event => {
     event.preventDefault();
+    const data = new FormData(formRef.current);
+    const { email, password } = Object.fromEntries(data);
+    if (login(email, password)) {
+      navigate('../dashboard/home');
+    } else {
+      triggerError('Email atau kata sandi Anda salah.');
+    }
   };
 
-  const handleRemember = () => { };
+  const { errorMessage, triggerError } = useErrorBlockQuote();
+
   return (
     <div className="login">
       <div className="login__container">
         <h1 className="login__h1">Masuk</h1>
-        <p className="login__p">Selamat datang di TopEase!</p>
-        <form onSubmit={handleSubmit} className='login__form'>
+        <p className="login__p">
+          Selamat datang di <Link className='login__link' to='../dashboard/home'>TopEase</Link>!
+        </p>
+        <form
+          onSubmit={handleSubmit}
+          className='login__form'
+          ref={formRef}
+        >
+          <ErrorBlockQuote message={errorMessage} />
           <p>
             <label htmlFor="email" className="login__label">Email*</label>
             <input
               type="email"
               className="login__input-text"
               id="email"
+              name='email'
               placeholder='Email'
               required
               autoFocus
-              ref={emailInputRef}
             />
           </p>
           <p>
@@ -39,9 +54,9 @@ export default function Login() {
               type="password"
               className="login__input-text"
               id="password"
+              name='password'
               placeholder='Kata sandi'
               required
-              ref={passwordInputRef}
             />
           </p>
           <div className="login__div">
@@ -51,10 +66,7 @@ export default function Login() {
                 id="remember"
                 className="login__input-checkbox"
                 checked={remember}
-                onChange={() => {
-                  console.log(remember);
-                  toggleRemember();
-                }}
+                onChange={toggleRemember}
               />
               <label htmlFor="remember" className="login__label">Remember me</label>
             </p>
