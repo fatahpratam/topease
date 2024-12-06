@@ -56,7 +56,7 @@ function HomeItem({ id, name, rating, imgUrl, discount, sold }) {
     if (discount !== 0)
       return <span className="home__span home__span--discount">
         {discount}%
-        <img src={sellIcon} alt="Sell icon" className="home__icon" />
+        <img src={sellIcon} alt="Sell icon" className="home__icon" loading="lazy" />
       </span>
   }
   return (
