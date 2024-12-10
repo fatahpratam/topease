@@ -9,3 +9,7 @@ export { default as shoppingCartIcon } from "./shoppingCart.svg";
 export { default as starVariantIcon } from "./starVariant.svg";
 export { default as infoIcon } from "./info.svg";
 export { default as infoErrorVariant } from "./infoErrorVariant.svg";
+export { default as appsIcon } from "./apps.svg";
+export { default as smartphoneIcon } from "./smartphone.svg";
+export { default as sportsIcon } from "./sports.svg";
+export { default as walletIcon } from "./wallet.svg";

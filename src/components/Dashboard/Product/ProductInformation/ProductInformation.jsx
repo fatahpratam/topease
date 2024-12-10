@@ -24,7 +24,7 @@ export default function ProductInformation({ product }) {
         </div>
         <hr className="info__hr" />
         <div className="info__div">
-          <Link to={'#'} className='info__link'>{product.type}</Link>
+          <Link to={`../../category/${product.type}`} className='info__link'>{product.type}</Link>
         </div>
       </div>
       <h3 className="info__h3">Deskripsi</h3>

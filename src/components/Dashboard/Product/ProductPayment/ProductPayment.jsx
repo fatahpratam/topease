@@ -3,10 +3,16 @@ import { useState, useRef } from "react";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
+import { ErrorBlockQuote } from "../../../Error";
+import { useErrorBlockQuote } from "../../../../hooks/index.js";
+import { useStorage } from "../../../../contexts/index.js";
+import { Link } from 'react-router-dom';
 
 export default function ProductPayment({ product }) {
   const [nominalOptionId, setNominalOptionId] = useState(product.nominalOptions[0].id);
   const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
+  const { errorMessage, triggerError } = useErrorBlockQuote();
+  const { isLoggedIn, loginInfo } = useStorage();
   const formRef = useRef();
 
   const handleNominalId = (id) => {
@@ -19,17 +25,19 @@ export default function ProductPayment({ product }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(formRef.current);
-    data.append('productId', product.id);
-    const objData = {};
-    for (const [key, value] of data.entries()) {
-      objData[key] = value;
+    if (isLoggedIn()) {
+      const data = new FormData(formRef.current);
+      data.append('productId', product.id);
+      data.append('userId', loginInfo.id);
+      const objData = {};
+      for (const [key, value] of data.entries()) {
+        objData[key] = value;
+      }
+      console.log(objData);
+    } else {
+      triggerError('Anda harus login atau register untuk melakukan pembelian.');
     }
-    console.log(objData);
   };
-
-  console.log(nominalOptionId);
-
 
   return (
     <form
@@ -66,6 +74,7 @@ export default function ProductPayment({ product }) {
         <PaymentConfirmation
           nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId)}
           paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
+          errorMessage={errorMessage}
         />
       </section>
     </form>
@@ -188,15 +197,13 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
   )
 }
 
-function PaymentConfirmation({ nominalOption, paymentMethod }) {
+function PaymentConfirmation({ nominalOption, paymentMethod, errorMessage }) {
   const numberFormatter = Intl.NumberFormat('id-ID');
   const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
 
-  const totalAdmin = nominalOption.adminAmount + paymentMethod.adminAmount;
+  const totalAdmin = nominalOption.adminAmount
+    + paymentMethod.adminAmount;
   const totalAmount = nominalOption.idrAmount + totalAdmin;
-
-  console.log(nominalOption);
-  console.log(paymentMethod);
 
   return (
     <div className="payment__confirm-section">
@@ -229,6 +236,7 @@ function PaymentConfirmation({ nominalOption, paymentMethod }) {
         <img src={infoIcon} alt="Info icon" className="product__icon" />
         Pastikan pesanan kamu sudah benar sebelum melanjutkan pesanan.
       </blockquote>
+      <ErrorBlockQuote message={errorMessage} />
       <button className="payment__confirm-button" type='submit'>Beli sekarang</button>
     </div>
   )

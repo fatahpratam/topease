@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { user } from "../data/index.js";
+import { users } from "../data/index.js";
 
 const StorageContext = createContext({
   loginInfo: {},
@@ -20,7 +20,7 @@ export const StorageProvider = ({ children }) => {
     JSON.parse(accessStorage('getItem', 'loginInfo')) || {}
   );
   const [loginDatabase, setLoginDatabase] = useState(
-    JSON.parse(accessStorage('getItem', 'loginDatabase')) || user
+    JSON.parse(accessStorage('getItem', 'loginDatabase')) || users
   );
 
   function accessStorage(property, ...args) {

@@ -1,17 +1,20 @@
 import './Header.css';
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { searchIcon, notificationIcon, accountCircleIcon } from "../../../assets/icons/index.js";
-import { AccountPopup, NotificationPopup } from "./Popup/index.js";
+import { AccountPopup, NotificationPopup, SearchPopup } from "./Popup/index.js";
 import { useStorage } from "../../../contexts/index.js";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [query, setQuery] = useState('');
   const { isLoggedIn, loginInfo, logout } = useStorage();
 
   const clearPopup = ({ target }) => {
     const whiteList = !target?.closest('.header__button')
+      && !target?.closest('.search')
       && !target?.closest('.account')
-      && !target?.closest('.notification')
+      && !target?.closest('.notification');
     if (whiteList) {
       const showList = [...document.querySelectorAll('.show')];
       showList?.forEach(element => element.classList.remove('show'));
@@ -38,6 +41,17 @@ export default function Header() {
     }
   };
 
+  const handleSearchPopup = () => {
+    const showList = [...document.querySelectorAll('.show:not(.search)')];
+    showList?.forEach(element => element.classList.remove('show'));
+    const element = document.querySelector('.search');
+    element.classList.toggle('show');
+  };
+
+  const handleSearchInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
   return (
     <div className="header">
       <h1 className="header__h1">
@@ -45,17 +59,14 @@ export default function Header() {
       </h1>
       <div className="header__container">
         <form className="header__form" onSubmit={event => event.preventDefault()}>
-          <input
-            type="text"
-            placeholder='Cari di sini!'
-            className='header__input-text'
-          />
-          <button className="header__button">
+          <SearchPopup query={query} onInputChange={handleSearchInputChange} />
+          <button className="header__button" onClick={handleSearchPopup}>
             <img
               src={searchIcon}
               alt="Search icon"
               className='header__button-icon'
             />
+            <p className='header__button-text'>Cari</p>
           </button>
         </form>
         <button

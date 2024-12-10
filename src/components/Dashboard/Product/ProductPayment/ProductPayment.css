@@ -8,12 +8,12 @@
   box-shadow: 0px 0px 8px var(--color-shadow);
 }
 
-.payment__h3 {
-  color: var(--color-primary);
-}
-
 .payment__section * {
   scroll-margin-top: 20rem;
+}
+
+.payment__h3 {
+  color: var(--color-primary);
 }
 
 .payment__blockquote {
@@ -24,7 +24,6 @@
   padding: 0.25rem;
   font-size: 0.8rem;
   font-weight: normal;
-  line-height: 0;
   color: var(--color-primary);
   background-color: rgba(201, 190, 255, 0.2);
 }
@@ -199,4 +198,10 @@
 
 .payment__confirm-button:active {
   filter: brightness(140%);
+}
+
+@media screen and (max-width: 640px) {
+  .payment__token-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

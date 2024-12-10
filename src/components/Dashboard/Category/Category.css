@@ -19,8 +19,7 @@
   list-style-type: none;
 }
 
-.category__li {
-  flex-basis: 12rem;
+.category__link {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -29,12 +28,13 @@
   padding: 1rem;
   cursor: pointer;
   font-weight: bold;
+  text-decoration: none;
   box-shadow: 0px 0px 8px var(--color-shadow);
   color: var(--color-on-surface);
   background-color: var(--color-surface);
 }
 
-.category__li:hover {
+.category__link:is(:hover, :focus) {
   filter: brightness(120%);
 }
 

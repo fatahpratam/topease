@@ -19,7 +19,7 @@ export default function Register() {
     const { name, email, password } = Object.fromEntries(data);
     if (register(name, email, password)) {
       login(email, password);
-      navigate('../dashboard/home');
+      navigate(-2);
     } else {
       triggerError('Nama atau email sudah terpakai.');
     }

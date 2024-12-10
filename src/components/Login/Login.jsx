@@ -15,7 +15,7 @@ export default function Login() {
     const data = new FormData(formRef.current);
     const { email, password } = Object.fromEntries(data);
     if (login(email, password)) {
-      navigate('../dashboard/home');
+      navigate(-1);
     } else {
       triggerError('Email atau kata sandi Anda salah.');
     }
