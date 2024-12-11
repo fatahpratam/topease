@@ -19,15 +19,19 @@
   list-style-type: none;
 }
 
+.category__li {
+  flex-basis: 12rem;
+  display: flex;
+}
+
 .category__link {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin: 0.5rem;
   border-radius: 1rem;
   padding: 1rem;
   cursor: pointer;
-  font-weight: bold;
   text-decoration: none;
   box-shadow: 0px 0px 8px var(--color-shadow);
   color: var(--color-on-surface);
@@ -44,7 +48,9 @@
 }
 
 .category__tag {
+  flex-grow: 1;
   display: flex;
+  align-items: start;
   gap: 0.5rem;
 }
 
@@ -77,7 +83,7 @@
 }
 
 .category__icon {
-  width: 1.25rem;
+  width: 1rem;
 }
 
 .category__img {

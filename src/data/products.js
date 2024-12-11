@@ -12,8 +12,8 @@ export const products = [
     discount: 10,
     type: "game",
     requiredFields: [
-      { fieldName: "uid", label: "User ID", type: "text", placeholder: "Enter your UID" },
-      { fieldName: "server", label: "Server", type: "text", placeholder: "Enter your server" },
+      { fieldName: "uid", label: "User ID", type: "text", placeholder: "Masukkan UID Anda" },
+      { fieldName: "server", label: "Server", type: "text", placeholder: "Masukkan server akun Anda" },
     ],
     nominalOptions: [
       { id: "fq-100-123abc", name: "100 Crystals", amount: 100, idrAmount: 15000, adminAmount: 1000, imgUrl: "https://via.placeholder.com/?text=100+Crystals" },
@@ -37,8 +37,8 @@ export const products = [
     discount: 0,
     type: "game",
     requiredFields: [
-      { fieldName: "uid", label: "User ID", type: "text", placeholder: "Enter your UID" },
-      { fieldName: "server", label: "Server", type: "text", placeholder: "Enter your server" },
+      { fieldName: "uid", label: "User ID", type: "text", placeholder: "Masukkan UID Anda" },
+      { fieldName: "server", label: "Server", type: "text", placeholder: "Masukkan server akun Anda" },
     ],
     nominalOptions: [
       { id: "bol-50-456def", name: "50 Diamonds", amount: 50, idrAmount: 10000, adminAmount: 1000, imgUrl: "https://via.placeholder.com/64?text=50+Diamonds" },
@@ -62,7 +62,7 @@ export const products = [
     discount: 15,
     type: "aplikasi",
     requiredFields: [
-      { fieldName: "accountEmail", label: "Email Address", type: "email", placeholder: "Enter your email" },
+      { fieldName: "accountEmail", label: "Email Address", type: "email", placeholder: "Masukkan email akun Anda" },
     ],
     nominalOptions: [
       { id: "dpp-month-789ghi", name: "Monthly Plan", amount: 1, idrAmount: 30000, adminAmount: 1000, imgUrl: "https://via.placeholder.com/64?text=Monthly+Plan" },
@@ -83,7 +83,7 @@ export const products = [
     discount: 0,
     type: "aplikasi",
     requiredFields: [
-      { fieldName: "accountEmail", label: "Email Address", type: "email", placeholder: "Enter your email" },
+      { fieldName: "accountEmail", label: "Email Address", type: "email", placeholder: "Masukkan email akun Anda" },
     ],
     nominalOptions: [
       { id: "ft-month-321jkl", name: "Monthly Plan", amount: 1, idrAmount: 50000, adminAmount: 1500, imgUrl: "https://via.placeholder.com/64?text=Monthly+Plan" },
@@ -104,7 +104,7 @@ export const products = [
     discount: 5,
     type: "e-wallet",
     requiredFields: [
-      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Enter your phone number" },
+      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Masukkan nomor HP Anda" },
     ],
     nominalOptions: [
       { id: "gopay-10k", name: "GoPay 10k", amount: 10000, idrAmount: 10000, adminAmount: 1000, imgUrl: "https://via.placeholder.com/64?text=Gopay+10k" },
@@ -128,7 +128,7 @@ export const products = [
     discount: 0,
     type: "e-wallet",
     requiredFields: [
-      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Enter your phone number" },
+      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Masukkan nomor HP Anda" },
     ],
     nominalOptions: [
       { id: "ovo-10k", name: "OVO 10k", amount: 10000, idrAmount: 10000, adminAmount: 1200, imgUrl: "https://via.placeholder.com/64?text=OVO+10k" },
@@ -152,7 +152,7 @@ export const products = [
     discount: 10,
     type: "pulsa",
     requiredFields: [
-      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Enter your phone number" },
+      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Masukkan nomor HP Anda" },
     ],
     nominalOptions: [
       { id: "telkomsel-5k", name: "Pulsa Telkomsel 5k", amount: 5000, idrAmount: 5000, adminAmount: 500, imgUrl: "https://via.placeholder.com/64?text=Pulsa+Telkomsel+5k" },
@@ -175,7 +175,7 @@ export const products = [
     discount: 0,
     type: "pulsa",
     requiredFields: [
-      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Enter your phone number" },
+      { fieldName: "phoneNumber", label: "Phone Number", type: "tel", placeholder: "Masukkan nomor HP Anda" },
     ],
     nominalOptions: [
       { id: "indosat-5k", name: "Pulsa Indosat 5k", amount: 5000, idrAmount: 5000, adminAmount: 500, imgUrl: "https://via.placeholder.com/64?text=Pulsa+Indosat+5k" },

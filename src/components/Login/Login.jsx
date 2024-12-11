@@ -13,11 +13,11 @@ export default function Login() {
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(formRef.current);
-    const { email, password } = Object.fromEntries(data);
-    if (login(email, password)) {
+    const { phoneNumber, password } = Object.fromEntries(data);
+    if (login(phoneNumber, password)) {
       navigate(-1);
     } else {
-      triggerError('Email atau kata sandi Anda salah.');
+      triggerError('Nomor WhatsApp atau kata sandi Anda salah.');
     }
   };
 
@@ -37,13 +37,14 @@ export default function Login() {
         >
           <ErrorBlockQuote message={errorMessage} />
           <p>
-            <label htmlFor="email" className="login__label">Email*</label>
+            <label htmlFor="phoneNumber" className="login__label">Nomor WhatsApp</label>
             <input
-              type="email"
+              type="tel"
               className="login__input-text"
-              id="email"
-              name='email'
-              placeholder='Email'
+              id="phoneNumber"
+              name='phoneNumber'
+              placeholder='Nomor WhatsApp'
+              pattern='^(\+62|62|0)8[1-9][0-9]{6,11}$'
               required
               autoFocus
             />

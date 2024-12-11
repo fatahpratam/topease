@@ -6,8 +6,8 @@ const StorageContext = createContext({
   loginDatabase: {},
   remember: false,
   toggleRemember: () => { },
-  register: (name, email, password) => { },
-  login: (email, password) => { },
+  register: (name, phoneNumber, password) => { },
+  login: (phoneNumber, password) => { },
   logout: () => { },
   isLoggedIn: () => { }
 });
@@ -49,13 +49,13 @@ export const StorageProvider = ({ children }) => {
     });
   }
 
-  function register(name, email, password) {
+  function register(name, phoneNumber, password) {
     const existingUser = loginDatabase.find(user => {
-      return user.name === name || user.email === email;
+      return user.name === name || user.phoneNumber === phoneNumber;
     });
     if (existingUser === undefined) {
       const newUser = {
-        id: crypto.randomUUID(), name, email, password
+        id: crypto.randomUUID(), name, phoneNumber, password
       };
       setLoginDatabase(prev => {
         prev.push(newUser);
@@ -68,9 +68,9 @@ export const StorageProvider = ({ children }) => {
     }
   }
 
-  function login(email, password) {
+  function login(phoneNumber, password) {
     const user = loginDatabase.find(data => {
-      return data.email === email && data.password === password
+      return data.phoneNumber === phoneNumber && data.password === password
     });
     if (user === undefined) {
       return false;

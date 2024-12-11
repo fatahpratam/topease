@@ -16,12 +16,12 @@ export default function Register() {
   const handleSubmit = e => {
     e.preventDefault();
     const data = new FormData(formRef.current);
-    const { name, email, password } = Object.fromEntries(data);
-    if (register(name, email, password)) {
-      login(email, password);
+    const { name, phoneNumber, password } = Object.fromEntries(data);
+    if (register(name, phoneNumber, password)) {
+      login(phoneNumber, password);
       navigate(-2);
     } else {
-      triggerError('Nama atau email sudah terpakai.');
+      triggerError('Nama atau Nomor WhatsApp sudah terpakai.');
     }
   };
 
@@ -60,13 +60,14 @@ export default function Register() {
             />
           </p>
           <p>
-            <label htmlFor="email" className="register__label">Email*</label>
+            <label htmlFor="phoneNumber" className="register__label">Nomor WhatsApp*</label>
             <input
-              type="email"
+              type="tel"
               className="register__input-text"
-              id="email"
-              name='email'
-              placeholder='Email'
+              id="phoneNumber"
+              name='phoneNumber'
+              placeholder='Nomor WhatsApp'
+              pattern='^(\+62|62|0)8[1-9][0-9]{6,11}$'
               required
             />
           </p>

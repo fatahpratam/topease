@@ -69,9 +69,9 @@
 .home__ul {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 10rem;
-  grid-auto-rows: 20rem;
-  gap: 2rem;
+  grid-auto-columns: 12rem;
+  grid-template-rows: 22rem;
+  gap: 1rem;
   padding: 0.5rem;
   list-style-type: none;
   overflow-x: scroll;
@@ -80,10 +80,11 @@
 }
 
 .home__li {
-  display: grid;
+  display: flex;
 }
 
 .home__link {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -100,7 +101,6 @@
 }
 
 .home__img {
-  width: 10rem;
   border-radius: 1rem;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .home__icon {
-  width: 1.25rem;
+  width: 1rem;
 }
 
 .home__tag {
