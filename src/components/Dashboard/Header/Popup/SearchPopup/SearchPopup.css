@@ -29,6 +29,8 @@
   gap: 1rem;
   list-style-type: none;
   overflow-y: auto;
+  scrollbar-color: var(--color-primary) var(--color-surface);
+  scrollbar-width: thin;
   background-color: var(--color-surface);
 }
 

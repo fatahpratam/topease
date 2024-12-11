@@ -1,16 +1,16 @@
 import './ProductPayment.css';
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
 import { ErrorBlockQuote } from "../../../Error";
 import { useErrorBlockQuote } from "../../../../hooks/index.js";
 import { useStorage } from "../../../../contexts/index.js";
-import { Link } from 'react-router-dom';
 
 export default function ProductPayment({ product }) {
   const [nominalOptionId, setNominalOptionId] = useState(product.nominalOptions[0].id);
   const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
+
   const { errorMessage, triggerError } = useErrorBlockQuote();
   const { isLoggedIn, loginInfo } = useStorage();
   const formRef = useRef();
@@ -38,6 +38,10 @@ export default function ProductPayment({ product }) {
       triggerError('Anda harus login atau register untuk melakukan pembelian.');
     }
   };
+
+  useEffect(() => {
+    setNominalOptionId(product.nominalOptions[0].id);
+  }, [product]);
 
   return (
     <form
@@ -72,7 +76,7 @@ export default function ProductPayment({ product }) {
       <section className="payment__section">
         <h3 className="payment__h3">Konfirmasi Pembayaran</h3>
         <PaymentConfirmation
-          nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId)}
+          nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId) || product.nominalOptions[0].id}
           paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
           errorMessage={errorMessage}
         />
@@ -116,8 +120,8 @@ function NominalOptionList({ nominalOptionId, nominalOptions, handleNominalId })
             className="payment__token-input"
             name='nominalOptionId'
             value={nominalOption.id}
-            onClick={e => handleNominalId(e.target.value)}
-            defaultChecked={nominalOption.id === nominalOptionId}
+            onChange={e => handleNominalId(e.target.value)}
+            checked={nominalOption.id === nominalOptionId}
             required
           />
           <label htmlFor={nominalOption.id} className="payment__token-label">
@@ -179,8 +183,8 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
         className="payment__method-input"
         name='paymentMethodId'
         value={paymentMethod.id}
-        onClick={e => handlePaymentId(e.target.value)}
-        defaultChecked={handleDefaultChecked(paymentMethod.id)}
+        onChange={e => handlePaymentId(e.target.value)}
+        checked={handleDefaultChecked(paymentMethod.id)}
         required
       />
       <label htmlFor={paymentMethod.id} className="payment__method-label">

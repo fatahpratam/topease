@@ -46,6 +46,7 @@ export default function Header() {
     showList?.forEach(element => element.classList.remove('show'));
     const element = document.querySelector('.search');
     element.classList.toggle('show');
+    document.querySelector('.search__input').focus();
   };
 
   const handleSearchInputChange = (e) => {

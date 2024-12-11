@@ -33,7 +33,6 @@
   align-items: center;
   border-radius: 1rem;
   padding: 1rem;
-  font-weight: bold;
   text-decoration: none;
   text-wrap: nowrap;
   box-shadow: 0px 0px 8px var(--color-shadow);
@@ -68,11 +67,20 @@
 }
 
 .home__ul {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 10rem;
+  grid-auto-rows: 20rem;
+  gap: 2rem;
   padding: 0.5rem;
-  gap: 1rem;
   list-style-type: none;
   overflow-x: scroll;
+  scrollbar-color: var(--color-primary) var(--color-surface);
+  scrollbar-width: thin;
+}
+
+.home__li {
+  display: grid;
 }
 
 .home__link {
@@ -81,7 +89,6 @@
   gap: 0.75rem;
   border-radius: 1rem;
   padding: 1rem;
-  font-weight: bold;
   text-decoration: none;
   box-shadow: 0px 0px 8px var(--color-shadow);
   color: var(--color-on-surface);
@@ -107,7 +114,9 @@
 }
 
 .home__tag {
+  flex-grow: 1;
   display: flex;
+  align-items: flex-start;
   gap: 0.5rem;
 }
 
