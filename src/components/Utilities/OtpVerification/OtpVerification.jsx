@@ -1,10 +1,10 @@
 import './OtpVerification.css';
 import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { smartphoneIcon } from "../../../assets/icons/index.js";
+import { pinIcon } from "../../../assets/icons/index.js";
 import { ErrorBlockQuote } from "../index.js";
-import { useErrorBlockQuote } from "../../../hooks/useErrorBlockQuote.js";
-import { generateOtp } from "../../../utils/generateOtp.js";
+import { useErrorBlockQuote } from "../../../hooks/index.js";
+import { generateOtp } from "../../../utils/index.js";
 import { useStorage } from "../../../contexts/index.js";
 
 export default function OtpVerification() {
@@ -17,7 +17,7 @@ export default function OtpVerification() {
 
   console.log(otpCode);
 
-  const handleOnSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const { otp } = Object.fromEntries(data);
@@ -28,8 +28,9 @@ export default function OtpVerification() {
         login(phoneNumber, password);
         navigate('/dashboard/home');
       }
-      else if (purpose === 'forgotpassword') {
-        console.log(purpose);
+      else if (purpose === 'forgot-password') {
+        const { phoneNumber } = location.state;
+        navigate('../change-password', { state: { phoneNumber } });
       }
     }
     else {
@@ -40,13 +41,12 @@ export default function OtpVerification() {
   return (
     <div className="otp">
       <div className="otp__container">
-        <img src={smartphoneIcon} alt="Smartphone Icon" className="otp__icon" />
+        <img src={pinIcon} alt="Password Icon" className="otp__icon" />
         <h2 className="otp__h2">Kode Verifikasi</h2>
         <p className="otp__p">Kami sudah mengirimkan kode verifikasi ke nomor yang Anda masukkan.</p>
         <ErrorBlockQuote message={errorMessage} />
-        <form className="otp__form" onSubmit={handleOnSubmit}>
+        <form className="otp__form" onSubmit={handleSubmit}>
           <input
-            id='otp'
             name='otp'
             type="text"
             className="otp__input"

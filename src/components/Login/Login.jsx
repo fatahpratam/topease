@@ -10,12 +10,12 @@ export default function Login() {
   const navigate = useNavigate();
   const { remember, toggleRemember, login } = useStorage();
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
     const data = new FormData(formRef.current);
     const { phoneNumber, password } = Object.fromEntries(data);
     if (login(phoneNumber, password)) {
-      navigate(-1);
+      navigate('/dashboard/home');
     } else {
       triggerError('Nomor WhatsApp atau kata sandi Anda salah.');
     }
@@ -37,7 +37,7 @@ export default function Login() {
         >
           <ErrorBlockQuote message={errorMessage} />
           <p>
-            <label htmlFor="phoneNumber" className="login__label">Nomor WhatsApp</label>
+            <label htmlFor="phoneNumber" className="login__label">Nomor WhatsApp*</label>
             <input
               type="tel"
               className="login__input-text"
@@ -71,7 +71,7 @@ export default function Login() {
               />
               <label htmlFor="remember" className="login__label">Remember me</label>
             </p>
-            <Link to='#' className="login__link">Lupa password?</Link>
+            <Link to='/forget-password' className="login__link">Lupa kata sandi?</Link>
           </div>
           <button className="login__button" type="submit">Masuk</button>
           <hr />

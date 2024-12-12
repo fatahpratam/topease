@@ -80,7 +80,7 @@ export const StorageProvider = ({ children }) => {
     const user = loginDatabase.find(
       user => user.phoneNumber === phoneNumber && user.password === newPassword
     );
-    if (user !== undefined) {
+    if (user === undefined) {
       setLoginDatabase(prev => {
         for (const user of prev) {
           if (user.phoneNumber === phoneNumber) {

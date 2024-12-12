@@ -13,3 +13,6 @@ export { default as appsIcon } from "./apps.svg";
 export { default as smartphoneIcon } from "./smartphone.svg";
 export { default as sportsIcon } from "./sports.svg";
 export { default as walletIcon } from "./wallet.svg";
+export { default as smartphoneVariantIcon } from "./smartphoneVariant.svg";
+export { default as passwordIcon } from "./password.svg";
+export { default as pinIcon } from "./pin.svg";

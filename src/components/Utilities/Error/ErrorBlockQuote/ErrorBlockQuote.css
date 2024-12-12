@@ -6,7 +6,6 @@
   border-left: 4px solid var(--color-on-error-container);
   padding: 0.25rem;
   font-size: 0.85rem;
-  line-height: 0;
   color: var(--color-on-error-container);
   background-color: rgb(147, 0, 10, 0.8);
 }
