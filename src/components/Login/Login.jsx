@@ -2,7 +2,7 @@ import './Login.css';
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStorage } from "../../contexts/index.js";
-import { ErrorBlockQuote } from "../Error/index.js";
+import { ErrorBlockQuote } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
 
 export default function Login() {

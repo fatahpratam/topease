@@ -1,5 +1,5 @@
 import './ErrorBlockQuote.css';
-import { infoErrorVariant } from "../../../assets/icons/index.js";
+import { infoErrorVariant } from "../../../../assets/icons/index.js";
 
 export default function ErrorBlockQuote({ message }) {
   if (!message)

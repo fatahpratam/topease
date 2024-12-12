@@ -2,7 +2,7 @@ import './Register.css';
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStorage } from "../../contexts/index.js";
-import { ErrorBlockQuote } from "../Error/index.js";
+import { ErrorBlockQuote } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
 
 export default function Register() {
@@ -20,7 +20,7 @@ export default function Register() {
     if (isAccountExist(name, phoneNumber)) {
       triggerError('Nama atau Nomor WhatsApp sudah terpakai.');
     } else {
-      navigate('./verify', { state: { name, phoneNumber, password } });
+      navigate('/otp/register', { state: { name, phoneNumber, password } });
     }
   };
 

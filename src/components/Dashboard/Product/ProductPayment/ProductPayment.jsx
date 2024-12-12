@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
-import { ErrorBlockQuote } from "../../../Error/index.js";
+import { ErrorBlockQuote } from "../../../Utilities/index.js";
 import { useErrorBlockQuote } from "../../../../hooks/index.js";
 import { useStorage } from "../../../../contexts/index.js";
 

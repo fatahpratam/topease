@@ -2,9 +2,8 @@ import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
-import { Dashboard, Home, Login, Product, Category } from './components/index.js';
-import { Register, OtpVerification } from "./components/Register/index.js";
-import { NotFound } from "./components/Error/index.js";
+import { Dashboard, Home, Login, Product, Category, Register } from './components/index.js';
+import { NotFound, OtpVerification } from "./components/Utilities/index.js";
 import { StorageProvider } from "./contexts/index.js";
 
 const router = createBrowserRouter(
@@ -12,10 +11,8 @@ const router = createBrowserRouter(
     <Route path='/' >
       <Route index element={<Navigate to='dashboard' />} />
       <Route path='login' element={<Login />} />
-      <Route path='register' >
-        <Route index element={<Register />} />
-        <Route path='verify' element={<OtpVerification />} />
-      </Route>
+      <Route path='register' element={<Register />} />
+      <Route path='otp/:purpose' element={<OtpVerification />} />
       <Route path='dashboard' element={<Dashboard />}>
         <Route index element={<Navigate to='home' />} />
         <Route path='home' element={<Home />} />

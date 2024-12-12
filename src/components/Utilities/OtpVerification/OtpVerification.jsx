@@ -1,16 +1,19 @@
 import './OtpVerification.css';
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { smartphoneIcon } from "../../../assets/icons/index.js";
-import { ErrorBlockQuote } from "../../Error/index.js";
+import { ErrorBlockQuote } from "../index.js";
 import { useErrorBlockQuote } from "../../../hooks/useErrorBlockQuote.js";
 import { generateOtp } from "../../../utils/generateOtp.js";
+import { useStorage } from "../../../contexts/index.js";
 
 export default function OtpVerification() {
-  const { errorMessage, triggerError } = useErrorBlockQuote();
-  const [otpCode] = useState(generateOtp());
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { errorMessage, triggerError } = useErrorBlockQuote(),
+    [otpCode] = useState(generateOtp()),
+    { purpose } = useParams(),
+    location = useLocation(),
+    navigate = useNavigate(),
+    { register, login } = useStorage();
 
   console.log(otpCode);
 
@@ -19,8 +22,15 @@ export default function OtpVerification() {
     const data = new FormData(e.target);
     const { otp } = Object.fromEntries(data);
     if (otp === otpCode) {
-      console.log('Success');
-      // navigate('success', { state: location.state || {} });
+      if (purpose === 'register') {
+        const { name, phoneNumber, password } = location.state
+        register(name, phoneNumber, password);
+        login(phoneNumber, password);
+        navigate('/dashboard/home');
+      }
+      else if (purpose === 'forgotpassword') {
+        console.log(purpose);
+      }
     }
     else {
       triggerError('Kode verifikasi yang Anda masukkan salah.', 3000);

@@ -53,22 +53,14 @@ export const StorageProvider = ({ children }) => {
   }
 
   function register(name, phoneNumber, password) {
-    const existingUser = loginDatabase.find(user => {
-      return user.name === name || user.phoneNumber === phoneNumber;
+    const newUser = {
+      id: crypto.randomUUID(), name, phoneNumber, password
+    };
+    setLoginDatabase(prev => {
+      prev.push(newUser);
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(prev));
+      return prev;
     });
-    if (existingUser === undefined) {
-      const newUser = {
-        id: crypto.randomUUID(), name, phoneNumber, password
-      };
-      setLoginDatabase(prev => {
-        prev.push(newUser);
-        accessStorage('setItem', 'loginDatabase', JSON.stringify(prev));
-        return prev;
-      });
-      return true;
-    } else {
-      return false;
-    }
   }
 
   function login(phoneNumber, password) {
