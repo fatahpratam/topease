@@ -2,7 +2,8 @@ import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
-import { Dashboard, Home, Login, Register, Product, Category } from './components/index.js';
+import { Dashboard, Home, Login, Product, Category } from './components/index.js';
+import { Register, OtpVerification } from "./components/Register/index.js";
 import { NotFound } from "./components/Error/index.js";
 import { StorageProvider } from "./contexts/index.js";
 
@@ -11,7 +12,10 @@ const router = createBrowserRouter(
     <Route path='/' >
       <Route index element={<Navigate to='dashboard' />} />
       <Route path='login' element={<Login />} />
-      <Route path='register' element={<Register />} />
+      <Route path='register' >
+        <Route index element={<Register />} />
+        <Route path='verify' element={<OtpVerification />} />
+      </Route>
       <Route path='dashboard' element={<Dashboard />}>
         <Route index element={<Navigate to='home' />} />
         <Route path='home' element={<Home />} />
@@ -23,9 +27,9 @@ const router = createBrowserRouter(
           <Route index element={<Navigate to='../home' />} />
           <Route path=':category' element={<Category />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
+        {/* <Route path='*' element={<NotFound />} /> */}
       </Route>
-      <Route path='*' element={<Navigate to='dashboard/notfound' />} />
+      {/* <Route path='*' element={<Navigate to='dashboard/notfound' />} /> */}
     </Route>
   )
 );

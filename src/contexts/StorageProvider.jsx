@@ -9,7 +9,10 @@ const StorageContext = createContext({
   register: (name, phoneNumber, password) => { },
   login: (phoneNumber, password) => { },
   logout: () => { },
-  isLoggedIn: () => { }
+  isLoggedIn: () => { },
+  changePassword: (phoneNumber, newPassword) => { },
+  isAccountExist: (name, phoneNumber) => { },
+  isNumberExist: (phoneNumber) => { }
 });
 
 export const StorageProvider = ({ children }) => {
@@ -69,15 +72,37 @@ export const StorageProvider = ({ children }) => {
   }
 
   function login(phoneNumber, password) {
-    const user = loginDatabase.find(data => {
-      return data.phoneNumber === phoneNumber && data.password === password
+    const user = loginDatabase.find(user => {
+      return user.phoneNumber === phoneNumber && user.password === password
     });
-    if (user === undefined) {
-      return false;
-    } else {
+    if (user !== undefined) {
       setLoginInfo(user);
       accessStorage('setItem', 'loginInfo', JSON.stringify(user));
       return true;
+    } else {
+      return false;
+    }
+  }
+
+  function changePassword(phoneNumber, newPassword) {
+    const user = loginDatabase.find(
+      user => user.phoneNumber === phoneNumber && user.password === newPassword
+    );
+    if (user !== undefined) {
+      setLoginDatabase(prev => {
+        for (const user of prev) {
+          if (user.phoneNumber === phoneNumber) {
+            user.password = newPassword;
+            break;
+          }
+        }
+        accessStorage('setItem', 'loginDatabase', JSON.stringify(prev));
+        return prev;
+      });
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
@@ -91,9 +116,24 @@ export const StorageProvider = ({ children }) => {
   function isLoggedIn() {
     return Object.keys(loginInfo).length !== 0;
   }
+
+  function isAccountExist(name, phoneNumber) {
+    const user = loginDatabase.find(
+      user => user.name === name && user.phoneNumber === phoneNumber
+    );
+    return user !== undefined;
+  }
+
+  function isNumberExist(phoneNumber) {
+    const user = loginDatabase.find(
+      user => user.phoneNumber === phoneNumber
+    );
+    return user !== undefined;
+  }
+
   return (
     <StorageContext.Provider
-      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn }}
+      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist }}
     >
       {children}
     </StorageContext.Provider>

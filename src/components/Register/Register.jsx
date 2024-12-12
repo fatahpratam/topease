@@ -10,18 +10,17 @@ export default function Register() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const navigate = useNavigate();
-  const { register, login } = useStorage();
+  const { isAccountExist } = useStorage();
   const { errorMessage, triggerError } = useErrorBlockQuote();
 
   const handleSubmit = e => {
     e.preventDefault();
     const data = new FormData(formRef.current);
     const { name, phoneNumber, password } = Object.fromEntries(data);
-    if (register(name, phoneNumber, password)) {
-      login(phoneNumber, password);
-      navigate(-2);
-    } else {
+    if (isAccountExist(name, phoneNumber)) {
       triggerError('Nama atau Nomor WhatsApp sudah terpakai.');
+    } else {
+      navigate('./verify', { state: { name, phoneNumber, password } });
     }
   };
 
