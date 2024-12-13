@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
 import { Dashboard, Home, Login, Product, Category, Register, ForgetPassword, ChangePassword } from './components/index.js';
 import { NotFound, OtpVerification } from "./components/Utilities/index.js";
-import { StorageProvider } from "./contexts/index.js";
+import { UserStorageProvider } from "./contexts/index.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,8 +35,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <StorageProvider>
+    <UserStorageProvider>
       <RouterProvider router={router} />
-    </StorageProvider>
+    </UserStorageProvider>
   </StrictMode>
 )

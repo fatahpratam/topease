@@ -15,7 +15,7 @@ const StorageContext = createContext({
   isNumberExist: (phoneNumber) => { }
 });
 
-export const StorageProvider = ({ children }) => {
+export const UserStorageProvider = ({ children }) => {
   const [remember, setRemember] = useState(
     JSON.parse(localStorage.getItem('remember')) || false
   );
