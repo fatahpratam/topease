@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { smartphoneVariantIcon } from "../../assets/icons/index.js";
 import { ErrorBlockQuote } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
-import { useStorage } from "../../contexts/index.js";
+import { useUserStorage } from "../../contexts/index.js";
 
 export default function ForgetPassword() {
   const { errorMessage, triggerError } = useErrorBlockQuote(),
-    { isNumberExist } = useStorage(),
+    { isNumberExist } = useUserStorage(),
     navigate = useNavigate()
 
   const handleSubmit = e => {

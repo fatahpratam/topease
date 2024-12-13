@@ -5,7 +5,7 @@ import { pinIcon } from "../../../assets/icons/index.js";
 import { ErrorBlockQuote } from "../index.js";
 import { useErrorBlockQuote } from "../../../hooks/index.js";
 import { generateOtp } from "../../../utils/index.js";
-import { useStorage } from "../../../contexts/index.js";
+import { useUserStorage } from "../../../contexts/index.js";
 
 export default function OtpVerification() {
   const { errorMessage, triggerError } = useErrorBlockQuote(),
@@ -13,7 +13,7 @@ export default function OtpVerification() {
     { purpose } = useParams(),
     location = useLocation(),
     navigate = useNavigate(),
-    { register, login } = useStorage();
+    { register, login } = useUserStorage();
 
   console.log(otpCode);
 

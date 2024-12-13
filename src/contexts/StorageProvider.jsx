@@ -132,6 +132,6 @@ export const StorageProvider = ({ children }) => {
   )
 }
 
-export function useStorage() {
+export function useUserStorage() {
   return useContext(StorageContext);
 }

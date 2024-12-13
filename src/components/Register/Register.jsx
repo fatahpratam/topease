@@ -1,7 +1,7 @@
 import './Register.css';
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useStorage } from "../../contexts/index.js";
+import { useUserStorage } from "../../contexts/index.js";
 import { ErrorBlockQuote } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
 
@@ -10,7 +10,7 @@ export default function Register() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const navigate = useNavigate();
-  const { isAccountExist } = useStorage();
+  const { isAccountExist } = useUserStorage();
   const { errorMessage, triggerError } = useErrorBlockQuote();
 
   const handleSubmit = e => {

@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { searchIcon, notificationIcon, accountCircleIcon } from "../../../assets/icons/index.js";
 import { AccountPopup, NotificationPopup, SearchPopup } from "./Popup/index.js";
-import { useStorage } from "../../../contexts/index.js";
+import { useUserStorage } from "../../../contexts/index.js";
 
 export default function Header() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
-  const { isLoggedIn, loginInfo, logout } = useStorage();
+  const { isLoggedIn, loginInfo, logout } = useUserStorage();
 
   const clearPopup = ({ target }) => {
     const whiteList = !target?.closest('.header__button')

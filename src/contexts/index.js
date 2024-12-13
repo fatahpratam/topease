@@ -1,1 +1,1 @@
-export { StorageProvider, useStorage } from "./StorageProvider.jsx";
+export { StorageProvider, useUserStorage } from "./StorageProvider.jsx";

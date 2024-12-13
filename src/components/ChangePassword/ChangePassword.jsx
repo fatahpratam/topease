@@ -4,11 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { passwordIcon } from "../../assets/icons/index.js";
 import { ErrorBlockQuote } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
-import { useStorage } from "../../contexts/index.js";
+import { useUserStorage } from "../../contexts/index.js";
 
 export default function ChangePassword() {
   const { errorMessage, triggerError } = useErrorBlockQuote(),
-    { changePassword, isLoggedIn, logout } = useStorage(),
+    { changePassword, isLoggedIn, logout } = useUserStorage(),
     location = useLocation(),
     navigate = useNavigate(),
     passwordRef = useRef(),

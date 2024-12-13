@@ -1,14 +1,14 @@
 import './Login.css';
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useStorage } from "../../contexts/index.js";
+import { useUserStorage } from "../../contexts/index.js";
 import { ErrorBlockQuote } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
 
 export default function Login() {
   const formRef = useRef();
   const navigate = useNavigate();
-  const { remember, toggleRemember, login } = useStorage();
+  const { remember, toggleRemember, login } = useUserStorage();
 
   const handleSubmit = e => {
     e.preventDefault();

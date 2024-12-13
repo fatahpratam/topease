@@ -5,14 +5,14 @@ import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
 import { ErrorBlockQuote } from "../../../Utilities/index.js";
 import { useErrorBlockQuote } from "../../../../hooks/index.js";
-import { useStorage } from "../../../../contexts/index.js";
+import { useUserStorage } from "../../../../contexts/index.js";
 
 export default function ProductPayment({ product }) {
   const [nominalOptionId, setNominalOptionId] = useState(product.nominalOptions[0].id);
   const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
 
   const { errorMessage, triggerError } = useErrorBlockQuote();
-  const { isLoggedIn, loginInfo } = useStorage();
+  const { isLoggedIn, loginInfo } = useUserStorage();
   const formRef = useRef();
 
   const handleNominalId = (id) => {
