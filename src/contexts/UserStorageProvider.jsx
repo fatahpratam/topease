@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { users } from "../data/index.js";
 
-const StorageContext = createContext({
+const UserStorageContext = createContext({
   loginInfo: {},
   loginDatabase: {},
   remember: false,
@@ -124,14 +124,14 @@ export const UserStorageProvider = ({ children }) => {
   }
 
   return (
-    <StorageContext.Provider
+    <UserStorageContext.Provider
       value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist }}
     >
       {children}
-    </StorageContext.Provider>
+    </UserStorageContext.Provider>
   )
 }
 
 export function useUserStorage() {
-  return useContext(StorageContext);
+  return useContext(UserStorageContext);
 }

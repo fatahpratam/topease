@@ -1,27 +1,37 @@
 import './ProductPayment.css';
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
-import { ErrorBlockQuote } from "../../../Utilities/index.js";
-import { useErrorBlockQuote } from "../../../../hooks/index.js";
-import { useUserStorage } from "../../../../contexts/index.js";
+import { useUserStorage, useProductStorage } from "../../../../contexts/index.js";
 
 export default function ProductPayment({ product }) {
-  const [nominalOptionId, setNominalOptionId] = useState(product.nominalOptions[0].id);
-  const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
+  const { initializeProductHistory, handleProductChange, getValueOf } = useProductStorage();
+  initializeProductHistory(product.id, product.nominalOptions[0].id, paymentMethods[0].id, product.requiredFields);
 
-  const { errorMessage, triggerError } = useErrorBlockQuote();
-  const { isLoggedIn, loginInfo } = useUserStorage();
-  const formRef = useRef();
+  const { isLoggedIn, loginInfo } = useUserStorage(),
+    formRef = useRef(),
+    navigate = useNavigate(),
+    nominalOptionId = getValueOf(product.id, 'nominalOptionId'),
+    paymentMethodId = getValueOf(product.id, 'paymentMethodId');
+
 
   const handleNominalId = (id) => {
-    setNominalOptionId(id);
+    handleProductChange(product.id, 'nominalOptionId', id);
   };
 
   const handlePaymentId = (id) => {
-    setPaymentMethodId(id);
+    handleProductChange(product.id, 'paymentMethodId', id);
   };
+
+  const handleExtraField = (property, value) => {
+    handleProductChange(product.id, property, value);
+  };
+
+  const getExtraField = (property) => {
+    return getValueOf(product.id, property);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,13 +45,9 @@ export default function ProductPayment({ product }) {
       }
       console.log(objData);
     } else {
-      triggerError('Anda harus login atau register untuk melakukan pembelian.');
+      navigate('../../../login');
     }
   };
-
-  useEffect(() => {
-    setNominalOptionId(product.nominalOptions[0].id);
-  }, [product]);
 
   return (
     <form
@@ -51,7 +57,11 @@ export default function ProductPayment({ product }) {
     >
       <section className="payment__section">
         <h3 className="payment__h3">Masukkan Informasi Akun</h3>
-        <AccountInfo requiredFields={product.requiredFields} />
+        <AccountInfo
+          requiredFields={product.requiredFields}
+          handleExtraField={handleExtraField}
+          getExtraField={getExtraField}
+        />
       </section>
       <section className="payment__section">
         <h3 className="payment__h3">Pilih Nominal</h3>
@@ -76,16 +86,15 @@ export default function ProductPayment({ product }) {
       <section className="payment__section">
         <h3 className="payment__h3">Konfirmasi Pembayaran</h3>
         <PaymentConfirmation
-          nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId) || product.nominalOptions[0].id}
+          nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId)}
           paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
-          errorMessage={errorMessage}
         />
       </section>
     </form>
   )
 }
 
-function AccountInfo({ requiredFields }) {
+function AccountInfo({ requiredFields, handleExtraField, getExtraField }) {
   return (
     <>
       {
@@ -98,6 +107,9 @@ function AccountInfo({ requiredFields }) {
               className="payment__account-input"
               placeholder={field.placeholder}
               name={field.fieldName}
+              value={getExtraField(field.fieldName)}
+              onChange={(e) => handleExtraField(field.fieldName, e.target.value)}
+              pattern={field.type === 'tel' ? '^(\\+62|62|0)8[1-9][0-9]{6,11}$' : ''}
               required
             />
           </p>
@@ -201,7 +213,7 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
   )
 }
 
-function PaymentConfirmation({ nominalOption, paymentMethod, errorMessage }) {
+function PaymentConfirmation({ nominalOption, paymentMethod }) {
   const numberFormatter = Intl.NumberFormat('id-ID');
   const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
 
@@ -240,7 +252,6 @@ function PaymentConfirmation({ nominalOption, paymentMethod, errorMessage }) {
         <img src={infoIcon} alt="Info icon" className="product__icon" />
         Pastikan pesanan kamu sudah benar sebelum melanjutkan pesanan.
       </blockquote>
-      <ErrorBlockQuote message={errorMessage} />
       <button className="payment__confirm-button" type='submit'>Beli sekarang</button>
     </div>
   )
