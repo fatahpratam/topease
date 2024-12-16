@@ -2,7 +2,7 @@ import './ChangePassword.css';
 import { useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { passwordIcon } from "../../assets/icons/index.js";
-import { ErrorBlockQuote } from "../Utilities/index.js";
+import { ErrorBlockQuote, ProtectedRoute } from "../Utilities/index.js";
 import { useErrorBlockQuote } from "../../hooks/index.js";
 import { useUserStorage } from "../../contexts/index.js";
 
@@ -39,43 +39,49 @@ export default function ChangePassword() {
     }
   };
 
+  const isStateNotExist = () => {
+    return location.state === null;
+  }
+
   return (
-    <div className="password">
-      <div className="password__container">
-        <img src={passwordIcon} alt="Smartphone Icon" className="password__icon" />
-        <h2 className="password__h2">Ganti Kata Sandi</h2>
-        <p className="password__p">Masukkan password baru untuk akun Anda.</p>
-        <ErrorBlockQuote message={errorMessage} />
-        <form className="password__form" onSubmit={handleSubmit}>
-          <p>
-            <label htmlFor="password" className="password__label">Kata sandi baru*</label>
-            <input
-              id='password'
-              name='password'
-              type="password"
-              className="password__input"
-              placeholder='Kata sandi'
-              onChange={handlePasswordValidity}
-              ref={passwordRef}
-              required
-            />
-          </p>
-          <p>
-            <label htmlFor="confirm-password" className="password__label">Konfirmasi kata sandi baru*</label>
-            <input
-              id='confirm-password'
-              name='confirmPassword'
-              type="password"
-              className="password__input"
-              placeholder='Konfirmasi kata sandi'
-              onChange={handlePasswordValidity}
-              ref={confirmPasswordRef}
-              required
-            />
-          </p>
-          <button className="password__button">Ganti kata sandi</button>
-        </form>
+    <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn() || isStateNotExist()}>
+      <div className="password">
+        <div className="password__container">
+          <img src={passwordIcon} alt="Smartphone Icon" className="password__icon" />
+          <h2 className="password__h2">Ganti Kata Sandi</h2>
+          <p className="password__p">Masukkan password baru untuk akun Anda.</p>
+          <ErrorBlockQuote message={errorMessage} />
+          <form className="password__form" onSubmit={handleSubmit}>
+            <p>
+              <label htmlFor="password" className="password__label">Kata sandi baru*</label>
+              <input
+                id='password'
+                name='password'
+                type="password"
+                className="password__input"
+                placeholder='Kata sandi'
+                onChange={handlePasswordValidity}
+                ref={passwordRef}
+                required
+              />
+            </p>
+            <p>
+              <label htmlFor="confirm-password" className="password__label">Konfirmasi kata sandi baru*</label>
+              <input
+                id='confirm-password'
+                name='confirmPassword'
+                type="password"
+                className="password__input"
+                placeholder='Konfirmasi kata sandi'
+                onChange={handlePasswordValidity}
+                ref={confirmPasswordRef}
+                required
+              />
+            </p>
+            <button className="password__button">Ganti kata sandi</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   )
 }
