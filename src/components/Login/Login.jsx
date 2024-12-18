@@ -25,7 +25,6 @@ export default function Login() {
   };
 
   const { errorMessage, triggerError } = useErrorBlockQuote();
-  console.log(history.length);
 
   return (
     <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn()}>

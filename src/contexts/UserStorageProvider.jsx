@@ -12,7 +12,12 @@ const UserStorageContext = createContext({
   isLoggedIn: () => { },
   changePassword: (phoneNumber, newPassword) => { },
   isAccountExist: (name, phoneNumber) => { },
-  isNumberExist: (phoneNumber) => { }
+  isNumberExist: (phoneNumber) => { },
+  addToCart: (product) => { },
+  handleCartItemChange: (productId, property, value) => { },
+  getCartItem: (productId) => { },
+  removeFromCart: (productId) => { },
+  isCartItemExist: (productId) => { }
 });
 
 export const UserStorageProvider = ({ children }) => {
@@ -57,10 +62,12 @@ export const UserStorageProvider = ({ children }) => {
       id: crypto.randomUUID(), name, phoneNumber, password
     };
     setLoginDatabase(prev => {
-      prev.push(newUser);
-      accessStorage('setItem', 'loginDatabase', JSON.stringify(prev));
-      return prev;
+      const updatedDatabase = [...prev, newUser];
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
     });
+    setLoginInfo(newUser);
+    accessStorage('setItem', 'loginInfo', JSON.stringify(newUser));
   }
 
   function login(phoneNumber, password) {
@@ -82,14 +89,13 @@ export const UserStorageProvider = ({ children }) => {
     );
     if (user === undefined) {
       setLoginDatabase(prev => {
-        for (const user of prev) {
-          if (user.phoneNumber === phoneNumber) {
-            user.password = newPassword;
-            break;
-          }
-        }
-        accessStorage('setItem', 'loginDatabase', JSON.stringify(prev));
-        return prev;
+        const updatedDatabase = prev.map(user => {
+          if (user.phoneNumber === phoneNumber)
+            return { ...user, password: newPassword };
+          return { ...user };
+        });
+        accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+        return updatedDatabase;
       });
       return true;
     }
@@ -123,9 +129,87 @@ export const UserStorageProvider = ({ children }) => {
     return user !== undefined;
   }
 
+  function addToCart(product) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === loginInfo.id) {
+          return {
+            ...user,
+            cart: [product, ...(user.cart || [])]
+          };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === loginInfo.id
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function handleCartItemChange(productId, property, value) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === loginInfo.id) {
+          const newCart = user.cart.map(item => {
+            if (item.productId === productId) {
+              return { ...item, [property]: value }
+            };
+            return { ...item };
+          });
+          return { ...user, cart: newCart };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === loginInfo.id
+      )
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function getCartItem(productId) {
+    return loginInfo.cart.find(
+      item => item.productId === productId
+    );
+  }
+
+  function removeFromCart(productId) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === loginInfo.id) {
+          const newCart = user.cart.filter(
+            item => item.productId !== productId
+          );
+          return { ...user, cart: newCart };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === loginInfo.id
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function isCartItemExist(productId) {
+    return loginInfo.cart?.find(
+      item => item.productId === productId
+    ) !== undefined;
+  }
+
   return (
     <UserStorageContext.Provider
-      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist }}
+      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist, addToCart, handleCartItemChange, getCartItem, removeFromCart, isCartItemExist }}
     >
       {children}
     </UserStorageContext.Provider>

@@ -25,7 +25,6 @@ export default function OtpVerification() {
       if (purpose === 'register') {
         const { name, phoneNumber, password } = location.state
         register(name, phoneNumber, password);
-        login(phoneNumber, password);
         if (history.length > 4)
           navigate(-3);
         else

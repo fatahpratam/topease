@@ -62,6 +62,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+
   .header__container {
     align-items: center;
   }
@@ -76,5 +80,11 @@
 
   .header__button-text {
     display: none;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .header__button {
+    padding: 0.5rem;
   }
 }

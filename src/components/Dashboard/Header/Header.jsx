@@ -1,7 +1,7 @@
 import './Header.css';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { searchIcon, notificationIcon, accountCircleIcon } from "../../../assets/icons/index.js";
+import { searchIcon, notificationIcon, accountCircleIcon, shoppingCartVariantIcon } from "../../../assets/icons/index.js";
 import { AccountPopup, NotificationPopup, SearchPopup } from "./Popup/index.js";
 import { useUserStorage } from "../../../contexts/index.js";
 
@@ -72,11 +72,21 @@ export default function Header() {
         </form>
         <button
           className="header__button"
+        >
+          <img
+            src={shoppingCartVariantIcon}
+            alt="Shopping cart icon"
+            className='header__button-icon'
+          />
+          <p className='header__button-text'>Keranjang</p>
+        </button>
+        <button
+          className="header__button"
           onClick={handleNotificationPopup}
         >
           <img
             src={notificationIcon}
-            alt="Account circle"
+            alt="Notification icon"
             className='header__button-icon'
           />
           <p className='header__button-text'>Notifikasi</p>

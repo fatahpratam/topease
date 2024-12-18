@@ -1,49 +1,94 @@
 import './ProductPayment.css';
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { paymentMethods } from "../../../../data/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
-import { useUserStorage, useProductStorage } from "../../../../contexts/index.js";
+import { useUserStorage } from "../../../../contexts/index.js";
 
 export default function ProductPayment({ product }) {
-  const { initializeProductHistory, handleProductChange, getValueOf } = useProductStorage();
-  initializeProductHistory(product.id, product.nominalOptions[0].id, paymentMethods[0].id, product.requiredFields);
+  const { isLoggedIn, addToCart, isCartItemExist, handleCartItemChange, removeFromCart, getCartItem, loginInfo } = useUserStorage(),
+    [paymentData, setPaymentData] = useState(() => {
+      const extraField = product.requiredFields.reduce((prev, curr) => {
+        return { ...prev, [curr.fieldName]: '' };
+      }, {});
+      for (const key of Object.keys(extraField)) {
+        if (key === 'phoneNumber') {
+          extraField.phoneNumber = loginInfo.phoneNumber;
+        }
+      }
+      return {
+        productId: product.id,
+        nominalOptionId: product.nominalOptions[0].id,
+        paymentMethodId: paymentMethods[0].id,
+        ...extraField
+      }
+    });
 
-  const { isLoggedIn, loginInfo } = useUserStorage(),
-    formRef = useRef(),
+  const formRef = useRef(),
     navigate = useNavigate(),
-    nominalOptionId = getValueOf(product.id, 'nominalOptionId'),
-    paymentMethodId = getValueOf(product.id, 'paymentMethodId');
+    doesCartItemExist = isCartItemExist(product.id),
+    nominalOptionId = getValueOf('nominalOptionId'),
+    paymentMethodId = getValueOf('paymentMethodId'),
+    nominalOption = findBy(product.nominalOptions, 'id', nominalOptionId) || product.nominalOptions[0];
+
+  const handleProductChange = (property, value) => {
+    if (doesCartItemExist)
+      handleCartItemChange(product.id, property, value);
+    else
+      setPaymentData(prev => {
+        return { ...prev, [property]: value };
+      });
+  };
+
+  function getValueOf(property) {
+    if (doesCartItemExist)
+      return getCartItem(product.id)[property];
+    else
+      return paymentData[property];
+  }
+
+  useEffect(() => {
+    setPaymentData(() => {
+      const extraField = product.requiredFields.reduce((prev, curr) => {
+        return { ...prev, [curr.fieldName]: '' };
+      }, {});
+      for (const key of Object.keys(extraField)) {
+        if (key === 'phoneNumber') {
+          extraField.phoneNumber = loginInfo.phoneNumber;
+        }
+      }
+      return {
+        productId: product.id,
+        nominalOptionId: product.nominalOptions[0].id,
+        paymentMethodId: paymentMethods[0].id,
+        ...extraField
+      }
+    });
+  }, [product]);
 
 
   const handleNominalId = (id) => {
-    handleProductChange(product.id, 'nominalOptionId', id);
+    handleProductChange('nominalOptionId', id);
   };
 
   const handlePaymentId = (id) => {
-    handleProductChange(product.id, 'paymentMethodId', id);
+    handleProductChange('paymentMethodId', id);
   };
 
   const handleExtraField = (property, value) => {
-    handleProductChange(product.id, property, value);
+    handleProductChange(property, value);
   };
-
-  const getExtraField = (property) => {
-    return getValueOf(product.id, property);
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLoggedIn()) {
-      const data = new FormData(formRef.current);
-      data.append('productId', product.id);
-      data.append('userId', loginInfo.id);
-      const objData = {};
-      for (const [key, value] of data.entries()) {
-        objData[key] = value;
+      if (doesCartItemExist) {
+        removeFromCart(product.id);
       }
-      console.log(objData);
+      else {
+        addToCart(paymentData);
+      }
     } else {
       navigate('../../../login');
     }
@@ -60,7 +105,7 @@ export default function ProductPayment({ product }) {
         <AccountInfo
           requiredFields={product.requiredFields}
           handleExtraField={handleExtraField}
-          getExtraField={getExtraField}
+          getExtraField={getValueOf}
         />
       </section>
       <section className="payment__section">
@@ -86,8 +131,10 @@ export default function ProductPayment({ product }) {
       <section className="payment__section">
         <h3 className="payment__h3">Konfirmasi Pembayaran</h3>
         <PaymentConfirmation
-          nominalOption={findBy(product.nominalOptions, 'id', nominalOptionId)}
+          nominalOption={nominalOption}
           paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
+          isCartItemExist={doesCartItemExist}
+          isLoggedIn={isLoggedIn()}
         />
       </section>
     </form>
@@ -109,7 +156,7 @@ function AccountInfo({ requiredFields, handleExtraField, getExtraField }) {
               name={field.fieldName}
               value={getExtraField(field.fieldName)}
               onChange={(e) => handleExtraField(field.fieldName, e.target.value)}
-              pattern={field.type === 'tel' ? '^(\\+62|62|0)8[1-9][0-9]{6,11}$' : ''}
+              pattern={field.type === 'tel' ? '^(\\+62|62|0)8[1-9][0-9]{6,11}$' : '.*'}
               required
             />
           </p>
@@ -213,7 +260,7 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
   )
 }
 
-function PaymentConfirmation({ nominalOption, paymentMethod }) {
+function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, isLoggedIn }) {
   const numberFormatter = Intl.NumberFormat('id-ID');
   const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
 
@@ -252,7 +299,14 @@ function PaymentConfirmation({ nominalOption, paymentMethod }) {
         <img src={infoIcon} alt="Info icon" className="product__icon" />
         Pastikan pesanan kamu sudah benar sebelum melanjutkan pesanan.
       </blockquote>
-      <button className="payment__confirm-button" type='submit'>Beli sekarang</button>
+      <button className="payment__confirm-button" type='submit'>
+        {!isLoggedIn
+          ? 'Tambah ke keranjang'
+          : isCartItemExist
+            ? 'Hapus dari keranjang'
+            : 'Tambah ke keranjang'
+        }
+      </button>
     </div>
   )
 }
