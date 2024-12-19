@@ -2,7 +2,7 @@ import './Header.css';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { searchIcon, notificationIcon, accountCircleIcon, shoppingCartVariantIcon } from "../../../assets/icons/index.js";
-import { AccountPopup, NotificationPopup, SearchPopup } from "./Popup/index.js";
+import { AccountPopup, NotificationPopup, SearchPopup, CartPopup } from "./Popup/index.js";
 import { useUserStorage } from "../../../contexts/index.js";
 
 export default function Header() {
@@ -13,6 +13,7 @@ export default function Header() {
   const clearPopup = ({ target }) => {
     const whiteList = !target?.closest('.header__button')
       && !target?.closest('.search')
+      && !target?.closest('.keranjang')
       && !target?.closest('.account')
       && !target?.closest('.notification');
     if (whiteList) {
@@ -49,6 +50,13 @@ export default function Header() {
     document.querySelector('.search__input').focus();
   };
 
+  const handleCartPopup = () => {
+    const showList = [...document.querySelectorAll('.show:not(.keranjang)')];
+    showList?.forEach(element => element.classList.remove('show'));
+    const element = document.querySelector('.keranjang');
+    element.classList.toggle('show');
+  };
+
   const handleSearchInputChange = (e) => {
     setQuery(e.target.value);
   };
@@ -72,6 +80,7 @@ export default function Header() {
         </form>
         <button
           className="header__button"
+          onClick={handleCartPopup}
         >
           <img
             src={shoppingCartVariantIcon}
@@ -80,6 +89,7 @@ export default function Header() {
           />
           <p className='header__button-text'>Keranjang</p>
         </button>
+        <CartPopup isLoggedIn={isLoggedIn()} loginInfo={loginInfo} />
         <button
           className="header__button"
           onClick={handleNotificationPopup}

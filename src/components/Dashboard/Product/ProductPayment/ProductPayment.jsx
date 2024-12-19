@@ -135,6 +135,7 @@ export default function ProductPayment({ product }) {
           paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
           isCartItemExist={doesCartItemExist}
           isLoggedIn={isLoggedIn()}
+          discount={product.discount}
         />
       </section>
     </form>
@@ -260,13 +261,12 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
   )
 }
 
-function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, isLoggedIn }) {
-  const numberFormatter = Intl.NumberFormat('id-ID');
-  const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
-
-  const totalAdmin = nominalOption.adminAmount
-    + paymentMethod.adminAmount;
-  const totalAmount = nominalOption.idrAmount + totalAdmin;
+function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, isLoggedIn, discount }) {
+  const numberFormatter = Intl.NumberFormat('id-ID'),
+    currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
+    totalAdmin = nominalOption.adminAmount + paymentMethod.adminAmount,
+    discountAmount = Math.floor((nominalOption.idrAmount + totalAdmin) * discount / 100),
+    totalAmount = nominalOption.idrAmount + totalAdmin - discountAmount;
 
   return (
     <div className="payment__confirm-section">
@@ -289,6 +289,10 @@ function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, is
       <p className="payment__confirm-p">
         Biaya admin
         <span className="payment__confirm-span">{currencyFormatter.format(totalAdmin)}</span>
+      </p>
+      <p className="payment__confirm-p">
+        Potongan promo
+        <span className="payment__confirm-span">{`(${discount}%) ${currencyFormatter.format(discountAmount)}`}</span>
       </p>
       <hr />
       <p className="payment__confirm-p">

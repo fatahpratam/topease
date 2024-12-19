@@ -17,3 +17,4 @@ export { default as smartphoneVariantIcon } from "./smartphoneVariant.svg";
 export { default as passwordIcon } from "./password.svg";
 export { default as pinIcon } from "./pin.svg";
 export { default as shoppingCartVariantIcon } from "./shoppingCartVariant.svg";
+export { default as arrowForwardIcon } from "./arrowForward.svg";
