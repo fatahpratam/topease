@@ -1,12 +1,16 @@
 import './Cart.css';
-import { useUserStorage } from "../../../contexts/index.js";
 import CartDetails from "./CartDetails/CartDetails.jsx";
+import CartPayment from "./CartPayment/CartPayment.jsx";
 
 export default function Cart() {
-  const { loginInfo, isLoggedIn } = useUserStorage();
   return (
     <div className="cart">
-      <CartDetails cart={loginInfo.cart} isLoggedIn={isLoggedIn()} />
+      <section className="cart__section">
+        <CartDetails />
+      </section>
+      <section className="cart__section">
+        <CartPayment />
+      </section>
     </div>
   )
 }

@@ -1,6 +1,12 @@
 .cart {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
   padding: 3rem 4rem;
   color: var(--color-on-surface);
+}
+
+.cart__section {
+  flex-basis: min(30rem, 100%);
 }

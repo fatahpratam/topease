@@ -2,8 +2,7 @@ import './ProductPayment.css';
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { infoIcon } from "../../../../assets/icons/index.js";
-import { paymentMethods } from "../../../../data/index.js";
-import { findBy, findNestedBy } from "../../../../utils/index.js";
+import { findBy } from "../../../../utils/index.js";
 import { useUserStorage } from "../../../../contexts/index.js";
 
 export default function ProductPayment({ product }) {
@@ -20,7 +19,6 @@ export default function ProductPayment({ product }) {
       return {
         productId: product.id,
         nominalOptionId: product.nominalOptions[0].id,
-        paymentMethodId: paymentMethods[0].id,
         ...extraField
       }
     });
@@ -29,7 +27,6 @@ export default function ProductPayment({ product }) {
     navigate = useNavigate(),
     doesCartItemExist = isCartItemExist(product.id),
     nominalOptionId = getValueOf('nominalOptionId'),
-    paymentMethodId = getValueOf('paymentMethodId'),
     nominalOption = findBy(product.nominalOptions, 'id', nominalOptionId) || product.nominalOptions[0];
 
   const handleProductChange = (property, value) => {
@@ -61,7 +58,6 @@ export default function ProductPayment({ product }) {
       return {
         productId: product.id,
         nominalOptionId: product.nominalOptions[0].id,
-        paymentMethodId: paymentMethods[0].id,
         ...extraField
       }
     });
@@ -70,10 +66,6 @@ export default function ProductPayment({ product }) {
 
   const handleNominalId = (id) => {
     handleProductChange('nominalOptionId', id);
-  };
-
-  const handlePaymentId = (id) => {
-    handleProductChange('paymentMethodId', id);
   };
 
   const handleExtraField = (property, value) => {
@@ -121,18 +113,9 @@ export default function ProductPayment({ product }) {
         />
       </section>
       <section className="payment__section">
-        <h3 className="payment__h3">Pilih Metode Pembayaran</h3>
-        <PaymentMethodList
-          paymentMethodId={paymentMethodId}
-          paymentMethods={paymentMethods}
-          handlePaymentId={handlePaymentId}
-        />
-      </section>
-      <section className="payment__section">
         <h3 className="payment__h3">Konfirmasi Pembayaran</h3>
         <PaymentConfirmation
           nominalOption={nominalOption}
-          paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
           isCartItemExist={doesCartItemExist}
           isLoggedIn={isLoggedIn()}
           discount={product.discount}
@@ -185,7 +168,7 @@ function NominalOptionList({ nominalOptionId, nominalOptions, handleNominalId })
             required
           />
           <label htmlFor={nominalOption.id} className="payment__token-label">
-            <img src={nominalOption.imgUrl} alt="" className="payment__token-icon" />
+            <img src={nominalOption.imgUrl} alt={nominalOption.name} className="payment__token-icon" />
             <span className="payment__token-span">{nominalOption.name}</span>
             <span className="payment__token-span">{numberFormatter.format(nominalOption.amount)}</span>
             <span className="payment__token-span">{currencyFormatter.format(nominalOption.idrAmount + nominalOption.adminAmount)}</span>
@@ -196,77 +179,12 @@ function NominalOptionList({ nominalOptionId, nominalOptions, handleNominalId })
   )
 }
 
-function PaymentMethodList({ paymentMethodId, paymentMethods, handlePaymentId }) {
-  const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
-  const handleDefaultChecked = (id) => {
-    return paymentMethodId === id;
-  };
-  return (
-    <div className="payment__method-section">
-      {paymentMethods.map(paymentMethod => {
-        if (paymentMethod.adminAmount === null)
-          return (
-            <details className="payment__method-details" key={paymentMethod.id}>
-              <summary className="payment__method-summary">{paymentMethod.name}</summary>
-              <div className="payment__method-container">
-                {paymentMethod.subMethods.map(paymentMethod => (
-                  <PaymentMethodItem
-                    paymentMethod={paymentMethod}
-                    currencyFormatter={currencyFormatter}
-                    key={paymentMethod.id}
-                    handlePaymentId={handlePaymentId}
-                    handleDefaultChecked={handleDefaultChecked}
-                  />
-                ))}
-              </div>
-            </details>
-          )
-        else
-          return <PaymentMethodItem
-            paymentMethod={paymentMethod}
-            currencyFormatter={currencyFormatter}
-            key={paymentMethod.id}
-            handlePaymentId={handlePaymentId}
-            handleDefaultChecked={handleDefaultChecked}
-          />
-      })}
-    </div>
-  )
-}
-
-function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, handleDefaultChecked }) {
-  return (
-    <div className="payment__method-item">
-      <input
-        id={paymentMethod.id}
-        type="radio"
-        className="payment__method-input"
-        name='paymentMethodId'
-        value={paymentMethod.id}
-        onChange={e => handlePaymentId(e.target.value)}
-        checked={handleDefaultChecked(paymentMethod.id)}
-        required
-      />
-      <label htmlFor={paymentMethod.id} className="payment__method-label">
-        <img
-          src={paymentMethod.imgUrl}
-          alt={paymentMethod.name} className="payment__method-icon"
-        />
-        <div className="payment__method-div">
-          <span className="payment__method-span">{paymentMethod.name}</span>
-          <span className="payment__method-span">{currencyFormatter.format(paymentMethod.adminAmount)}</span>
-        </div>
-      </label>
-    </div>
-  )
-}
-
-function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, isLoggedIn, discount }) {
+function PaymentConfirmation({ nominalOption, isCartItemExist, isLoggedIn, discount }) {
   const numberFormatter = Intl.NumberFormat('id-ID'),
     currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
-    totalAdmin = nominalOption.adminAmount + paymentMethod.adminAmount,
-    discountAmount = Math.floor((nominalOption.idrAmount + totalAdmin) * discount / 100),
-    totalAmount = nominalOption.idrAmount + totalAdmin - discountAmount;
+    totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
+    discountAmount = Math.floor((totalAmount) * discount / 100),
+    finalAmount = totalAmount - discountAmount;
 
   return (
     <div className="payment__confirm-section">
@@ -279,16 +197,12 @@ function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, is
         <span className="payment__confirm-span">{numberFormatter.format(nominalOption.amount)}</span>
       </p>
       <p className="payment__confirm-p">
-        Metode pembayaran
-        <span className="payment__confirm-span">{paymentMethod.name}</span>
-      </p>
-      <p className="payment__confirm-p">
         Harga awal
         <span className="payment__confirm-span">{currencyFormatter.format(nominalOption.amount)}</span>
       </p>
       <p className="payment__confirm-p">
         Biaya admin
-        <span className="payment__confirm-span">{currencyFormatter.format(totalAdmin)}</span>
+        <span className="payment__confirm-span">{currencyFormatter.format(nominalOption.adminAmount)}</span>
       </p>
       <p className="payment__confirm-p">
         Potongan promo
@@ -297,7 +211,7 @@ function PaymentConfirmation({ nominalOption, paymentMethod, isCartItemExist, is
       <hr />
       <p className="payment__confirm-p">
         <strong>Total Tagihan</strong>
-        <span className="payment__confirm-span">{currencyFormatter.format(totalAmount)}</span>
+        <span className="payment__confirm-span">{currencyFormatter.format(finalAmount)}</span>
       </p>
       <blockquote className="payment__blockquote">
         <img src={infoIcon} alt="Info icon" className="product__icon" />

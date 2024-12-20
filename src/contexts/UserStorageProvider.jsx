@@ -17,7 +17,12 @@ const UserStorageContext = createContext({
   handleCartItemChange: (productId, property, value) => { },
   getCartItem: (productId) => { },
   removeFromCart: (productId) => { },
-  isCartItemExist: (productId) => { }
+  isCartItemExist: (productId) => { },
+  toggleCartItem: (productId) => { },
+  toggleAllCartItem: (isChecked) => { },
+  isEveryCartItemChecked: () => { },
+  getCheckedCartItem: () => { },
+  removeCheckedFromCart: () => { }
 });
 
 export const UserStorageProvider = ({ children }) => {
@@ -174,10 +179,71 @@ export const UserStorageProvider = ({ children }) => {
     });
   }
 
+  function toggleCartItem(productId) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === loginInfo.id) {
+          const newCart = user.cart.map(item => {
+            if (item.productId === productId) {
+              return { ...item, isChecked: !item.isChecked };
+            }
+            return { ...item };
+          });
+          return { ...user, cart: newCart };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === loginInfo.id
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function toggleAllCartItem(isChecked) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === loginInfo.id) {
+          const newCart = user.cart.map(
+            item => ({ ...item, isChecked: isChecked })
+          );
+          return { ...user, cart: newCart };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === loginInfo.id
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function isEveryCartItemChecked() {
+    return Object.keys(loginInfo.cart).length > 0
+      && loginInfo.cart.every(
+        item => item.isChecked
+      );
+  }
+
   function getCartItem(productId) {
     return loginInfo.cart.find(
       item => item.productId === productId
     );
+  }
+
+  function getCheckedCartItem() {
+    return loginInfo.cart.filter(
+      item => item.isChecked
+    ).map(item => {
+      delete item.isChecked;
+      return { ...item };
+    });
   }
 
   function removeFromCart(productId) {
@@ -201,6 +267,27 @@ export const UserStorageProvider = ({ children }) => {
     });
   }
 
+  function removeCheckedFromCart() {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === loginInfo.id) {
+          const newCart = user.cart.filter(
+            item => !item.isChecked
+          );
+          return { ...user, cart: newCart };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === loginInfo.id
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
   function isCartItemExist(productId) {
     return loginInfo.cart?.find(
       item => item.productId === productId
@@ -209,7 +296,7 @@ export const UserStorageProvider = ({ children }) => {
 
   return (
     <UserStorageContext.Provider
-      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist, addToCart, handleCartItemChange, getCartItem, removeFromCart, isCartItemExist }}
+      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist, addToCart, handleCartItemChange, getCartItem, removeFromCart, isCartItemExist, toggleCartItem, getCheckedCartItem, removeCheckedFromCart, toggleAllCartItem, isEveryCartItemChecked }}
     >
       {children}
     </UserStorageContext.Provider>

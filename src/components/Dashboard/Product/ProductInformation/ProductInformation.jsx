@@ -20,7 +20,7 @@ export default function ProductInformation({ product }) {
         <hr className="info__hr" />
         <div className="info__div">
           {product.currentMonthSold}+
-          <img src={shoppingCartIcon} alt="Rating icon" className="product__icon" />
+          <img src={shoppingCartIcon} alt="Shopping cart icon" className="product__icon" />
         </div>
         <hr className="info__hr" />
         <div className="info__div">

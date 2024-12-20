@@ -48,7 +48,7 @@ export default function OtpVerification() {
     <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn() || isStateNotExist()}>
       <div className="otp">
         <div className="otp__container">
-          <img src={pinIcon} alt="Password Icon" className="otp__icon" />
+          <img src={pinIcon} alt="Otp Icon" className="otp__icon" />
           <h2 className="otp__h2">Kode Verifikasi</h2>
           <p className="otp__p">Kami sudah mengirimkan kode verifikasi ke nomor yang Anda masukkan.</p>
           <ErrorBlockQuote message={errorMessage} />

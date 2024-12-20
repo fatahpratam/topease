@@ -47,7 +47,7 @@ export default function ChangePassword() {
     <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn() || isStateNotExist()}>
       <div className="password">
         <div className="password__container">
-          <img src={passwordIcon} alt="Smartphone Icon" className="password__icon" />
+          <img src={passwordIcon} alt="Password Icon" className="password__icon" />
           <h2 className="password__h2">Ganti Kata Sandi</h2>
           <p className="password__p">Masukkan password baru untuk akun Anda.</p>
           <ErrorBlockQuote message={errorMessage} />

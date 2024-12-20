@@ -1,10 +1,10 @@
 import './CartPopup.css';
 import { arrowForwardIcon } from "../../../../../assets/icons/index.js";
 import { Link } from "react-router-dom";
-import { products, paymentMethods } from "../../../../../data/index.js";
+import { products } from "../../../../../data/index.js";
 
 export default function CartPopup({ loginInfo, isLoggedIn }) {
-  const { length } = loginInfo.cart;
+  const length = loginInfo.cart?.length;
   return (
     <div className="keranjang">
       <div className="keranjang__container">
@@ -46,11 +46,9 @@ function CartItem({ cartItem }) {
   const nominalOption = product.nominalOptions.find(
     nominalOption => nominalOption.id === cartItem.nominalOptionId
   );
-  const paymentMethod = paymentMethods.find(
-    paymentMethod => paymentMethod.id === cartItem.paymentMethodId
-  );
-  const totalAdmin = nominalOption.adminAmount + paymentMethod.adminAmount;
-  const totalAmount = nominalOption.idrAmount + totalAdmin;
+  const totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
+    discountAmount = Math.floor((totalAmount) * product.discount / 100),
+    finalAmount = totalAmount - discountAmount;
   return (
     <li className="keranjang__li">
       <Link className="keranjang__link" to={`/dashboard/product/${product.id}`}>
@@ -59,7 +57,7 @@ function CartItem({ cartItem }) {
           <h3 className="keranjang__h3">{product.name}</h3>
           <p className="keranjang__p">{nominalOption.name}</p>
         </div>
-        <p className="keranjang__p keranjang__p-total">{currencyFormatter.format(totalAmount)}</p>
+        <p className="keranjang__p keranjang__p-total">{currencyFormatter.format(finalAmount)}</p>
       </Link>
     </li>
   )
