@@ -57,7 +57,7 @@ function CartList({ cart }) {
           className="select-all__button"
           onClick={removeCheckedFromCart}
         >
-          Hapus pilihan
+          Hapus keranjang
         </button>
       </div>
       <div className="cart-details__ul">

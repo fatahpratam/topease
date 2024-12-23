@@ -1,3 +1,17 @@
+.cart-payment {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+}
+
+.cart-payment__h2 {
+  line-height: 1;
+  color: var(--color-primary);
+}
+
 .cart-payment__method-section {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,10 @@
 /* || INFO SECTION */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .info__h2 {
   font-size: 2rem;
   color: var(--color-primary);

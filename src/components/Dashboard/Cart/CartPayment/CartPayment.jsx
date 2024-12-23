@@ -1,20 +1,28 @@
 import "./CartPayment.css";
 import { useState } from "react";
 import { paymentMethods } from "../../../../data/index.js";
+import { useUserStorage } from "../../../../contexts/index.js";
 
 export default function CartPayment() {
   const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
+  const { isLoggedIn } = useUserStorage();
 
   const handlePaymentId = (id) => {
     setPaymentMethodId(id);
   }
   return (
     <div className="cart-payment">
-      <PaymentMethodList
-        paymentMethodId={paymentMethodId}
-        paymentMethods={paymentMethods}
-        handlePaymentId={handlePaymentId}
-      />
+      <h2 className="cart-payment__h2">Metode Pembayaran</h2>
+      <p className="cart-details__p">Berikut adalah daftar metode pembayaran yang ada.</p>
+      {
+        !isLoggedIn()
+          ? <p>Anda harus Masuk untuk memilih metode pembayaran.</p>
+          : <PaymentMethodList
+            paymentMethodId={paymentMethodId}
+            paymentMethods={paymentMethods}
+            handlePaymentId={handlePaymentId}
+          />
+      }
     </div>
   )
 }

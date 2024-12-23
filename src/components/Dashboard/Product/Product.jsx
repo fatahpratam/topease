@@ -10,8 +10,12 @@ export default function Product() {
   const product = findBy(products, 'id', id);
   return (
     <div className="product">
-      <ProductInformation product={product} />
-      <ProductPayment product={product} />
+      <div className="product__container">
+        <ProductInformation product={product} />
+      </div>
+      <div className="product__container">
+        <ProductPayment product={product} />
+      </div>
     </div>
   )
 }

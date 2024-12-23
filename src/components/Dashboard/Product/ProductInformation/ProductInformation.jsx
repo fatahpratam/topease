@@ -4,7 +4,7 @@ import { starVariantIcon, shoppingCartIcon } from "../../../../assets/icons/inde
 
 export default function ProductInformation({ product }) {
   return (
-    <div className="product__container info">
+    <div className="info">
       <h2 className="info__h2">Top Up {product.name}</h2>
       <img src={product.imgUrl} alt={product.name} className="info__img" />
       <div className="info__column">

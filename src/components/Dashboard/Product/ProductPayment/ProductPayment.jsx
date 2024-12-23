@@ -88,7 +88,7 @@ export default function ProductPayment({ product }) {
 
   return (
     <form
-      className="product__container payment"
+      className="payment"
       onSubmit={handleSubmit}
       ref={formRef}
     >
