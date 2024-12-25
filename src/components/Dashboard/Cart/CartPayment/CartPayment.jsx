@@ -1,28 +1,46 @@
 import "./CartPayment.css";
 import { useState } from "react";
-import { paymentMethods } from "../../../../data/index.js";
+import { products, paymentMethods } from "../../../../data/index.js";
 import { useUserStorage } from "../../../../contexts/index.js";
+import { infoIcon } from "../../../../assets/icons/index.js";
+import { findNestedBy, findBy } from "../../../../utils/index.js";
 
 export default function CartPayment() {
-  const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id);
-  const { isLoggedIn } = useUserStorage();
+  const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id),
+    { isLoggedIn, getCheckedCartItem } = useUserStorage(),
+    checkedCartItem = isLoggedIn() && getCheckedCartItem();
 
   const handlePaymentId = (id) => {
     setPaymentMethodId(id);
   }
   return (
     <div className="cart-payment">
-      <h2 className="cart-payment__h2">Metode Pembayaran</h2>
-      <p className="cart-details__p">Berikut adalah daftar metode pembayaran yang ada.</p>
-      {
-        !isLoggedIn()
-          ? <p>Anda harus Masuk untuk memilih metode pembayaran.</p>
-          : <PaymentMethodList
-            paymentMethodId={paymentMethodId}
-            paymentMethods={paymentMethods}
-            handlePaymentId={handlePaymentId}
-          />
-      }
+      <div className="cart-payment__container">
+        <h2 className="cart-payment__h2">Metode Pembayaran</h2>
+        <p>Berikut adalah daftar metode pembayaran yang ada.</p>
+        {
+          !isLoggedIn()
+            ? <p>Anda harus Masuk untuk memilih metode pembayaran.</p>
+            : <PaymentMethodList
+              paymentMethodId={paymentMethodId}
+              paymentMethods={paymentMethods}
+              handlePaymentId={handlePaymentId}
+            />
+        }
+      </div>
+      <div className="cart-payment__container">
+        <h2 className="cart-payment__h2">Konfirmasi Pembayaran</h2>
+        {
+          !isLoggedIn()
+            ? <p>Anda harus Masuk untuk melakukan pembelian.</p>
+            : checkedCartItem.length === 0
+              ? <p>Anda harus memilih minimal satu keranjang.</p>
+              : <PaymentConfirmation
+                cart={checkedCartItem}
+                paymentMethod={findNestedBy(paymentMethods, 'subMethods', 'id', paymentMethodId)}
+              />
+        }
+      </div>
     </div>
   )
 }
@@ -91,5 +109,56 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
         </div>
       </label>
     </div>
+  )
+}
+
+function PaymentConfirmation({ cart, paymentMethod }) {
+  const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
+  const cartTotalAmount = cart.reduce((prev, curr) => {
+    const product = findBy(products, 'id', curr.productId),
+      nominalOption = findBy(product.nominalOptions, 'id', curr.nominalOptionId),
+      totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
+      discountAmount = Math.floor((totalAmount) * product.discount / 100),
+      finalAmount = totalAmount - discountAmount;
+    return prev + finalAmount;
+  }, 0);
+  const finalAmount = cartTotalAmount + paymentMethod.adminAmount;
+
+  const handleOnSubmit = e => {
+    e.preventDefault();
+    console.log('Final amount: ', finalAmount);
+  };
+
+  return (
+    <form className="cart-payment__confirm-section" onSubmit={handleOnSubmit}>
+      <p className="cart-payment__confirm-p">
+        Jumlah produk yang dibeli
+        <span className="cart-payment__confirm-span">{cart.length}</span>
+      </p>
+      <p className="cart-payment__confirm-p">
+        Metode pembayaran
+        <span className="cart-payment__confirm-span">{paymentMethod.name}</span>
+      </p>
+      <p className="cart-payment__confirm-p">
+        Harga awal
+        <span className="cart-payment__confirm-span">{currencyFormatter.format(cartTotalAmount)}</span>
+      </p>
+      <p className="cart-payment__confirm-p">
+        Biaya admin metode pembayaran
+        <span className="cart-payment__confirm-span">{currencyFormatter.format(paymentMethod.adminAmount)}</span>
+      </p>
+      <hr />
+      <p className="cart-payment__confirm-p">
+        <strong>Total Tagihan</strong>
+        <span className="cart-payment__confirm-span">{currencyFormatter.format(finalAmount)}</span>
+      </p>
+      <blockquote className="cart-payment__blockquote">
+        <img src={infoIcon} alt="Info icon" className="cart-payment__icon" />
+        Pastikan pesanan kamu sudah benar sebelum melanjutkan pesanan.
+      </blockquote>
+      <button className="cart-payment__confirm-button" type='submit'>
+        Beli
+      </button>
+    </form>
   )
 }

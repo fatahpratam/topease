@@ -240,10 +240,7 @@ export const UserStorageProvider = ({ children }) => {
   function getCheckedCartItem() {
     return loginInfo.cart.filter(
       item => item.isChecked
-    ).map(item => {
-      delete item.isChecked;
-      return { ...item };
-    });
+    );
   }
 
   function removeFromCart(productId) {
