@@ -6,7 +6,8 @@ import { infoIcon } from "../../../../assets/icons/index.js";
 import { findNestedBy, findBy } from "../../../../utils/index.js";
 
 export default function CartPayment() {
-  const [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id),
+  const
+    [paymentMethodId, setPaymentMethodId] = useState(paymentMethods[0].id),
     { isLoggedIn, getCheckedCartItem } = useUserStorage(),
     checkedCartItem = isLoggedIn() && getCheckedCartItem();
 

@@ -1,5 +1,5 @@
 import './ProductPayment.css';
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { findBy } from "../../../../utils/index.js";
@@ -23,8 +23,7 @@ export default function ProductPayment({ product }) {
       }
     });
 
-  const formRef = useRef(),
-    navigate = useNavigate(),
+  const navigate = useNavigate(),
     doesCartItemExist = isCartItemExist(product.id),
     nominalOptionId = getValueOf('nominalOptionId'),
     nominalOption = findBy(product.nominalOptions, 'id', nominalOptionId) || product.nominalOptions[0];
@@ -90,7 +89,6 @@ export default function ProductPayment({ product }) {
     <form
       className="payment"
       onSubmit={handleSubmit}
-      ref={formRef}
     >
       <section className="payment__section">
         <h3 className="payment__h3">Masukkan Informasi Akun</h3>
@@ -180,7 +178,8 @@ function NominalOptionList({ nominalOptionId, nominalOptions, handleNominalId })
 }
 
 function PaymentConfirmation({ nominalOption, isCartItemExist, isLoggedIn, discount }) {
-  const numberFormatter = Intl.NumberFormat('id-ID'),
+  const
+    numberFormatter = Intl.NumberFormat('id-ID'),
     currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
     totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
     discountAmount = Math.floor((totalAmount) * discount / 100),
