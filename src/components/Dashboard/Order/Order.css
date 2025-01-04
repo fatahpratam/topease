@@ -1,0 +1,12 @@
+.order {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4rem;
+  padding: 2rem;
+  color: var(--color-on-surface);
+}
+
+.order__container {
+  flex-basis: min(32rem, 100%);
+}

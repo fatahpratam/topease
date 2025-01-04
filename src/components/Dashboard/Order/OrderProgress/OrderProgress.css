@@ -1,0 +1,72 @@
+.order-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 2rem 3rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+}
+
+.order-progress__h2 {
+  color: var(--color-primary);
+}
+
+.order-progress__icon {
+  width: 1.25rem;
+}
+
+/* || WAITING-PAYMENT SECTION */
+.waiting-payment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.waiting-payment__p {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.waiting-payment__span {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.waiting-payment__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.waiting-payment__img {
+  width: 16rem;
+}
+
+.waiting-payment__link {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.waiting-payment__link:is(:hover, :focus) {
+  text-decoration: underline;
+}
+
+.waiting-payment__button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+}
+
+/* || PROCESSING-ORDER SECTION */
+
+/* || FINISH-TRANSACTION SECTION */

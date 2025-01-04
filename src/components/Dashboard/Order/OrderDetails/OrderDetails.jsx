@@ -6,9 +6,20 @@ import dayjs from 'dayjs';
 
 export default function OrderDetails({ order }) {
   const
+    currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
     { loginInfo } = useUserStorage(),
     paymentMethod = findNestedBy(paymentMethods, 'subMethods', 'id', order.paymentMethodId),
-    date = dayjs(order.date);
+    date = dayjs(order.orderDate),
+    cartTotalAmount = order.cart.reduce((prev, curr) => {
+      const
+        product = findBy(products, 'id', curr.productId),
+        nominalOption = findBy(product.nominalOptions, 'id', curr.nominalOptionId),
+        totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
+        discountAmount = Math.floor((totalAmount) * product.discount / 100),
+        finalAmount = totalAmount - discountAmount;
+      return prev + finalAmount;
+    }, 0),
+    finalAmount = cartTotalAmount + paymentMethod.adminAmount;
 
   return (
     <div className="order-details">
@@ -29,7 +40,7 @@ export default function OrderDetails({ order }) {
       </p>
       <p className="order-details__p">
         Total tagihan
-        <span className="order-details__span">{paymentMethod.name}</span>
+        <span className="order-details__span">{currencyFormatter.format(finalAmount)}</span>
       </p>
       <p className="order-details__p">
         Status pembayaran
@@ -37,7 +48,7 @@ export default function OrderDetails({ order }) {
       </p>
       <p className="order-details__p">
         Status pesanan
-        <span className="order-details__span">{order.orderStatus}</span>
+        <span className="order-details__span">Menunggu pembayaran</span>
       </p>
       <p className="order-details__p">
         Waktu pesanan
@@ -59,20 +70,20 @@ function ProductList({ cart }) {
 
 function ProductItem({ item }) {
   const
-    numberFormatter = Intl.NumberFormat('id-ID'),
+    currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
     product = findBy(products, 'id', item.productId),
     nominalOption = findBy(product.nominalOptions, 'id', item.nominalOptionId),
     totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
-    discountAmount = Math.floor((totalAmount) * discount / 100),
+    discountAmount = Math.floor((totalAmount) * product.discount / 100),
     finalAmount = totalAmount - discountAmount;
 
   return (
     <li className="order-details__li">
       <img src={product.imgUrl} alt={product.name} className="order-details__icon" />
       <p>{product.name}</p>
-      <div className="order-detail__sub-container">
-        <p>{nominalOption.name}</p>
-        <p>{numberFormatter.format(finalAmount)}</p>
+      <div className="order-details__sub-container">
+        <span className="order-details__span">{nominalOption.name}</span>
+        <p>{currencyFormatter.format(finalAmount)}</p>
       </div>
     </li>
   )

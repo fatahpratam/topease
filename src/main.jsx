@@ -2,7 +2,7 @@ import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
-import { Dashboard, Home, Login, Product, Category, Register, ForgetPassword, ChangePassword, Cart } from './components/index.js';
+import { Dashboard, Home, Login, Product, Category, Register, ForgetPassword, ChangePassword, Cart, Order } from './components/index.js';
 import { NotFound, OtpVerification } from "./components/Utilities/index.js";
 import { UserStorageProvider } from "./contexts/index.js";
 
@@ -25,6 +25,10 @@ const router = createBrowserRouter(
         <Route path='category'>
           <Route index element={<Navigate to='../home' />} />
           <Route path=':category' element={<Category />} />
+        </Route>
+        <Route path='order'>
+          <Route index element={<Navigate to='../home' />} />
+          <Route path=':id' element={<Order />} />
         </Route>
         <Route path='cart' element={<Cart />} />
         {/* <Route path='*' element={<NotFound />} /> */}

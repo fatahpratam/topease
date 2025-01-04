@@ -101,7 +101,7 @@ export default function ProductPayment({ product }) {
       <section className="payment__section">
         <h3 className="payment__h3">Pilih Nominal</h3>
         <blockquote className="payment__blockquote">
-          <img src={infoIcon} alt="Info icon" className="product__icon" />
+          <img src={infoIcon} alt="Ikon info" className="product__icon" />
           Harga tertera sudah termasuk biaya admin dan biaya tambahan lainnya.
         </blockquote>
         <NominalOptionList
@@ -213,7 +213,7 @@ function PaymentConfirmation({ nominalOption, isCartItemExist, isLoggedIn, disco
         <span className="payment__confirm-span">{currencyFormatter.format(finalAmount)}</span>
       </p>
       <blockquote className="payment__blockquote">
-        <img src={infoIcon} alt="Info icon" className="product__icon" />
+        <img src={infoIcon} alt="Ikon info" className="product__icon" />
         Pastikan pesanan kamu sudah benar sebelum melanjutkan pesanan.
       </blockquote>
       <button className="payment__confirm-button" type='submit'>

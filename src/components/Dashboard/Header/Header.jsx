@@ -72,7 +72,7 @@ export default function Header() {
           <button className="header__button" onClick={handleSearchPopup}>
             <img
               src={searchIcon}
-              alt="Search icon"
+              alt="Ikon pencarian"
               className='header__button-icon'
             />
             <p className='header__button-text'>Cari</p>
@@ -84,7 +84,7 @@ export default function Header() {
         >
           <img
             src={shoppingCartVariantIcon}
-            alt="Shopping cart icon"
+            alt="Icon keranjang"
             className='header__button-icon'
           />
           <p className='header__button-text'>Keranjang</p>
@@ -96,7 +96,7 @@ export default function Header() {
         >
           <img
             src={notificationIcon}
-            alt="Notification icon"
+            alt="Ikon notifikasi"
             className='header__button-icon'
           />
           <p className='header__button-text'>Notifikasi</p>

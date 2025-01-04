@@ -14,7 +14,7 @@ export function useOrder() {
     const order = getOrder(orderId);
     useEffect(() => {
       const intervalId = setInterval(() => {
-        const countdown = getCountdown(order.date);
+        const countdown = getCountdown(order.expiredDate);
         if (countdown === '0j 0m 0s') {
           clearInterval(intervalId);
           setOrders(prev => {
@@ -44,21 +44,26 @@ export function useOrder() {
   }
 
   function addOrder(userId, paymentMethodId, cart) {
-    const date = dayjs().format();
+    const
+      orderDate = dayjs().format(),
+      expiredDate = dayjs().add(1, 'day').format(),
+      orderId = Date.now().toString();
     setOrders(prev => {
-      const newOrders = [...prev].unshift({
-        orderId: crypto.randomUUID(),
+      const newOrders = [{
+        orderId: orderId,
         userId,
         paymentMethodId,
-        date,
+        orderDate,
+        expiredDate,
         paymentStatus: 'Menunggu pembayaran',
         cart: cart.map(cartItem => ({ ...cartItem, orderStatus: 'Menunggu pembayaran' })),
         cancelled: false,
         expired: false
-      });
+      }, ...prev];
       localStorage.setItem('order', JSON.stringify(newOrders));
       return newOrders;
     });
+    return orderId;
   }
 
   function updateOrder(orderId, property, value) {

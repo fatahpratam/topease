@@ -11,7 +11,7 @@ export default function CartPopup({ loginInfo, isLoggedIn }) {
         <h2>
           <Link className="keranjang__h2" to={'/dashboard/cart'}>
             Keranjang {length > 0 ? `(${length})` : ''}
-            <img src={arrowForwardIcon} alt="Arrow forward icon" className="keranjang__icon" />
+            <img src={arrowForwardIcon} alt="Ikon panah maju" className="keranjang__icon" />
           </Link>
         </h2>
         {

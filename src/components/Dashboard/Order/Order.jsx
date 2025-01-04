@@ -7,13 +7,14 @@ import { useUserStorage } from "../../../contexts/index.js";
 import { ProtectedRoute } from "../../Utilities/index.js";
 
 export default function Order() {
-  const { id } = useParams(),
+  const
+    { id } = useParams(),
     { isLoggedIn, loginInfo } = useUserStorage(),
     { getOrder } = useOrder(),
     order = getOrder(id);
 
   return (
-    <ProtectedRoute condition={isLoggedIn() && loginInfo.id === order.userId} to={'/dashboard/home'}>
+    <ProtectedRoute condition={!isLoggedIn() && loginInfo.id !== order.userId} to={'/dashboard/home'}>
       <div className="order">
         <div className="order__container">
           <OrderProgress order={order} />

@@ -25,7 +25,7 @@ function ProductCard({ id, name, rating, imgUrl, discount, currentMonthSold }) {
     if (discount !== 0)
       return <span className="category__span category__span--discount">
         {discount}%
-        <img src={sellIcon} alt="Sell icon" className="category__icon" loading='lazy' />
+        <img src={sellIcon} alt="Ikon penjualan" className="category__icon" loading='lazy' />
       </span>
   }
   return (
@@ -36,13 +36,13 @@ function ProductCard({ id, name, rating, imgUrl, discount, currentMonthSold }) {
         <p className="category__tag">
           <span className="category__span category__span--rating">
             {rating.star}
-            <img src={starIcon} alt="Star icon" className="category__icon" />
+            <img src={starIcon} alt="Ikon bintang" className="category__icon" />
           </span>
           {isDiscount()}
         </p>
         <hr />
         <p className="category__p">
-          <img src={shoppingCartIcon} alt="Shopping cart icon" className="category__icon" />
+          <img src={shoppingCartIcon} alt="Ikon keranjang" className="category__icon" />
           Terjual {currentMonthSold}+
         </p>
       </Link>

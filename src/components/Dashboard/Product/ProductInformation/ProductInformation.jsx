@@ -10,7 +10,7 @@ export default function ProductInformation({ product }) {
       <div className="info__column">
         <div className="info__div">
           {product.rating.star}
-          <img src={starVariantIcon} alt="Rating icon" className="product__icon" />
+          <img src={starVariantIcon} alt="Ikon bintang" className="product__icon" />
         </div>
         <hr className="info__hr" />
         <div className="info__div">
@@ -20,7 +20,7 @@ export default function ProductInformation({ product }) {
         <hr className="info__hr" />
         <div className="info__div">
           {product.currentMonthSold}+
-          <img src={shoppingCartIcon} alt="Shopping cart icon" className="product__icon" />
+          <img src={shoppingCartIcon} alt="Ikon keranjang" className="product__icon" />
         </div>
         <hr className="info__hr" />
         <div className="info__div">

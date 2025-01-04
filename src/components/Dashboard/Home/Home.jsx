@@ -79,7 +79,7 @@ function ProductItem({ id, name, rating, imgUrl, discount, sold }) {
     if (discount !== 0)
       return <span className="home__span home__span--discount">
         {discount}%
-        <img src={sellIcon} alt="Sell icon" className="home__icon" loading="lazy" />
+        <img src={sellIcon} alt="Ikon penjualan" className="home__icon" loading="lazy" />
       </span>
   }
   return (
@@ -90,13 +90,13 @@ function ProductItem({ id, name, rating, imgUrl, discount, sold }) {
         <p className="home__tag">
           <span className="home__span home__span--rating">
             {rating.star}
-            <img src={starIcon} alt="Star icon" className="home__icon" />
+            <img src={starIcon} alt="Ikon bintang" className="home__icon" />
           </span>
           {isDiscount()}
         </p>
         <hr />
         <p className="home__p">
-          <img src={shoppingCartIcon} alt="Shopping cart icon" className="home__icon" />
+          <img src={shoppingCartIcon} alt="Ikon keranjang" className="home__icon" />
           Terjual {sold}+
         </p>
       </Link>

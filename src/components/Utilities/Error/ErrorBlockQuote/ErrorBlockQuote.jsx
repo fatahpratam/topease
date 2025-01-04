@@ -8,7 +8,7 @@ export default function ErrorBlockQuote({ message }) {
     <blockquote className="error-blockquote">
       <img
         src={infoErrorVariant}
-        alt="Info icon"
+        alt="Ikon info"
         className='error-blockquote__img'
       />
       {message}

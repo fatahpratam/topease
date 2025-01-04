@@ -1,9 +1,11 @@
 import "./CartPayment.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { products, paymentMethods } from "../../../../data/index.js";
 import { useUserStorage } from "../../../../contexts/index.js";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { findNestedBy, findBy } from "../../../../utils/index.js";
+import { useOrder } from "../../../../hooks/index.js";
 
 export default function CartPayment() {
   const
@@ -114,20 +116,27 @@ function PaymentMethodItem({ paymentMethod, currencyFormatter, handlePaymentId, 
 }
 
 function PaymentConfirmation({ cart, paymentMethod }) {
-  const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
-  const cartTotalAmount = cart.reduce((prev, curr) => {
-    const product = findBy(products, 'id', curr.productId),
-      nominalOption = findBy(product.nominalOptions, 'id', curr.nominalOptionId),
-      totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
-      discountAmount = Math.floor((totalAmount) * product.discount / 100),
-      finalAmount = totalAmount - discountAmount;
-    return prev + finalAmount;
-  }, 0);
-  const finalAmount = cartTotalAmount + paymentMethod.adminAmount;
+  const
+    currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
+    cartTotalAmount = cart.reduce((prev, curr) => {
+      const
+        product = findBy(products, 'id', curr.productId),
+        nominalOption = findBy(product.nominalOptions, 'id', curr.nominalOptionId),
+        totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
+        discountAmount = Math.floor((totalAmount) * product.discount / 100),
+        finalAmount = totalAmount - discountAmount;
+      return prev + finalAmount;
+    }, 0),
+    finalAmount = cartTotalAmount + paymentMethod.adminAmount,
+    { loginInfo, getCheckedCartItem, removeCheckedFromCart } = useUserStorage(),
+    { addOrder } = useOrder(),
+    navigate = useNavigate();
 
   const handleOnSubmit = e => {
     e.preventDefault();
-    console.log('Final amount: ', finalAmount);
+    const orderId = addOrder(loginInfo.id, paymentMethod.id, getCheckedCartItem());
+    removeCheckedFromCart();
+    navigate(`/dashboard/order/${orderId}`);
   };
 
   return (
@@ -154,7 +163,7 @@ function PaymentConfirmation({ cart, paymentMethod }) {
         <span className="cart-payment__confirm-span">{currencyFormatter.format(finalAmount)}</span>
       </p>
       <blockquote className="cart-payment__blockquote">
-        <img src={infoIcon} alt="Info icon" className="cart-payment__icon" />
+        <img src={infoIcon} alt="Ikon info" className="cart-payment__icon" />
         Pastikan pesanan kamu sudah benar sebelum melanjutkan pesanan.
       </blockquote>
       <button className="cart-payment__confirm-button" type='submit'>

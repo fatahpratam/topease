@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { products } from "../../../../data/index.js";
 import { useUserStorage } from "../../../../contexts/index.js";
-import { findNestedBy } from "../../../../utils/index.js";
 
 export default function CartDetails() {
   const { loginInfo, isLoggedIn } = useUserStorage();
@@ -86,7 +85,8 @@ function CartItem({ cartItem, toggleCartItem }) {
   const nominalOption = product.nominalOptions.find(
     nominalOption => nominalOption.id === cartItem.nominalOptionId
   );
-  const totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
+  const
+    totalAmount = nominalOption.idrAmount + nominalOption.adminAmount,
     discountAmount = Math.floor((totalAmount) * product.discount / 100),
     finalAmount = totalAmount - discountAmount;
   return (

@@ -25,7 +25,7 @@ export default function ForgetPassword() {
     <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn()}>
       <div className="forget">
         <div className="forget__container">
-          <img src={smartphoneVariantIcon} alt="Smartphone Icon" className="forget__icon" />
+          <img src={smartphoneVariantIcon} alt="Ikon smartphone" className="forget__icon" />
           <h2 className="forget__h2">Lupa Kata Sandi</h2>
           <p className="forget__p">Masukkan nomor WhatsApp yang terkait dengan akun Anda.</p>
           <ErrorBlockQuote message={errorMessage} />
