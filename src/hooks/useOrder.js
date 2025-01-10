@@ -47,7 +47,12 @@ export function useOrder() {
     const
       orderDate = dayjs().format(),
       expiredDate = dayjs().add(1, 'day').format(),
-      orderId = Date.now().toString();
+      orderId = Date.now().toString(),
+      newCart = cart.map(cartItem => {
+        const { isChecked: _, ...newCartItem } = cartItem;
+        return { ...newCartItem, orderStatus: 'Menunggu pembayaran' };
+      });
+
     setOrders(prev => {
       const newOrders = [{
         orderId: orderId,
@@ -56,7 +61,7 @@ export function useOrder() {
         orderDate,
         expiredDate,
         paymentStatus: 'Menunggu pembayaran',
-        cart: cart.map(cartItem => ({ ...cartItem, orderStatus: 'Menunggu pembayaran' })),
+        cart: newCart,
         cancelled: false,
         expired: false
       }, ...prev];
@@ -105,12 +110,11 @@ export function useOrder() {
       localStorage.setItem('order', JSON.stringify(newOrders));
       return newOrders;
     });
-    simulateAction(orderId, 'order');
   }
 
   function clearIntervalId() {
     clearInterval(intervalId);
-    setIntervalId(null);
+    setIntervalId(0);
   }
 
   function simulateAction(orderId, action) {
@@ -120,6 +124,7 @@ export function useOrder() {
         ? 'Dibatalkan'
         : '';
     clearIntervalId();
+
     useEffect(() => {
       const intervalId = setInterval(() => {
         setOrders(prev => {
