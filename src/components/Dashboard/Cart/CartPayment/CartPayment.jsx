@@ -5,7 +5,7 @@ import { products, paymentMethods } from "../../../../data/index.js";
 import { useUserStorage } from "../../../../contexts/index.js";
 import { infoIcon } from "../../../../assets/icons/index.js";
 import { findNestedBy, findBy } from "../../../../utils/index.js";
-import { useOrder } from "../../../../hooks/index.js";
+import { useOrder } from "../../../../contexts/index.js";
 
 export default function CartPayment() {
   const

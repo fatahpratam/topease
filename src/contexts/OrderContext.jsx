@@ -1,14 +1,25 @@
 import dayjs from "dayjs";
-import { useState, useEffect } from "react";
-import { useCountdown } from "../hooks/index.js";
+import { useContext, createContext, useState, useEffect } from "react";
 
-export function useOrder() {
-  const [orders, setOrders] = useState(
-    JSON.parse(localStorage.getItem('order')) || []
-  );
-  const [intervalId, setIntervalId] = useState(0);
+const OrderContext = createContext({
+  startCountdown: (orderId) => { },
+  addOrder: (userId, paymentMethodId, cart) => { },
+  updateOrder: (orderId) => { },
+  getOrder: () => { },
+  filterOrderBy: (property, value) => { },
+  countdown: '--j --m --s',
+  checkPaymentStatus: (orderId) => { },
+  getOrderStatus: (orderId) => { },
+  simulateAction: (orderId, action) => { }
+});
 
-  const [countdown, setCountdown] = useState('--j --m --s');
+export const OrderStorageProvider = ({ children }) => {
+  const
+    [countdown, setCountdown] = useState('--j --m --s'),
+    [intervalId, setIntervalId] = useState(0),
+    [orders, setOrders] = useState(
+      JSON.parse(localStorage.getItem('order')) || []
+    )
 
   function startCountdown(orderId) {
     const order = getOrder(orderId);
@@ -85,9 +96,10 @@ export function useOrder() {
   }
 
   function getOrder(orderId) {
-    return orders.find(
+    const order = orders.find(
       order => order.orderId === orderId
     );
+    return { ...order };
   }
 
   function filterOrderBy(property, value) {
@@ -112,48 +124,6 @@ export function useOrder() {
     });
   }
 
-  function clearIntervalId() {
-    clearInterval(intervalId);
-    setIntervalId(0);
-  }
-
-  function simulateAction(orderId, action) {
-    const orderStatus = action === 'order'
-      ? 'Terkirim'
-      : action === 'cancel'
-        ? 'Dibatalkan'
-        : '';
-    clearIntervalId();
-
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        setOrders(prev => {
-          let modified = false;
-          const newOrders = prev.map(order => {
-            if (order.orderId === orderId) {
-              const newCart = order.cart.map(cartItem => {
-                if (cartItem.orderStatus !== orderStatus && !modified) {
-                  modified = true;
-                  return { ...cartItem, orderStatus: orderStatus };
-                }
-                return { ...cartItem };
-              });
-              return { ...order, cart: newCart };
-            }
-            return { ...order };
-          });
-          if (!modified)
-            clearIntervalId();
-          localStorage.setItem('order', JSON.stringify(newOrders));
-          return newOrders;
-        });
-      }, 2000);
-      setIntervalId(intervalId);
-
-      return () => clearIntervalId();
-    }, []);
-  }
-
   function getOrderStatus(orderId) {
     const order = getOrder(orderId);
     const { cart } = order;
@@ -173,10 +143,57 @@ export function useOrder() {
           : 'Dalam pemrosesan';
   }
 
-  return {
+  function simulateAction(orderId, action) {
+    const orderStatus = action === 'order'
+      ? 'Terkirim'
+      : action === 'cancel'
+        ? 'Dibatalkan'
+        : '';
+    clearIntervalId();
+
+    useEffect(() => {
+      const newIntervalId = setInterval(() => {
+        setOrders((prev) => {
+          let modified = false;
+          const newOrders = prev.map((order) => {
+            if (order.orderId === orderId) {
+              const newCart = order.cart.map((cartItem) => {
+                if (cartItem.orderStatus !== orderStatus && !modified) {
+                  modified = true;
+                  return { ...cartItem, orderStatus };
+                }
+                return { ...cartItem };
+              });
+              return { ...order, cart: newCart };
+            }
+            return { ...order };
+          });
+          if (!modified) clearIntervalId();
+          localStorage.setItem('order', JSON.stringify(newOrders));
+          return newOrders;
+        });
+      }, 2000);
+      setIntervalId(newIntervalId);
+
+      return () => clearIntervalId();
+    }, []);
+  }
+
+  function clearIntervalId() {
+    clearInterval(intervalId);
+    setIntervalId(0);
+  }
+
+  return (<OrderContext.Provider value={{
     addOrder, updateOrder, getOrder, filterOrderBy, countdown,
-    startCountdown, checkPaymentStatus, simulateAction, getOrderStatus
-  };
+    startCountdown, checkPaymentStatus, getOrderStatus, simulateAction
+  }}>
+    {children}
+  </OrderContext.Provider>)
+}
+
+export function useOrder() {
+  return useContext(OrderContext);
 }
 
 function getCountdown(dateFormat) {

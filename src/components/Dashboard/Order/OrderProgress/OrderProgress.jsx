@@ -1,9 +1,9 @@
 import './OrderProgress.css';
 import dayjs from 'dayjs';
 import { scheduleIcon, downloadIcon } from "../../../../assets/icons/index.js";
-import { useOrder } from "../../../../hooks/index.js";
 import { products } from "../../../../data/index.js";
 import { findBy } from "../../../../utils/index.js";
+import { useOrder } from "../../../../contexts/index.js";
 
 export default function OrderProgress({ order }) {
 
@@ -41,7 +41,7 @@ function WaitingPayment({ order }) {
       <div className="waiting-payment__container">
         <p>Scan QR kode dengan aplikasi pembayaranmu</p>
         <img
-          src="https://via.placeholder.com/150?text=QR+Code"
+          src="https://via.assets.so/img.jpg?w=300&h=300&t=QR+Code"
           alt="Kode QR"
           className="waiting-payment__img"
         />
