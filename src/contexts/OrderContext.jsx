@@ -10,48 +10,58 @@ const OrderContext = createContext({
   countdown: '--j --m --s',
   checkPaymentStatus: (orderId) => { },
   getOrderStatus: (orderId) => { },
-  simulateAction: (orderId, action) => { }
+  simulateOrder: (orderId, action) => { },
+  mountAction: (orderId) => { },
+  unmountAction: () => { }
 });
 
 export const OrderStorageProvider = ({ children }) => {
   const
     [countdown, setCountdown] = useState('--j --m --s'),
-    [intervalId, setIntervalId] = useState(0),
+    [actionIntervalId, setActionIntervalId] = useState(0),
+    [countdownIntervalId, setCountdownIntervalId] = useState(0),
     [orders, setOrders] = useState(
       JSON.parse(localStorage.getItem('order')) || []
-    )
+    );
 
   function startCountdown(orderId) {
     const order = getOrder(orderId);
     useEffect(() => {
-      const intervalId = setInterval(() => {
-        const countdown = getCountdown(order.expiredDate);
-        if (countdown === '0j 0m 0s') {
-          clearInterval(intervalId);
-          setOrders(prev => {
-            const newOrders = prev.map(order => {
-              if (order.orderId === orderId) {
-                const newCart = order.cart.map(
-                  cartItem => ({ ...cartItem, orderStatus: 'Jatuh tempo' })
-                );
-                return {
-                  ...order,
-                  cart: newCart,
-                  paymentStatus: 'Jatuh tempo',
-                  expired: true
-                };
-              }
-              return { ...order };
+      let intervalId = 0;
+      if (order.paymentStatus === 'Menunggu pembayaran') {
+        intervalId = setInterval(() => {
+          const countdown = getCountdown(order.expiredDate);
+          if (countdown === '0j 0m 0s') {
+            clearInterval(intervalId);
+            setOrders(prev => {
+              const newOrders = prev.map(order => {
+                if (order.orderId === orderId) {
+                  const newCart = order.cart.map(
+                    cartItem => ({ ...cartItem, orderStatus: 'Jatuh tempo' })
+                  );
+                  return {
+                    ...order,
+                    cart: newCart,
+                    paymentStatus: 'Jatuh tempo',
+                    expired: true
+                  };
+                }
+                return { ...order };
+              });
+              localStorage.setItem('order', JSON.stringify(newOrders));
+              return newOrders;
             });
-            localStorage.setItem('order', JSON.stringify(newOrders));
-            return newOrders;
-          });
-        }
-        setCountdown(countdown);
-      }, 1000);
+          }
+          setCountdown(countdown);
+        }, 1000);
+        setCountdownIntervalId(prev => {
+          clearInterval(prev);
+          return intervalId;
+        });
+      }
 
       return () => clearInterval(intervalId);
-    }, [orderId]);
+    }, []);
   }
 
   function addOrder(userId, paymentMethodId, cart) {
@@ -120,6 +130,8 @@ export const OrderStorageProvider = ({ children }) => {
         return { ...order };
       });
       localStorage.setItem('order', JSON.stringify(newOrders));
+      clearInterval(countdownIntervalId);
+      setCountdown('--j --m --s');
       return newOrders;
     });
   }
@@ -143,50 +155,55 @@ export const OrderStorageProvider = ({ children }) => {
           : 'Dalam pemrosesan';
   }
 
-  function simulateAction(orderId, action) {
-    const orderStatus = action === 'order'
-      ? 'Terkirim'
-      : action === 'cancel'
-        ? 'Dibatalkan'
-        : '';
-    clearIntervalId();
-
-    useEffect(() => {
-      const newIntervalId = setInterval(() => {
-        setOrders((prev) => {
-          let modified = false;
-          const newOrders = prev.map((order) => {
-            if (order.orderId === orderId) {
-              const newCart = order.cart.map((cartItem) => {
-                if (cartItem.orderStatus !== orderStatus && !modified) {
-                  modified = true;
-                  return { ...cartItem, orderStatus };
-                }
-                return { ...cartItem };
-              });
-              return { ...order, cart: newCart };
-            }
-            return { ...order };
-          });
-          if (!modified) clearIntervalId();
-          localStorage.setItem('order', JSON.stringify(newOrders));
-          return newOrders;
+  function simulateOrder(orderId) {
+    const newIntervalId = setInterval(() => {
+      setOrders((prev) => {
+        let modified = false;
+        const newOrders = prev.map((order) => {
+          if (order.orderId === orderId) {
+            const newCart = order.cart.map((cartItem) => {
+              if (cartItem.orderStatus !== 'Terkirim' && !modified) {
+                modified = true;
+                return { ...cartItem, orderStatus: 'Terkirim' };
+              }
+              return { ...cartItem };
+            });
+            return { ...order, cart: newCart };
+          }
+          return { ...order };
         });
-      }, 2000);
-      setIntervalId(newIntervalId);
+        if (!modified) clearInterval(newIntervalId);
+        localStorage.setItem('order', JSON.stringify(newOrders));
+        return newOrders;
+      });
+    }, 2000);
+    setActionIntervalId(prev => {
+      clearInterval(prev);
+      return newIntervalId;
+    });
+  }
 
-      return () => clearIntervalId();
+  function mountAction(orderId) {
+    useEffect(() => {
+      const order = getOrder(orderId);
+      if (order.paymentStatus === 'Lunas' && getOrderStatus(orderId) !== 'Semua terkirim') {
+        simulateOrder(orderId);
+      }
     }, []);
   }
 
-  function clearIntervalId() {
-    clearInterval(intervalId);
-    setIntervalId(0);
+  function unmountAction() {
+    useEffect(() => {
+      return () => {
+        clearInterval(actionIntervalId);
+      };
+    }, [actionIntervalId]);
   }
 
   return (<OrderContext.Provider value={{
     addOrder, updateOrder, getOrder, filterOrderBy, countdown,
-    startCountdown, checkPaymentStatus, getOrderStatus, simulateAction
+    startCountdown, checkPaymentStatus, getOrderStatus, simulateOrder,
+    mountAction, unmountAction
   }}>
     {children}
   </OrderContext.Provider>)

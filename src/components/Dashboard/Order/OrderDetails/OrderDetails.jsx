@@ -1,13 +1,14 @@
 import './OrderDetails.css';
 import { findBy, findNestedBy } from "../../../../utils/index.js";
 import { products, paymentMethods } from "../../../../data/index.js";
-import { useUserStorage } from "../../../../contexts/index.js";
+import { useUserStorage, useOrder } from "../../../../contexts/index.js";
 import dayjs from 'dayjs';
 
 export default function OrderDetails({ order }) {
   const
     currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
     { loginInfo } = useUserStorage(),
+    { getOrderStatus } = useOrder(),
     paymentMethod = findNestedBy(paymentMethods, 'subMethods', 'id', order.paymentMethodId),
     date = dayjs(order.orderDate),
     cartTotalAmount = order.cart.reduce((prev, curr) => {
@@ -48,7 +49,7 @@ export default function OrderDetails({ order }) {
       </p>
       <p className="order-details__p">
         Status pesanan
-        <span className="order-details__span">Menunggu pembayaran</span>
+        <span className="order-details__span">{getOrderStatus(order.orderId)}</span>
       </p>
       <p className="order-details__p">
         Waktu pesanan

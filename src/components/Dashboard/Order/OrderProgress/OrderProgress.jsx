@@ -19,14 +19,16 @@ export default function OrderProgress({ order }) {
 function WaitingPayment({ order }) {
   const
     localizedFormat = dayjs(order.expiredDate).locale('id').format('D MMMM YYYY [pukul] HH:mm'),
-    { startCountdown, countdown, checkPaymentStatus, simulateAction } = useOrder();
+    { startCountdown, countdown, checkPaymentStatus, simulateOrder, unmountAction, mountAction } = useOrder();
 
 
   const handleOnClick = () => {
     checkPaymentStatus(order.orderId);
-    simulateAction(order.orderId, 'order');
+    simulateOrder(order.orderId, 'order');
   };
   startCountdown(order.orderId);
+  mountAction(order.orderId);
+  unmountAction();
 
   return (
     <div className="waiting-payment">
@@ -45,7 +47,7 @@ function WaitingPayment({ order }) {
           alt="Kode QR"
           className="waiting-payment__img"
         />
-        <a href="https://via.placeholder.com/150?text=QR+Code" className="waiting-payment__link" download>
+        <a href="https://via.assets.so/img.jpg?w=300&h=300&t=QR+Code" className="waiting-payment__link" download>
           <img src={downloadIcon} alt="Ikon unduh" className="order-progress__icon" />
           Unduh kode QR
         </a>
