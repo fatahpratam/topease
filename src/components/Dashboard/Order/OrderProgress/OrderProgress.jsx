@@ -1,9 +1,10 @@
 import './OrderProgress.css';
 import dayjs from 'dayjs';
-import { scheduleIcon, downloadIcon } from "../../../../assets/icons/index.js";
+import { scheduleIcon, downloadIcon, homeIcon, inventoryIcon } from "../../../../assets/icons/index.js";
 import { products } from "../../../../data/index.js";
 import { findBy } from "../../../../utils/index.js";
 import { useOrder } from "../../../../contexts/index.js";
+import { useNavigate } from 'react-router-dom';
 
 export default function OrderProgress({ order }) {
 
@@ -49,7 +50,7 @@ function WaitingPayment({ order }) {
         />
         <a href="https://via.assets.so/img.jpg?w=300&h=300&t=QR+Code" className="waiting-payment__link" download>
           <img src={downloadIcon} alt="Ikon unduh" className="order-progress__icon" />
-          Unduh kode QR
+          Kode QR
         </a>
         <button
           className="waiting-payment__button"
@@ -140,11 +141,36 @@ function CartItem({ cartItem }) {
 }
 
 function FinishTransaction({ order }) {
-  const isDisabled = order.paymentStatus === 'Menunggu pembayaran';
+  const
+    navigate = useNavigate(),
+    { getOrderStatus } = useOrder(),
+    orderStatus = getOrderStatus(order.orderId),
+    isDisabled = (orderStatus !== 'Semua terkirim' && orderStatus !== 'Semua dibatalkan');
+
 
   return (
     <div className={`finish-transaction ${isDisabled && 'disabled'}`}>
       <h2 className="order-progress__h2">Transaksi selesai</h2>
+      {
+        !isDisabled &&
+        <>
+          <p className="finish-transaction__p">Terima kasih telah berbelanja di TopEase! Bukti transaksi dari belanjaan Anda dapat diunduh melalui link berikut:</p>
+          <a href="https://via.assets.so/img.jpg?w=300&h=600&t=Bukti+transaksi" className="finish-transaction__link" download>
+            <img src={downloadIcon} alt="Ikon unduh" className="order-progress__icon" />
+            Bukti transaksi
+          </a>
+          <div className="finish-transaction__container">
+            <button className="finish-transaction__button" onClick={() => navigate('/dashboard/home')}>
+              <img src={homeIcon} alt="Ikon beranda" className="finish-transaction__icon" />
+              Beranda
+            </button>
+            <button className="finish-transaction__button" onClick={() => navigate('/dashboard/riwayat')}>
+              <img src={inventoryIcon} alt="Ikon transaksi" className="finish-transaction__icon" />
+              Riwayat
+            </button>
+          </div>
+        </>
+      }
     </div>
   )
 }

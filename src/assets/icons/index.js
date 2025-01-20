@@ -20,3 +20,4 @@ export { default as shoppingCartVariantIcon } from "./shoppingCartVariant.svg";
 export { default as arrowForwardIcon } from "./arrowForward.svg";
 export { default as scheduleIcon } from "./schedule.svg";
 export { default as downloadIcon } from "./download.svg";
+export { default as homeIcon } from "./home.svg";

@@ -84,7 +84,7 @@ export default function Header() {
         >
           <img
             src={shoppingCartVariantIcon}
-            alt="Icon keranjang"
+            alt="Ikon keranjang"
             className='header__button-icon'
           />
           <p className='header__button-text'>Keranjang</p>
