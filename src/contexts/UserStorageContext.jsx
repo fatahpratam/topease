@@ -140,7 +140,7 @@ export const UserStorageProvider = ({ children }) => {
         if (user.id === loginInfo.id) {
           return {
             ...user,
-            cart: [product, ...(user.cart || [])]
+            cart: [{ ...product, isChecked: false }, ...(user.cart || [])]
           };
         }
         return { ...user };

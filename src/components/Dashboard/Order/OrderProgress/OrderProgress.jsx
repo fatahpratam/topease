@@ -2,7 +2,7 @@ import './OrderProgress.css';
 import dayjs from 'dayjs';
 import { scheduleIcon, downloadIcon, homeIcon, inventoryIcon } from "../../../../assets/icons/index.js";
 import { products } from "../../../../data/index.js";
-import { findBy } from "../../../../utils/index.js";
+import { findBy, fileDownloader } from "../../../../utils/index.js";
 import { useOrder } from "../../../../contexts/index.js";
 import { useNavigate } from 'react-router-dom';
 
@@ -31,6 +31,11 @@ function WaitingPayment({ order }) {
   mountAction(order.orderId);
   unmountAction();
 
+  const handleDownload = e => {
+    e.preventDefault();
+    fileDownloader('QR Code.jpg', 'https://via.assets.so/img.jpg?w=300&h=300&t=QR+Code');
+  };
+
   return (
     <div className="waiting-payment">
       <h2 className="order-progress__h2">Menunggu Pembayaran</h2>
@@ -48,7 +53,11 @@ function WaitingPayment({ order }) {
           alt="Kode QR"
           className="waiting-payment__img"
         />
-        <a href="https://via.assets.so/img.jpg?w=300&h=300&t=QR+Code" className="waiting-payment__link" download>
+        <a
+          href=""
+          className="waiting-payment__link"
+          onClick={handleDownload}
+        >
           <img src={downloadIcon} alt="Ikon unduh" className="order-progress__icon" />
           Kode QR
         </a>
@@ -147,6 +156,10 @@ function FinishTransaction({ order }) {
     orderStatus = getOrderStatus(order.orderId),
     isDisabled = (orderStatus !== 'Semua terkirim' && orderStatus !== 'Semua dibatalkan');
 
+  const handleDownload = e => {
+    e.preventDefault();
+    fileDownloader('Bukti transaksi.jpg', 'https://via.assets.so/img.jpg?w=300&h=600&t=Bukti+transaksi');
+  };
 
   return (
     <div className={`finish-transaction ${isDisabled && 'disabled'}`}>
@@ -155,7 +168,11 @@ function FinishTransaction({ order }) {
         !isDisabled &&
         <>
           <p className="finish-transaction__p">Terima kasih telah berbelanja di TopEase! Bukti transaksi dari belanjaan Anda dapat diunduh melalui link berikut:</p>
-          <a href="https://via.assets.so/img.jpg?w=300&h=600&t=Bukti+transaksi" className="finish-transaction__link" download>
+          <a
+            href=""
+            className="finish-transaction__link"
+            onClick={handleDownload}
+          >
             <img src={downloadIcon} alt="Ikon unduh" className="order-progress__icon" />
             Bukti transaksi
           </a>

@@ -26,18 +26,16 @@ function CartList({ cart }) {
   const [selectAll, setSelectAll] = useState(isEveryCartItemChecked());
 
   const handleAllSelectOnChange = () => {
-    setSelectAll(prev => {
-      toggleAllCartItem(!prev);
-      return !prev;
-    });
+    toggleAllCartItem(!selectAll);
   };
 
+  const handleCartItemChange = (productId) => {
+    toggleCartItem(productId);
+  }
+
   useEffect(() => {
-    if (isEveryCartItemChecked())
-      setSelectAll(true);
-    else
-      setSelectAll(false);
-  }, [cart]);
+    setSelectAll(isEveryCartItemChecked());
+  }, [isEveryCartItemChecked]);
 
   return (
     <>
@@ -64,7 +62,7 @@ function CartList({ cart }) {
           cart.map(cartItem => (
             <CartItem
               cartItem={cartItem}
-              toggleCartItem={toggleCartItem}
+              handleCartItemChange={handleCartItemChange}
               key={cartItem.productId}
             />
           ))
@@ -74,10 +72,10 @@ function CartList({ cart }) {
   )
 }
 
-function CartItem({ cartItem, toggleCartItem }) {
+function CartItem({ cartItem, handleCartItemChange }) {
   const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' });
   const handleOnChange = () => {
-    toggleCartItem(cartItem.productId);
+    handleCartItemChange(cartItem.productId);
   };
   const product = products.find(
     product => product.id === cartItem.productId
