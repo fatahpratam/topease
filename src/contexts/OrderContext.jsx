@@ -10,7 +10,8 @@ const OrderContext = createContext({
   countdown: '--j --m --s',
   checkPaymentStatus: (orderId) => { },
   getOrderStatus: (orderId) => { },
-  simulateOrder: (orderId, action) => { },
+  simulateOrder: (orderId) => { },
+  simulateCancel: (orderId) => { },
   mountAction: (orderId) => { },
   unmountAction: () => { }
 });
@@ -21,7 +22,7 @@ export const OrderStorageProvider = ({ children }) => {
     [actionIntervalId, setActionIntervalId] = useState(0),
     [countdownIntervalId, setCountdownIntervalId] = useState(0),
     [orders, setOrders] = useState(
-      JSON.parse(localStorage.getItem('order')) || []
+      JSON.parse(localStorage.getItem('orders')) || []
     );
 
   function startCountdown(orderId) {
@@ -48,7 +49,7 @@ export const OrderStorageProvider = ({ children }) => {
                 }
                 return { ...order };
               });
-              localStorage.setItem('order', JSON.stringify(newOrders));
+              localStorage.setItem('orders', JSON.stringify(newOrders));
               return newOrders;
             });
           }
@@ -86,7 +87,7 @@ export const OrderStorageProvider = ({ children }) => {
         cancelled: false,
         expired: false
       }, ...prev];
-      localStorage.setItem('order', JSON.stringify(newOrders));
+      localStorage.setItem('orders', JSON.stringify(newOrders));
       return newOrders;
     });
     return orderId;
@@ -100,7 +101,7 @@ export const OrderStorageProvider = ({ children }) => {
         }
         return { ...order };
       });
-      localStorage.setItem('order', JSON.stringify(newOrders));
+      localStorage.setItem('orders', JSON.stringify(newOrders));
       return newOrders;
     });
   }
@@ -129,7 +130,7 @@ export const OrderStorageProvider = ({ children }) => {
         }
         return { ...order };
       });
-      localStorage.setItem('order', JSON.stringify(newOrders));
+      localStorage.setItem('orders', JSON.stringify(newOrders));
       clearInterval(countdownIntervalId);
       setCountdown('--j --m --s');
       return newOrders;
@@ -173,7 +174,7 @@ export const OrderStorageProvider = ({ children }) => {
           return { ...order };
         });
         if (!modified) clearInterval(newIntervalId);
-        localStorage.setItem('order', JSON.stringify(newOrders));
+        localStorage.setItem('orders', JSON.stringify(newOrders));
         return newOrders;
       });
     }, 2000);
@@ -183,12 +184,70 @@ export const OrderStorageProvider = ({ children }) => {
     });
   }
 
+  function simulateCancel(orderId) {
+    clearInterval(countdownIntervalId);
+    setCountdown('--j --m --s');
+    if (getOrder(orderId).paymentStatus === 'Menunggu pembayaran') {
+      setOrders(prev => {
+        const newOrders = prev.map(order => {
+          if (order.orderId === orderId) {
+            const newCart = order.cart.map(cartItem => {
+              return { ...cartItem, orderStatus: 'Dibatalkan' };
+            });
+            return { ...order, cart: newCart, paymentStatus: 'Dibatalkan', cancelled: true };
+          }
+          return { ...order };
+        });
+        localStorage.setItem('orders', JSON.stringify(newOrders));
+        return newOrders;
+      });
+    }
+    else {
+      setOrders(prev => {
+        const newOrders = prev.map(order => {
+          if (order.orderId === orderId) {
+            return { ...order, paymentStatus: 'Dibatalkan', cancelled: true };
+          }
+          return { ...order };
+        });
+        localStorage.setItem('orders', JSON.stringify(newOrders));
+        return newOrders;
+      });
+      const newIntervalId = setInterval(() => {
+        setOrders(prev => {
+          let modified = false;
+          const newOrders = prev.map(order => {
+            if (order.orderId === orderId) {
+              const newCart = order.cart.map(cartItem => {
+                if (cartItem.orderStatus !== 'Dibatalkan' && !modified) {
+                  modified = true;
+                  return { ...cartItem, orderStatus: 'Dibatalkan' };
+                }
+                return { ...cartItem };
+              });
+              return { ...order, cart: newCart };
+            }
+            return { ...order };
+          });
+          if (!modified) clearInterval(newIntervalId);
+          localStorage.setItem('orders', JSON.stringify(newOrders));
+          return newOrders;
+        });
+      }, 2000);
+      setActionIntervalId(prev => {
+        clearInterval(prev);
+        return newIntervalId;
+      });
+    }
+  }
+
   function mountAction(orderId) {
     useEffect(() => {
       const order = getOrder(orderId);
-      if (order.paymentStatus === 'Lunas' && getOrderStatus(orderId) !== 'Semua terkirim') {
+      if (order.paymentStatus === 'Lunas' && getOrderStatus(orderId) !== 'Semua terkirim')
         simulateOrder(orderId);
-      }
+      else if (order.paymentStatus === 'Dibatalkan' && getOrderStatus(orderId) !== 'Semua dibatalkan')
+        simulateCancel(orderId)
     }, []);
   }
 
@@ -203,7 +262,7 @@ export const OrderStorageProvider = ({ children }) => {
   return (<OrderContext.Provider value={{
     addOrder, updateOrder, getOrder, filterOrderBy, countdown,
     startCountdown, checkPaymentStatus, getOrderStatus, simulateOrder,
-    mountAction, unmountAction
+    simulateCancel, mountAction, unmountAction
   }}>
     {children}
   </OrderContext.Provider>)

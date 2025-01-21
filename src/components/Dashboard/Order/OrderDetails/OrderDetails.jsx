@@ -8,7 +8,7 @@ export default function OrderDetails({ order }) {
   const
     currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
     { loginInfo } = useUserStorage(),
-    { getOrderStatus } = useOrder(),
+    { getOrderStatus, simulateCancel } = useOrder(),
     paymentMethod = findNestedBy(paymentMethods, 'subMethods', 'id', order.paymentMethodId),
     date = dayjs(order.orderDate),
     cartTotalAmount = order.cart.reduce((prev, curr) => {
@@ -20,41 +20,53 @@ export default function OrderDetails({ order }) {
         finalAmount = totalAmount - discountAmount;
       return prev + finalAmount;
     }, 0),
-    finalAmount = cartTotalAmount + paymentMethod.adminAmount;
+    finalAmount = cartTotalAmount + paymentMethod.adminAmount,
+    orderStatuses = getOrderStatus(order.orderId);
+
+  const handleOnClick = () => {
+    simulateCancel(order.orderId);
+  };
 
   return (
     <div className="order-details">
-      <h2 className="order-details__h2">Detail Pembayaran</h2>
-      <ProductList cart={order.cart} />
-      <hr />
-      <p className="order-details__p">
-        ID pesanan
-        <span className="order-details__span">{order.orderId}</span>
-      </p>
-      <p className="order-details__p">
-        Nomor WhatsApp
-        <span className="order-details__span">{loginInfo.phoneNumber}</span>
-      </p>
-      <p className="order-details__p">
-        Metode pembayaran
-        <span className="order-details__span">{paymentMethod.name}</span>
-      </p>
-      <p className="order-details__p">
-        Total tagihan
-        <span className="order-details__span">{currencyFormatter.format(finalAmount)}</span>
-      </p>
-      <p className="order-details__p">
-        Status pembayaran
-        <span className="order-details__span">{order.paymentStatus}</span>
-      </p>
-      <p className="order-details__p">
-        Status pesanan
-        <span className="order-details__span">{getOrderStatus(order.orderId)}</span>
-      </p>
-      <p className="order-details__p">
-        Waktu pesanan
-        <span className="order-details__span">{date.format('DD/MM/YYYY HH:mm')}</span>
-      </p>
+      <div className="order-details__container">
+        <h2 className="order-details__h2">Detail Pembayaran</h2>
+        <ProductList cart={order.cart} />
+        <hr />
+        <p className="order-details__p">
+          ID pesanan
+          <span className="order-details__span">{order.orderId}</span>
+        </p>
+        <p className="order-details__p">
+          Nomor WhatsApp
+          <span className="order-details__span">{loginInfo.phoneNumber}</span>
+        </p>
+        <p className="order-details__p">
+          Metode pembayaran
+          <span className="order-details__span">{paymentMethod.name}</span>
+        </p>
+        <p className="order-details__p">
+          Total tagihan
+          <span className="order-details__span">{currencyFormatter.format(finalAmount)}</span>
+        </p>
+        <p className="order-details__p">
+          Status pembayaran
+          <span className="order-details__span">{order.paymentStatus}</span>
+        </p>
+        <p className="order-details__p">
+          Status pesanan
+          <span className="order-details__span">{orderStatuses}</span>
+        </p>
+        <p className="order-details__p">
+          Waktu pesanan
+          <span className="order-details__span">{date.format('DD/MM/YYYY HH:mm')}</span>
+        </p>
+      </div>
+      <button
+        className="order-details__button"
+        onClick={handleOnClick}
+        disabled={order.cancelled || orderStatuses.includes('Semua')}
+      >Batalkan pesanan</button>
     </div>
   )
 }
