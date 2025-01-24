@@ -9,7 +9,7 @@ export default function AccountPopup({ username, imgUrl, onLogoutClicked }) {
           <img src={imgUrl} alt="Profile picture" className="account__img" />
           {username}
         </h2>
-        <Link className='account__link' to='#'>Riwayat</Link>
+        <Link className='account__link' to='/dashboard/history'>Riwayat</Link>
         <Link className='account__link' to='#'>Pengaturan</Link>
         <button
           className="account__button"

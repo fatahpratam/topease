@@ -4,23 +4,22 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { historyOptions, paymentMethods, products } from "../../../../data/index.js";
 import { useOrder, useUserStorage } from "../../../../contexts/index.js";
-import { findNestedBy } from "../../../../utils/index.js";
-
-const { filterOrderBy, getOrderStatus } = useOrder();
+import { findNestedBy, findBy } from "../../../../utils/index.js";
 
 export default function HistoryOverview() {
   const
+    { filterOrderBy } = useOrder(),
     { loginInfo } = useUserStorage(),
     { durationOptions, paymentOptions, orderOptions } = historyOptions,
     [duration, setDuration] = useState(durationOptions[0].duration),
     [paymentStatus, setPaymentStatus] = useState(paymentOptions[0]),
     [orderStatus, setOrderStatus] = useState(orderOptions[0]),
-    orders = filterOrderBy(loginInfo.userId, duration, paymentStatus, orderStatus);
+    orders = filterOrderBy(loginInfo.id, duration, paymentStatus, orderStatus);
 
   return (
-    <div className="history-list">
-      <h2 className="history-list__h2">Riwayat</h2>
-      <p className="history-list__p">Berikut adalah riwayat-riwayat dari pembelian Anda.</p>
+    <div className="history-overview">
+      <h2 className="history-overview__h2">Riwayat</h2>
+      <p>Berikut adalah riwayat-riwayat dari pembelian Anda. Anda dapat melakukan penyaringan bedasarkan tanggal pesanan, status pembayaran, dan status pesanan.</p>
       <HistoryOption
         duration={duration}
         paymentStatus={paymentStatus}
@@ -29,7 +28,11 @@ export default function HistoryOverview() {
         setPaymentStatus={setPaymentStatus}
         setOrderStatus={setOrderStatus}
       />
-      <HistoryList orders={orders} />
+      {
+        orders.length === 0
+          ? <p>Tidak ada riwayat pembelian berdasarkan kriteria penyaringan.</p>
+          : <HistoryList orders={orders} />
+      }
     </div>
   );
 }
@@ -44,32 +47,32 @@ function HistoryOption({
     handleOrderChange = e => setOrderStatus(e.target.value);
 
   return (
-    <form className="history-list__form" onSubmit={e => e.preventDefault()}>
+    <form className="history-overview__form" onSubmit={e => e.preventDefault()}>
       <select
-        className="history-list__select"
+        className="history-overview__select"
         value={duration}
         onChange={handleDurationChange}
       >
         {durationOptions.map(
-          option => <option value={option.duration} className="history-list__option">{option.name}</option>
+          option => <option value={option.duration} className="history-overview__option" key={option.duration}>{option.name}</option>
         )}
       </select>
       <select
-        className="history-list__select"
+        className="history-overview__select"
         value={paymentStatus}
         onChange={handlePaymentChange}
       >
         {paymentOptions.map(
-          option => <option value={option} className="history-list__option">{option}</option>
+          option => <option value={option} className="history-overview__option" key={option}>{option}</option>
         )}
       </select>
       <select
-        className="history-list__select"
+        className="history-overview__select"
         value={orderStatus}
         onChange={handleOrderChange}
       >
         {orderOptions.map(
-          option => <option value={option} className="history-list__option">{option}</option>
+          option => <option value={option} className="history-overview__option" key={option}>{option}</option>
         )}
       </select>
     </form>
@@ -78,7 +81,7 @@ function HistoryOption({
 
 function HistoryList({ orders }) {
   return (
-    <ul className="history-list__ul">
+    <ul className="history-overview__ul">
       {orders.map(
         order => <HistoryItem order={order} key={order.orderId} />
       )}
@@ -90,6 +93,7 @@ const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', cu
 
 function HistoryItem({ order }) {
   const
+    { getOrderStatus } = useOrder(),
     paymentMethod = findNestedBy(paymentMethods, 'subMethods', 'id', order.paymentMethodId),
     cartTotalAmount = order.cart.reduce((prev, curr) => {
       const
@@ -103,31 +107,41 @@ function HistoryItem({ order }) {
     finalAmount = cartTotalAmount + paymentMethod.adminAmount;
 
   return (
-    <li className="history-list__li">
-      <h2 className="history-list__h2">Order Id {order.orderId}</h2>
-      <div className="history-list__container">
-        <p className="history-list__p">
-          Metode pembayaran:
+    <li className="history-overview__li">
+      <h3 className="history-overview__h3">Id pesanan: {order.orderId}</h3>
+      <div className="history-overview__container">
+        <p className="history-overview__p">
+          <span className="history-overview__span">
+            Metode pembayaran
+          </span>
           {paymentMethod.name}
         </p>
-        <p className="history-list__p">
-          Tanggal pemesanan:
+        <p className="history-overview__p">
+          <span className="history-overview__span">
+            Tanggal pemesanan
+          </span>
           {dayjs(order.orderDate).format('DD-MM-YYYY HH:mm')}
         </p>
-        <p className="history-list__p">
-          Status pembayaran:
+        <p className="history-overview__p">
+          <span className="history-overview__span">
+            Status pembayaran
+          </span>
           {order.paymentStatus}
         </p>
-        <p className="history-list__p">
-          Status pesanan:
+        <p className="history-overview__p">
+          <span className="history-overview__span">
+            Status pesanan
+          </span>
           {getOrderStatus(order.orderId)}
         </p>
-        <p className="history-list__p">
-          Total biaya:
+        <p className="history-overview__p">
+          <span className="history-overview__span">
+            Total biaya
+          </span>
           {currencyFormatter.format(finalAmount)}
         </p>
-        <p className="history-list__p">
-          <Link className="history-list__link" to={`/dashboard/history/${order.orderId}`}>Lihat</Link>
+        <p className="history-overview__p">
+          <Link className="history-overview__link" to={`/dashboard/history/${order.orderId}`}>Lihat Detail</Link>
         </p>
       </div>
     </li>

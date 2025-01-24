@@ -1,0 +1,5 @@
+.history {
+  width: min(40rem, 100%);
+  margin-inline: auto;
+  padding: 2rem 1rem;
+}

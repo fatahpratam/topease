@@ -96,9 +96,8 @@
   margin-right: 1rem;
   font-weight: bold;
   color: var(--color-primary);
-  text-decoration: none;
 }
 
 .cart-details__link:is(:hover, :focus) {
-  text-decoration: underline;
+  text-decoration: none;
 }

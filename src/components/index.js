@@ -10,3 +10,4 @@ export { default as ForgetPassword } from "./ForgetPassword/ForgetPassword.jsx";
 export { default as ChangePassword } from "./ChangePassword/ChangePassword.jsx";
 export { default as Cart } from "./Dashboard/Cart/Cart.jsx";
 export { default as Order } from "./Dashboard/Order/Order.jsx";
+export { default as History } from "./Dashboard/History/History.jsx";

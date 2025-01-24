@@ -181,7 +181,7 @@ function FinishTransaction({ order }) {
               <img src={homeIcon} alt="Ikon beranda" className="finish-transaction__icon" />
               Beranda
             </button>
-            <button className="finish-transaction__button" onClick={() => navigate('/dashboard/riwayat')}>
+            <button className="finish-transaction__button" onClick={() => navigate('/dashboard/history')}>
               <img src={inventoryIcon} alt="Ikon transaksi" className="finish-transaction__icon" />
               Riwayat
             </button>

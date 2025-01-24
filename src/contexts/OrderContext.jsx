@@ -5,7 +5,7 @@ const OrderContext = createContext({
   startCountdown: (orderId) => { },
   addOrder: (userId, paymentMethodId, cart) => { },
   updateOrder: (orderId) => { },
-  getOrder: () => { },
+  getOrder: (orderId) => { },
   filterOrderBy: (userId, duration, paymentStatus, orderStatus) => { },
   countdown: '--j --m --s',
   checkPaymentStatus: (orderId) => { },
@@ -107,10 +107,9 @@ export const OrderStorageProvider = ({ children }) => {
   }
 
   function getOrder(orderId) {
-    const order = orders.find(
+    return orders.find(
       order => order.orderId === orderId
     );
-    return { ...order };
   }
 
   function filterOrderBy(userId, duration, paymentStatus, orderStatus) {
