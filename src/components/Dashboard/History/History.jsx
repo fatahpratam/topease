@@ -1,30 +1,20 @@
 import './History.css';
-import { useState } from 'react';
-import { historyOptions } from "../../../data/index.js";
+import { useParams } from 'react-router-dom';
+import { ProtectedRoute } from "../../Utilities/index.js";
+import { useUserStorage } from "../../../contexts/index.js";
+import HistoryOverview from './HistoryOverview/HistoryOverview.jsx';
+import HistoryDetails from './HistoryDetails/HistoryDetails.jsx';
 
 export default function History() {
   const
-    { durationOptions, paymentOptions, orderOptions } = historyOptions,
-    [duration, setDuration] = useState(durationOptions[0]),
-    [paymentStatus, setPaymentStatus] = useState(paymentOptions[0]),
-    [orderStatus, setOrderStatus] = useState(orderOptions[0]);
+    { id } = useParams(),
+    { isLoggedIn } = useUserStorage()
 
   return (
-    <div className="history">
-      <h1 className="history__h1">Riwayat</h1>
-      <p className="history__p">Berikut adalah riwayat-riwayat dari pembelian Anda.</p>
-    </div>
+    <ProtectedRoute to={'/dashboard/home'} condition={!isLoggedIn()}>
+      <div className="history">
+        {id ? <HistoryDetails id={id} /> : <HistoryOverview />}
+      </div>
+    </ProtectedRoute>
   );
-}
-
-function HistoryOption({ }) {
-  return;
-}
-
-function HistoryList({ }) {
-  return;
-}
-
-function HistoryItem({ }) {
-  return;
 }

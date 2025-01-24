@@ -6,7 +6,7 @@ const OrderContext = createContext({
   addOrder: (userId, paymentMethodId, cart) => { },
   updateOrder: (orderId) => { },
   getOrder: () => { },
-  filterOrderBy: (duration, paymentStatus, orderStatus) => { },
+  filterOrderBy: (userId, duration, paymentStatus, orderStatus) => { },
   countdown: '--j --m --s',
   checkPaymentStatus: (orderId) => { },
   getOrderStatus: (orderId) => { },
@@ -113,9 +113,11 @@ export const OrderStorageProvider = ({ children }) => {
     return { ...order };
   }
 
-  function filterOrderBy(duration, paymentStatus, orderStatus) {
+  function filterOrderBy(userId, duration, paymentStatus, orderStatus) {
     const pastDate = dayjs().subtract(duration, 'day');
     return orders.filter(order => {
+      return order.userId === userId;
+    }).filter(order => {
       return duration === 'Semua' || dayjs(order.orderDate).diff(pastDate) > 0;
     }).filter(order => {
       return paymentStatus === 'Semua' || order.paymentStatus === paymentStatus;
