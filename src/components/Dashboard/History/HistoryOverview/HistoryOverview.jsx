@@ -1,6 +1,7 @@
 import './HistoryOverview.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import "dayjs/locale/id";
 import dayjs from 'dayjs';
 import { historyOptions, paymentMethods, products } from "../../../../data/index.js";
 import { useOrder, useUserStorage } from "../../../../contexts/index.js";
@@ -108,20 +109,8 @@ function HistoryItem({ order }) {
 
   return (
     <li className="history-overview__li">
-      <h3 className="history-overview__h3">Id pesanan: {order.orderId}</h3>
+      <h3 className="history-overview__h3">{dayjs(order.orderDate).locale('id').format('D MMMM YYYY, HH:mm')}</h3>
       <div className="history-overview__container">
-        <p className="history-overview__p">
-          <span className="history-overview__span">
-            Metode pembayaran
-          </span>
-          {paymentMethod.name}
-        </p>
-        <p className="history-overview__p">
-          <span className="history-overview__span">
-            Tanggal pemesanan
-          </span>
-          {dayjs(order.orderDate).format('DD-MM-YYYY HH:mm')}
-        </p>
         <p className="history-overview__p">
           <span className="history-overview__span">
             Status pembayaran
