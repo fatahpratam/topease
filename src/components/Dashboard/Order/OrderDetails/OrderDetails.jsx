@@ -32,34 +32,34 @@ export default function OrderDetails({ order }) {
       <div className="order-details__container">
         <h2 className="order-details__h2">Detail Pembayaran</h2>
         <ProductList cart={order.cart} />
-        <hr />
+        <hr className="order-details__hr" />
         <p className="order-details__p">
-          ID pesanan
-          <span className="order-details__span">{order.orderId}</span>
+          <span className="order-details__span">ID pesanan</span>
+          {order.orderId}
         </p>
         <p className="order-details__p">
-          Nomor WhatsApp
-          <span className="order-details__span">{loginInfo.phoneNumber}</span>
+          <span className="order-details__span">Nomor WhatsApp</span>
+          {loginInfo.phoneNumber}
         </p>
         <p className="order-details__p">
-          Metode pembayaran
-          <span className="order-details__span">{paymentMethod.name}</span>
+          <span className="order-details__span">Metode pembayaran</span>
+          {paymentMethod.name}
         </p>
         <p className="order-details__p">
-          Total tagihan
-          <span className="order-details__span">{currencyFormatter.format(finalAmount)}</span>
+          <span className="order-details__span">Total tagihan</span>
+          {currencyFormatter.format(finalAmount)}
         </p>
         <p className="order-details__p">
-          Status pembayaran
-          <span className="order-details__span">{order.paymentStatus}</span>
+          <span className="order-details__span">Status pembayaran</span>
+          {order.paymentStatus}
         </p>
         <p className="order-details__p">
-          Status pesanan
-          <span className="order-details__span">{orderStatuses}</span>
+          <span className="order-details__span">Status pesanan</span>
+          {orderStatuses}
         </p>
         <p className="order-details__p">
-          Waktu pesanan
-          <span className="order-details__span">{date.format('DD/MM/YYYY HH:mm')}</span>
+          <span className="order-details__span">Waktu pesanan</span>
+          {date.format('DD/MM/YYYY HH:mm')}
         </p>
       </div>
       <button

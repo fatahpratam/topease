@@ -117,6 +117,10 @@
   flex-grow: 1;
 }
 
+.processing-order__sub-container p:first-child {
+  color: var(--color-primary);
+}
+
 .processing-order__img {
   width: 4rem;
 }

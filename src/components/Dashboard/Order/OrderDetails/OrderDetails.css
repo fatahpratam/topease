@@ -42,6 +42,11 @@
   align-items: flex-end;
 }
 
+.order-details__hr {
+  border: 0.15rem solid var(--color-outline);
+  border-radius: 0.15rem;
+}
+
 .order-details__p {
   display: flex;
   justify-content: space-between;

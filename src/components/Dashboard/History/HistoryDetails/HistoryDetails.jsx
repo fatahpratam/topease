@@ -1,16 +1,21 @@
 import './HistoryDetails.css';
 import dayjs from 'dayjs';
 import { useOrder, useUserStorage } from "../../../../contexts/index.js";
-import { ProtectedRoute } from "../../../Utilities/index.js";
 import { findBy, findNestedBy } from "../../../../utils/index.js";
 import { products, paymentMethods } from "../../../../data/index.js";
+import { Navigate } from 'react-router-dom';
 
 export default function HistoryDetails({ id }) {
   const
     { getOrder, getOrderStatus } = useOrder(),
     { loginInfo } = useUserStorage(),
-    order = getOrder(id),
-    currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
+    order = getOrder(id);
+
+  if (!order || loginInfo.id !== order.userId) {
+    return <Navigate to={'/dashboard/history'} />
+  }
+
+  const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),
     paymentMethod = findNestedBy(paymentMethods, 'subMethods', 'id', order.paymentMethodId),
     { cartTotalAmount, cartTotalAdmin } = order.cart.reduce((prev, curr) => {
       const
@@ -30,42 +35,44 @@ export default function HistoryDetails({ id }) {
     orderStatuses = getOrderStatus(order.orderId);
 
   return (
-    <ProtectedRoute to={'/dashboard/history'} condition={!order || loginInfo.id !== order.userId}>
-      <div className="history-details">
-        <h2 className="history-details__h2">Detail Riwayat</h2>
-        <p className="history-details__p">
-          <span className="history-details__span">ID pesanan</span>
-          {order.orderId}
-        </p>
-        <p className="history-details__p">
-          Metode pembayaran
-          <span className="history-details__span">{paymentMethod.name}</span>
-        </p>
-        <p className="history-details__p">
-          Total admin
-          <span className="history-details__span">{currencyFormatter.format(finalAdmin)}</span>
-        </p>
-        <p className="history-details__p">
-          Total tagihan
-          <span className="history-details__span">{currencyFormatter.format(finalAmount)}</span>
-        </p>
-        <p className="history-details__p">
-          Status pembayaran
-          <span className="history-details__span">{order.paymentStatus}</span>
-        </p>
-        <p className="history-details__p">
-          Status pesanan
-          <span className="history-details__span">{orderStatuses}</span>
-        </p>
-        <p className="history-details__p">
-          Waktu pesanan
-          <span className="history-details__span">{dayjs(order.orderDate).format('DD/MM/YYYY HH:mm')}</span>
-        </p>
-        <hr className="history-details__hr" />
-        <h3 className="history-details__h3">Detail keranjang</h3>
-        <CartList cart={order.cart} />
-      </div>
-    </ProtectedRoute>
+    <div className="history-details">
+      <h2 className="history-details__h2">Detail Riwayat</h2>
+      <p className="history-details__p">
+        <span className="history-details__span">ID pesanan</span>
+        {order.orderId}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Metode pembayaran</span>
+        {paymentMethod.name}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Admin metode pembayaran</span>
+        {currencyFormatter.format(paymentMethod.adminAmount)}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Total admin</span>
+        {currencyFormatter.format(finalAdmin)}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Total tagihan</span>
+        {currencyFormatter.format(finalAmount)}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Status pembayaran</span>
+        {order.paymentStatus}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Status pesanan</span>
+        {orderStatuses}
+      </p>
+      <p className="history-details__p">
+        <span className="history-details__span">Waktu pesanan</span>
+        {dayjs(order.orderDate).format('DD/MM/YYYY HH:mm')}
+      </p>
+      <hr className="history-details__hr" />
+      <h3 className="history-details__h3">Detail keranjang</h3>
+      <CartList cart={order.cart} />
+    </div>
   );
 }
 
