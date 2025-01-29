@@ -2,7 +2,7 @@ import './index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Navigate } from "react-router-dom";
-import { Dashboard, Home, Login, Product, Category, Register, ForgetPassword, ChangePassword, Cart, Order, History, Setting, PrivacyPolicy } from './components/index.js';
+import { Dashboard, Home, Login, Product, Category, Register, ForgetPassword, ChangePassword, Cart, Order, History, Setting, PrivacyPolicy, TermsConditions } from './components/index.js';
 import { NotFound, OtpVerification } from "./components/Utilities/index.js";
 import { UserStorageProvider, OrderStorageProvider } from "./contexts/index.js";
 
@@ -36,7 +36,8 @@ const router = createBrowserRouter(
           <Route index element={<History />} />
           <Route path=':id' element={<History />} />
         </Route>
-        <Route path='kebijakan-privasi' element={<PrivacyPolicy />} />
+        <Route path='privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='terms-and-conditions' element={<TermsConditions />} />
         {/* <Route path='*' element={<NotFound />} /> */}
       </Route>
       {/* <Route path='*' element={<Navigate to='dashboard/notfound' />} /> */}
