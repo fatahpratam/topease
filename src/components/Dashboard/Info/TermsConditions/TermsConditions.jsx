@@ -1,4 +1,5 @@
 import './TermsConditions.css';
+import { Link } from 'react-router-dom';
 
 export default function TermsConditions() {
   return (
@@ -44,7 +45,7 @@ export default function TermsConditions() {
             <h3 className="terms-conditions__h3">Pembatalan dan Pengembalian Dana</h3>
             <ul className="terms-conditions__ul">
               <li className="terms-conditions__li">Pembatalan pesanan hanya dapat dilakukan jika pembayaran belum dikonfirmasi.</li>
-              <li className="terms-conditions__li">Pengembalian dana akan diproses sesuai dengan kebijakan <a href="/dashboard/refund-policy" className="terms-conditions__link">Kebijakan Pengembalian Dana</a> kami.</li>
+              <li className="terms-conditions__li">Pengembalian dana akan diproses sesuai dengan kebijakan <Link to="/dashboard/refund-policy" className="terms-conditions__link">Kebijakan Pengembalian Dana</Link> kami.</li>
             </ul>
           </li>
           <li className="terms-conditions__main-li">
@@ -77,8 +78,8 @@ export default function TermsConditions() {
             <h3 className="terms-conditions__h3">Hubungi Kami</h3>
             <p className="terms-conditions__p">Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan ini, Anda dapat menghubungi kami melalui:</p>
             <ul className="terms-conditions__ul">
-              <li className="terms-conditions__li"><strong>Email</strong>: <a href="mailto:support@topease.com" className="terms-conditions__link">support@topease.com</a></li>
-              <li className="terms-conditions__li"><strong>WhatsApp</strong>: <a href="tel:0812345678" className="terms-conditions__link">0812345678</a></li>
+              <li className="terms-conditions__li"><strong>Email</strong>: <Link to="mailto:support@topease.com" className="terms-conditions__link">support@topease.com</Link></li>
+              <li className="terms-conditions__li"><strong>WhatsApp</strong>: <Link to="tel:0812345678" className="terms-conditions__link">0812345678</Link></li>
             </ul>
             <p className="terms-conditions__p">Terima kasih telah menggunakan TopEase!</p>
           </li>

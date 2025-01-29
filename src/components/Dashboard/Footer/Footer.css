@@ -17,6 +17,10 @@
   padding: 1rem;
 }
 
+.footer__h2 {
+  color: var(--color-primary);
+}
+
 .footer__ul {
   margin-top: 0.5rem;
   list-style-type: none;

@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="footer__container">
         <section className="footer__section">
           <h2 className="footer__h2">Tentang</h2>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae corrupti natus iure quas exercitationem inventore praesentium odio porro ipsam nam nisi iusto nemo modi quae, laboriosam fugit sed tempora quia.</p>
+          <p>TopEase adalah platform top-up digital yang memungkinkan pengguna untuk mengisi saldo berbagai layanan seperti game, e-wallet, dan pulsa secara cepat dan mudah.</p>
         </section>
         <section className="footer__section">
           <h2 className="footer__h2">Legal</h2>
@@ -20,21 +20,21 @@ export default function Footer() {
         <section className="footer__section">
           <h2 className="footer__h2">Pusat Bantuan</h2>
           <ul className="footer__ul">
-            <li><Link to='#' className="footer__link">FAQ</Link></li>
-            <li><Link to='#' className="footer__link">Email</Link></li>
-            <li><Link to='#' className="footer__link">WhatsApp</Link></li>
+            <li><Link to='/dashboard/faq' className="footer__link">FAQ</Link></li>
+            <li><Link to='mailto:support@topease.com' className="footer__link">Email</Link></li>
+            <li><Link to='tel:0812345678' className="footer__link">WhatsApp</Link></li>
           </ul>
         </section>
         <section className="footer__section">
           <h2 className="footer__h2">Social Media</h2>
           <ul className="footer__ul">
-            <li><Link to='#' className="footer__link">Facebook</Link></li>
-            <li><Link to='#' className="footer__link">Instagram</Link></li>
-            <li><Link to='#' className="footer__link">X</Link></li>
+            <li><Link to='https://www.facebook.com/topease' className="footer__link" target="_blank">Facebook</Link></li>
+            <li><Link to='https://www.instagram.com/topease/' className="footer__link" target="_blank">Instagram</Link></li>
+            <li><Link to='https://x.com/topease' className="footer__link" target="_blank">X</Link></li>
           </ul>
         </section>
       </div>
-      <p>@{new Date().getFullYear()} TopEase.com All Rights Reserved</p>
+      <p><strong>@{new Date().getFullYear()} TopEase.com All Rights Reserved</strong></p>
     </div>
   )
 }

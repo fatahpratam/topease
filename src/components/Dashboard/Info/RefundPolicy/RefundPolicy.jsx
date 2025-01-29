@@ -1,4 +1,6 @@
 import './RefundPolicy.css';
+import { Link } from 'react-router-dom';
+
 
 export default function RefundPolicy() {
   return (
@@ -57,8 +59,8 @@ export default function RefundPolicy() {
             <h3 className="refund-policy__h3">Hubungi Kami</h3>
             <p className="refund-policy__p">Jika Anda memiliki pertanyaan atau ingin mengajukan permohonan pengembalian dana, silakan hubungi kami melalui:</p>
             <ul className="refund-policy__ul">
-              <li className="refund-policy__li"><strong>Email</strong>: <a href="mailto:support@topease.com" className="refund-policy__link">support@topease.com</a></li>
-              <li className="refund-policy__li"><strong>WhatsApp</strong>: <a href="tel:0812345678" className="refund-policy__link">0812345678</a></li>
+              <li className="refund-policy__li"><strong>Email</strong>: <Link to="mailto:support@topease.com" className="refund-policy__link">support@topease.com</Link></li>
+              <li className="refund-policy__li"><strong>WhatsApp</strong>: <Link to="tel:0812345678" className="refund-policy__link">0812345678</Link></li>
             </ul>
             <p className="refund-policy__p">Terima kasih telah menggunakan TopEase!</p>
           </li>

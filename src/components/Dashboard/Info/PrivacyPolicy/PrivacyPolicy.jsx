@@ -1,4 +1,6 @@
 import './PrivacyPolicy.css';
+import { Link } from 'react-router-dom';
+
 
 export default function PrivacyPolicy() {
   return (
@@ -83,8 +85,8 @@ export default function PrivacyPolicy() {
             <h3 className="privacy-policy__h3">Hubungi Kami</h3>
             <p className="privacy-policy__p">Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, Anda dapat menghubungi kami melalui:</p>
             <ul className="privacy-policy__ul">
-              <li className="privacy-policy__li"><strong>Email</strong>: <a href="mailto:support@topease.com" className="privacy-policy__link">support@topease.com</a></li>
-              <li className="privacy-policy__li"><strong>WhatsApp</strong>: <a href="tel:0812345678" className="privacy-policy__link">0812345678</a></li>
+              <li className="privacy-policy__li"><strong>Email</strong>: <Link to="mailto:support@topease.com" className="privacy-policy__link">support@topease.com</Link></li>
+              <li className="privacy-policy__li"><strong>WhatsApp</strong>: <Link to="tel:0812345678" className="privacy-policy__link">0812345678</Link></li>
             </ul>
             <p className="privacy-policy__p">Terima kasih telah menggunakan TopEase!</p>
           </li>
