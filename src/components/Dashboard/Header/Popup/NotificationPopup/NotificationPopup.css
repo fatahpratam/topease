@@ -17,6 +17,10 @@
   background-color: var(--color-surface);
 }
 
+.notification__h2 {
+  color: var(--color-primary);
+}
+
 .show {
   display: block;
 }

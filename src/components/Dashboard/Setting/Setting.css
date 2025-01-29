@@ -1,0 +1,80 @@
+.setting {
+  padding: 1rem;
+}
+
+.setting__container {
+  width: min(40rem, 100%);
+  margin: 1rem auto;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: var(--color-on-surface);
+  box-shadow: 0px 0px 8px var(--color-shadow);
+}
+
+.setting__h2 {
+  color: var(--color-primary);
+}
+
+.setting__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.setting__h3 {
+  border-bottom: 0.2rem solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.setting__h3--delete {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.setting__input {
+  width: min(15rem, 100%);
+  border: 0.25rem solid var(--color-outline);
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  color: var(--color-on-surface);
+  font-weight: bold;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  background-color: transparent;
+}
+
+.setting__input:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.setting__sub-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.setting__button {
+  align-self: flex-start;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-weight: bold;
+  color: var(--color-on-primary);
+  box-shadow: 0px 0px 8px var(--color-shadow);
+  background-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.setting__button--delete {
+  color: var(--color-on-error);
+  background-color: var(--color-error);
+}
+
+.setting__button:is(:hover, :focus) {
+  filter: brightness(120%);
+}
+
+.setting__button:active {
+  filter: brightness(140%);
+}

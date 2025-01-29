@@ -9,11 +9,13 @@ export default function Setting() {
   return (
     <ProtectedRoute to={'/dashboard/home'} condition={!isLoggedIn()}>
       <div className="setting">
-        <h2 className="setting__h2">Pengaturan</h2>
-        <ChangeName />
-        <ChangePhoneNumber />
-        <ChangePassword />
-        <DeleteAccount />
+        <div className="setting__container">
+          <h2 className="setting__h2">Pengaturan</h2>
+          <ChangeName />
+          <ChangePhoneNumber />
+          <ChangePassword />
+          <DeleteAccount />
+        </div>
       </div>
     </ProtectedRoute>
   )
@@ -48,7 +50,7 @@ function ChangeName() {
   };
 
   return (
-    <div className="setting__container" >
+    <div className="setting__section" >
       <h3 className="setting__h3">Ganti Nama</h3>
       <p className="setting__p">Ubah nama pengguna Anda untuk memperbarui informasi profil.</p>
       <input
@@ -109,7 +111,7 @@ function ChangePhoneNumber() {
   };
 
   return (
-    <div className="setting__container">
+    <div className="setting__section">
       <h3 className="setting__h3">Ganti Nomor WhatsApp</h3>
       <p className="setting__p">Perbarui nomor WhatsApp Anda untuk menjaga komunikasi tetap lancar.</p>
       <input
@@ -148,7 +150,7 @@ function ChangePassword() {
   };
 
   return (
-    <div className="setting__container">
+    <div className="setting__section">
       <h3 className="setting__h3">Ganti Kata Sandi</h3>
       <p className="setting__p">Tingkatkan keamanan akun Anda dengan mengganti kata sandi secara berkala.</p>
       <button className="setting__button" onClick={handleOnClick}>Ganti kata sandi</button>
@@ -168,8 +170,8 @@ function DeleteAccount() {
   };
 
   return (
-    <div className="setting__container">
-      <h3 className="setting__h3">Hapus Akun</h3>
+    <div className="setting__section">
+      <h3 className="setting__h3 setting__h3--delete">Hapus Akun</h3>
       <p className="setting__p">Hapus akun Anda secara permanen jika Anda tidak lagi membutuhkan layanan kami.</p>
       <button
         className="setting__button setting__button--delete"
