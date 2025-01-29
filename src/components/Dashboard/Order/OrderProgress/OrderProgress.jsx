@@ -79,7 +79,7 @@ function ProcessingOrder({ order }) {
   return (
     <>
       <div className={`processing-order ${isDisabled && 'disabled'}`}>
-        <h2 className="order-progress__h2">Pesanan diproses</h2>
+        <h2 className="order-progress__h2">Pesanan Diproses</h2>
         {
           !isDisabled &&
           <>
@@ -163,7 +163,7 @@ function FinishTransaction({ order }) {
 
   return (
     <div className={`finish-transaction ${isDisabled && 'disabled'}`}>
-      <h2 className="order-progress__h2">Transaksi selesai</h2>
+      <h2 className="order-progress__h2">Transaksi Selesai</h2>
       {
         !isDisabled &&
         <>

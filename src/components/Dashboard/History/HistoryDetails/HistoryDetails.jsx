@@ -1,7 +1,8 @@
 import './HistoryDetails.css';
 import dayjs from 'dayjs';
+import { downloadIcon } from "../../../../assets/icons/index.js";
 import { useOrder, useUserStorage } from "../../../../contexts/index.js";
-import { findBy, findNestedBy } from "../../../../utils/index.js";
+import { findBy, findNestedBy, fileDownloader } from "../../../../utils/index.js";
 import { products, paymentMethods } from "../../../../data/index.js";
 import { Navigate } from 'react-router-dom';
 
@@ -33,6 +34,12 @@ export default function HistoryDetails({ id }) {
     finalAmount = cartTotalAmount + paymentMethod.adminAmount,
     finalAdmin = cartTotalAdmin + paymentMethod.adminAmount,
     orderStatuses = getOrderStatus(order.orderId);
+
+  const handleDownload = e => {
+    e.preventDefault();
+    fileDownloader('Bukti transaksi.jpg', 'https://via.assets.so/img.jpg?w=300&h=600&t=Bukti+transaksi');
+
+  }
 
   return (
     <div className="history-details">
@@ -69,6 +76,10 @@ export default function HistoryDetails({ id }) {
         <span className="history-details__span">Waktu pesanan</span>
         {dayjs(order.orderDate).format('DD/MM/YYYY HH:mm')}
       </p>
+      <a href="" className="history-details__link" onClick={handleDownload}>
+        <img src={downloadIcon} alt="Ikon unduh" className="history-details__icon" />
+        Bukti transaksi
+      </a>
       <hr className="history-details__hr" />
       <h3 className="history-details__h3">Detail keranjang</h3>
       <CartList cart={order.cart} />

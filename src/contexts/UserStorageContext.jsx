@@ -67,7 +67,7 @@ export const UserStorageProvider = ({ children }) => {
 
   function register(name, phoneNumber, password) {
     const newUser = {
-      id: crypto.randomUUID(), name, phoneNumber, password
+      id: crypto.randomUUID(), name, phoneNumber, password, cart: []
     };
     setLoginDatabase(prev => {
       const updatedDatabase = [...prev, newUser];

@@ -105,7 +105,11 @@ function HistoryItem({ order }) {
         finalAmount = totalAmount - discountAmount;
       return prev + finalAmount;
     }, 0),
-    finalAmount = cartTotalAmount + paymentMethod.adminAmount;
+    finalAmount = cartTotalAmount + paymentMethod.adminAmount,
+    orderStatus = getOrderStatus(order.orderId),
+    path = orderStatus === 'Semua dibatalkan' || orderStatus === 'Semua terkirim' || orderStatus === 'Jatuh tempo'
+      ? 'history'
+      : 'order';
 
   return (
     <li className="history-overview__li">
@@ -121,7 +125,7 @@ function HistoryItem({ order }) {
           <span className="history-overview__span">
             Status pesanan
           </span>
-          {getOrderStatus(order.orderId)}
+          {orderStatus}
         </p>
         <p className="history-overview__p">
           <span className="history-overview__span">
@@ -130,7 +134,7 @@ function HistoryItem({ order }) {
           {currencyFormatter.format(finalAmount)}
         </p>
         <p className="history-overview__p">
-          <Link className="history-overview__link" to={`/dashboard/history/${order.orderId}`}>Lihat Detail</Link>
+          <Link className="history-overview__link" to={`/dashboard/${path}/${order.orderId}`}>Lihat Detail</Link>
         </p>
       </div>
     </li>

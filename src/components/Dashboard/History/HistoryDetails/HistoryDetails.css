@@ -28,6 +28,22 @@
   border-radius: 0.15rem;
 }
 
+.history-details__link {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.history-details__link:is(:hover, :focus) {
+  text-decoration: underline;
+}
+
+.history-details__icon {
+  width: 1.25rem;
+}
+
 /* || CART DETAIL SUB-SECTION */
 .history-details__h3 {
   color: var(--color-primary);
