@@ -13,7 +13,7 @@ export default function OtpVerification() {
     { purpose } = useParams(),
     location = useLocation(),
     navigate = useNavigate(),
-    { register, login, isLoggedIn } = useUserStorage();
+    { register, changePhoneNumber, deleteAccount } = useUserStorage();
 
   console.log(otpCode);
 
@@ -34,18 +34,24 @@ export default function OtpVerification() {
         const { phoneNumber } = location.state;
         navigate('../change-password', { state: { phoneNumber, purpose } });
       }
+      else if (purpose === 'change-number') {
+        const { userId, newPhoneNumber } = location.state;
+        changePhoneNumber(userId, newPhoneNumber);
+        navigate('/dashboard/setting');
+      }
+      else if (purpose === 'delete-account') {
+        const { userId } = location.state;
+        deleteAccount(userId);
+        navigate('/dashboard/home');
+      }
     }
     else {
       triggerError('Kode verifikasi yang Anda masukkan salah.', 3000);
     }
   };
 
-  const isStateNotExist = () => {
-    return location.state === null;
-  }
-
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn() || isStateNotExist()}>
+    <ProtectedRoute to={'/dashboard/home'} condition={location.state === null}>
       <div className="otp">
         <div className="otp__container">
           <img src={pinIcon} alt="Ikon OTP" className="otp__icon" />

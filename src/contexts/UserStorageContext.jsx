@@ -11,6 +11,9 @@ const UserStorageContext = createContext({
   logout: () => { },
   isLoggedIn: () => { },
   changePassword: (phoneNumber, newPassword) => { },
+  changeUsername: (userId, newUsername) => { },
+  changePhoneNumber: (userId, newPhoneNumber) => { },
+  deleteAccount: (userId) => { },
   isAccountExist: (name, phoneNumber) => { },
   isNumberExist: (phoneNumber) => { },
   addToCart: (product) => { },
@@ -107,6 +110,53 @@ export const UserStorageProvider = ({ children }) => {
     else {
       return false;
     }
+  }
+
+  function changeUsername(userId, newName) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === userId) {
+          return { ...user, name: newName };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === userId
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function changePhoneNumber(userId, newPhoneNumber) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.map(user => {
+        if (user.id === userId) {
+          return { ...user, phoneNumber: newPhoneNumber };
+        }
+        return { ...user };
+      });
+      const updatedUser = updatedDatabase.find(
+        user => user.id === userId
+      );
+      setLoginInfo(updatedUser);
+      accessStorage('setItem', 'loginInfo', JSON.stringify(updatedUser));
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
+  }
+
+  function deleteAccount(userId) {
+    setLoginDatabase(prev => {
+      const updatedDatabase = prev.filter(
+        user => user.id !== userId
+      );
+      logout();
+      accessStorage('setItem', 'loginDatabase', JSON.stringify(updatedDatabase));
+      return updatedDatabase;
+    });
   }
 
   function logout() {
@@ -293,7 +343,7 @@ export const UserStorageProvider = ({ children }) => {
 
   return (
     <UserStorageContext.Provider
-      value={{ loginInfo, loginDatabase, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, isAccountExist, isNumberExist, addToCart, handleCartItemChange, getCartItem, removeFromCart, isCartItemExist, toggleCartItem, getCheckedCartItem, removeCheckedFromCart, toggleAllCartItem, isEveryCartItemChecked }}
+      value={{ loginInfo, remember, toggleRemember, register, login, logout, isLoggedIn, changePassword, changeUsername, changePhoneNumber, deleteAccount, isAccountExist, isNumberExist, addToCart, handleCartItemChange, getCartItem, removeFromCart, isCartItemExist, toggleCartItem, getCheckedCartItem, removeCheckedFromCart, toggleAllCartItem, isEveryCartItemChecked }}
     >
       {children}
     </UserStorageContext.Provider>

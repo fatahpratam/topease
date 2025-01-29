@@ -31,7 +31,6 @@ export default function ChangePassword() {
     const { phoneNumber } = location.state,
       newPassword = passwordRef.current.value;
     if (changePassword(phoneNumber, newPassword)) {
-      isLoggedIn() && logout();
       navigate('/login');
     }
     else {
@@ -39,12 +38,8 @@ export default function ChangePassword() {
     }
   };
 
-  const isStateNotExist = () => {
-    return location.state === null;
-  }
-
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn() || isStateNotExist()}>
+    <ProtectedRoute to={'/dashboard/home'} condition={location.state === null}>
       <div className="password">
         <div className="password__container">
           <img src={passwordIcon} alt="Ikon password" className="password__icon" />
