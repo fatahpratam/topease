@@ -14,3 +14,4 @@ export { default as History } from "./Dashboard/History/History.jsx";
 export { default as Setting } from "./Dashboard/Setting/Setting.jsx";
 export { default as PrivacyPolicy } from "./Dashboard/Info/PrivacyPolicy/PrivacyPolicy.jsx";
 export { default as TermsConditions } from "./Dashboard/Info/TermsConditions/TermsConditions.jsx";
+export { default as RefundPolicy } from "./Dashboard/Info/RefundPolicy/RefundPolicy.jsx";

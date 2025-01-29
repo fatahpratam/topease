@@ -1,0 +1,61 @@
+.refund-policy {
+  padding: 1rem;
+  color: var(--color-on-surface);
+}
+
+.refund-policy__h2 {
+  color: var(--color-primary);
+}
+
+.refund-policy__container {
+  width: min(50rem, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem auto;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0px 0px 8px var(--color-shadow);
+}
+
+.refund-policy__main-ol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-left: 1.25rem;
+}
+
+.refund-policy__main-li::marker {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.refund-policy__p {
+  text-align: justify;
+}
+
+.refund-policy__p--bold {
+  font-weight: bold;
+}
+
+.refund-policy__h3 {
+  color: var(--color-primary);
+}
+
+.refund-policy__ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block: 0.25rem;
+  padding-left: 1.25rem;
+}
+
+.refund-policy__link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.refund-policy__link:is(:hover, :focus) {
+  text-decoration: underline;
+}

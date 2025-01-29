@@ -14,7 +14,7 @@ export default function Footer() {
           <ul className="footer__ul">
             <li><Link to='/dashboard/privacy-policy' className="footer__link">Kebijakan Privasi</Link></li>
             <li><Link to='/dashboard/terms-and-conditions' className="footer__link">Syarat dan Ketentuan</Link></li>
-            <li><Link to='#' className="footer__link">Refund Policy</Link></li>
+            <li><Link to='/dashboard/refund-policy' className="footer__link">Kebijakan Pengembalian Dana</Link></li>
           </ul>
         </section>
         <section className="footer__section">
