@@ -85,3 +85,9 @@
 .register__link:is(:hover, :focus) {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 640px) {
+  .register__container {
+    padding: 1rem 1.5rem;
+  }
+}

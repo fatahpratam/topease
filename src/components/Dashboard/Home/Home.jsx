@@ -94,7 +94,7 @@ function ProductItem({ id, name, rating, imgUrl, discount, sold }) {
           </span>
           {isDiscount()}
         </p>
-        <hr />
+        <hr className="home__hr" />
         <p className="home__p">
           <img src={shoppingCartIcon} alt="Ikon keranjang" className="home__icon" />
           Terjual {sold}+

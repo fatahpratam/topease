@@ -91,7 +91,7 @@ function CartList({ cart }) {
   return (
     <ul className="history-details__ul">
       {cart.map(
-        item => <CartItem item={item} />
+        item => <CartItem item={item} key={item.productId} />
       )}
     </ul>
   );

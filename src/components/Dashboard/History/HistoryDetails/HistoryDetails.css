@@ -96,6 +96,8 @@
 }
 
 .history-details__input {
+  width: min(12rem, 100%);
+  margin-left: 1rem;
   border: 0.25rem solid var(--color-outline);
   border-radius: 0.5rem;
   padding: 0.25rem;
@@ -105,4 +107,10 @@
 
 .history-details__input:is(:hover, :focus) {
   filter: brightness(120%);
+}
+
+@media screen and (max-width: 640px) {
+  .history-details {
+    padding: 1.5rem 1rem;
+  }
 }

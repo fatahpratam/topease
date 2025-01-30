@@ -67,3 +67,9 @@
 .privacy-policy__link:is(:hover, :focus) {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 640px) {
+  .privacy-policy__container {
+    padding: 1.5rem 1rem;
+  }
+}

@@ -129,7 +129,7 @@ function AccountInfo({ requiredFields, handleExtraField, getExtraField }) {
       {
         requiredFields.map(field => (
           <p className="payment__account-p" key={field.fieldName}>
-            <label htmlFor={field.fieldName}>{field.label}*</label>
+            <label htmlFor={field.fieldName} className="payment__account-label">{field.label}*</label>
             <input
               id={field.fieldName}
               type={field.type}
@@ -207,7 +207,7 @@ function PaymentConfirmation({ nominalOption, isCartItemExist, isLoggedIn, disco
         Potongan promo
         <span className="payment__confirm-span">{`(${discount}%) ${currencyFormatter.format(discountAmount)}`}</span>
       </p>
-      <hr />
+      <hr className="payment__confirm-hr" />
       <p className="payment__confirm-p">
         <strong>Total Tagihan</strong>
         <span className="payment__confirm-span">{currencyFormatter.format(finalAmount)}</span>

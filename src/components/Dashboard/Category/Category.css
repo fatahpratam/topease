@@ -77,6 +77,11 @@
   background-color: rgba(0, 128, 0, 0.25);
 }
 
+.category__hr {
+  border: 0.15rem solid var(--color-primary);
+  border-radius: 0.15rem;
+}
+
 .category__p {
   display: flex;
   gap: 0.25rem;
@@ -88,4 +93,14 @@
 
 .category__img {
   border-radius: 1rem;
+}
+
+@media screen and (max-width: 640px) {
+  .category__li {
+    flex-basis: 9rem;
+  }
+
+  .category__tag {
+    flex-direction: column;
+  }
 }

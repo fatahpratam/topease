@@ -3,10 +3,17 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 4rem;
-  padding: 3rem 2rem;
+  padding: 3rem 1rem;
   color: var(--color-on-surface);
 }
 
 .cart__section {
-  flex-basis: min(32rem, 100%);
+  flex-basis: min(30rem, 100%);
+}
+
+@media screen and (max-width: 640px) {
+  .cart {
+    padding: 1.5rem 1rem;
+    gap: 2rem;
+  }
 }

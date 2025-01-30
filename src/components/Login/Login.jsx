@@ -14,14 +14,10 @@ export default function Login() {
     e.preventDefault();
     const data = new FormData(formRef.current);
     const { phoneNumber, password } = Object.fromEntries(data);
-    if (login(phoneNumber, password)) {
-      if (history.length > 2)
-        navigate(-1);
-      else
-        navigate('/dashboard/home');
-    } else {
+    if (login(phoneNumber, password))
+      navigate('/dashboard/home');
+    else
       triggerError('Nomor WhatsApp atau kata sandi Anda salah.');
-    }
   };
 
   const { errorMessage, triggerError } = useErrorBlockQuote();

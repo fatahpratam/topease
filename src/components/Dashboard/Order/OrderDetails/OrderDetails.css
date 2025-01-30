@@ -53,6 +53,7 @@
 }
 
 .order-details__span {
+  text-align: end;
   color: var(--color-primary);
 }
 
@@ -79,4 +80,10 @@
 .order-details__button:disabled {
   filter: brightness(50%);
   cursor: not-allowed;
+}
+
+@media screen and (max-width: 640px) {
+  .order-details__container {
+    padding: 1.5rem 1rem;
+  }
 }

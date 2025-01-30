@@ -1,5 +1,5 @@
 .keranjang {
-  width: 80vw;
+  width: calc(100vw - 2rem);
   display: none;
   position: absolute;
   top: 4.5rem;

@@ -9,7 +9,7 @@
 }
 
 .login__container {
-  min-width: 400px;
+  width: min(25rem, 100%);
   padding: 2rem 3rem;
   border-radius: 2rem;
   display: flex;
@@ -88,4 +88,10 @@
 
 .login__link:is(:hover, :focus) {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 640px) {
+  .login__container {
+    padding: 1rem 1.5rem;
+  }
 }

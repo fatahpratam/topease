@@ -43,4 +43,8 @@
   .footer__container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .footer__section {
+    padding: 0.5rem;
+  }
 }

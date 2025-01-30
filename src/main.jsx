@@ -40,9 +40,9 @@ const router = createBrowserRouter(
         <Route path='terms-and-conditions' element={<TermsConditions />} />
         <Route path='refund-policy' element={<RefundPolicy />} />
         <Route path='faq' element={<FAQ />} />
-        {/* <Route path='*' element={<NotFound />} /> */}
+        <Route path='*' element={<NotFound />} />
       </Route>
-      {/* <Route path='*' element={<Navigate to='dashboard/notfound' />} /> */}
+      <Route path='*' element={<Navigate to='dashboard/notfound' />} />
     </Route>
   )
 );

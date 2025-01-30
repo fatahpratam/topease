@@ -59,3 +59,9 @@
 .faq__link:is(:hover, :focus) {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 640px) {
+  .faq__container {
+    padding: 1.5rem 1rem;
+  }
+}

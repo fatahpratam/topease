@@ -154,10 +154,10 @@ function PaymentConfirmation({ cart, paymentMethod }) {
         <span className="cart-payment__confirm-span">{currencyFormatter.format(cartTotalAmount)}</span>
       </p>
       <p className="cart-payment__confirm-p">
-        Biaya admin metode pembayaran
+        Admin metode pembayaran
         <span className="cart-payment__confirm-span">{currencyFormatter.format(paymentMethod.adminAmount)}</span>
       </p>
-      <hr />
+      <hr className="cart-payment__confirm-hr" />
       <p className="cart-payment__confirm-p">
         <strong>Total Tagihan</strong>
         <span className="cart-payment__confirm-span">{currencyFormatter.format(finalAmount)}</span>

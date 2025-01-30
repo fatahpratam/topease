@@ -93,11 +93,20 @@
 }
 
 .cart-details__link {
-  margin-right: 1rem;
   font-weight: bold;
   color: var(--color-primary);
 }
 
 .cart-details__link:is(:hover, :focus) {
   text-decoration: none;
+}
+
+@media screen and (max-width: 640px) {
+  .cart-details {
+    padding: 1.5rem 1rem;
+  }
+
+  .cart-details__img {
+    display: none;
+  }
 }

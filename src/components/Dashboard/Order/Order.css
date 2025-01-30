@@ -10,3 +10,10 @@
 .order__container {
   flex-basis: min(32rem, 100%);
 }
+
+@media screen and (max-width: 640px) {
+  .order {
+    padding: 1.5rem 1rem;
+    gap: 2rem;
+  }
+}

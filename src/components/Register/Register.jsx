@@ -104,8 +104,7 @@ export default function Register() {
                 required
               />
               <label htmlFor="tos" className="register__label">
-                Saya setuju dengan
-                <Link to='#' className="register__link">Kebijakan Privasi</Link>
+                Saya setuju dengan <Link to='/dashboard/privacy-policy' className="register__link">Kebijakan Privasi</Link>
                 dan memahami bagaimana data saya akan digunakan.*
               </label>
             </p>
@@ -117,8 +116,7 @@ export default function Register() {
                 required
               />
               <label htmlFor="sk" className="register__label">
-                Saya telah membaca dan setuju dengan
-                <Link to='#' className="register__link">Syarat dan Ketentuan</Link>.*
+                Saya telah membaca dan setuju dengan <Link to='/dashboard/terms-and-conditions' className="register__link">Syarat dan Ketentuan</Link>.*
               </label>
             </p>
             <button

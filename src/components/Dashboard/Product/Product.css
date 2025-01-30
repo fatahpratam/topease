@@ -16,3 +16,10 @@
 .product__icon {
   width: 1.25rem;
 }
+
+@media screen and (max-width: 640px) {
+  .product {
+    padding: 1.5rem 1rem;
+    gap: 2rem;
+  }
+}

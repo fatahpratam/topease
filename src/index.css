@@ -52,3 +52,9 @@ img {
   --color-shadow: rgb(0 0 0);
   --color-surface-container: rgb(31 31 37);
 }
+
+@media screen and (max-width: 640px) {
+  body {
+    font-size: 0.9rem;
+  }
+}

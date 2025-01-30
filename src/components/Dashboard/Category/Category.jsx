@@ -40,7 +40,7 @@ function ProductCard({ id, name, rating, imgUrl, discount, currentMonthSold }) {
           </span>
           {isDiscount()}
         </p>
-        <hr />
+        <hr className="category__hr" />
         <p className="category__p">
           <img src={shoppingCartIcon} alt="Ikon keranjang" className="category__icon" />
           Terjual {currentMonthSold}+
