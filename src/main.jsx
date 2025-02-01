@@ -8,7 +8,7 @@ import { UserStorageProvider, OrderStorageProvider } from "./contexts/index.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' >
+    <Route path='topease' >
       <Route index element={<Navigate to='dashboard' />} />
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />} />

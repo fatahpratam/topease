@@ -45,7 +45,7 @@ function SearchResultList({ results }) {
 function SearchResultItem({ id, name, type }) {
   return (
     <li className="search__li">
-      <Link className='search__link' to={`/dashboard/${type}/${id}`}>{name}</Link>
+      <Link className='search__link' to={`/topease/dashboard/${type}/${id}`}>{name}</Link>
     </li>
   )
 }

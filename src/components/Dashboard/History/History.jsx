@@ -11,7 +11,7 @@ export default function History() {
     { isLoggedIn } = useUserStorage();
 
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={!isLoggedIn()}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={!isLoggedIn()}>
       <div className="history">
         {id ? <HistoryDetails id={id} /> : <HistoryOverview />}
       </div>

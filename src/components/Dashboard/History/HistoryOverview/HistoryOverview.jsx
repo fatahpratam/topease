@@ -134,7 +134,7 @@ function HistoryItem({ order }) {
           {currencyFormatter.format(finalAmount)}
         </p>
         <p className="history-overview__p">
-          <Link className="history-overview__link" to={`/dashboard/${path}/${order.orderId}`}>Lihat Detail</Link>
+          <Link className="history-overview__link" to={`/topease/dashboard/${path}/${order.orderId}`}>Lihat Detail</Link>
         </p>
       </div>
     </li>

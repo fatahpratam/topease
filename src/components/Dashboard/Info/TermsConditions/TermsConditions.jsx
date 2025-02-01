@@ -45,7 +45,7 @@ export default function TermsConditions() {
             <h3 className="terms-conditions__h3">Pembatalan dan Pengembalian Dana</h3>
             <ul className="terms-conditions__ul">
               <li className="terms-conditions__li">Pembatalan pesanan hanya dapat dilakukan jika pembayaran belum dikonfirmasi.</li>
-              <li className="terms-conditions__li">Pengembalian dana akan diproses sesuai dengan kebijakan <Link to="/dashboard/refund-policy" className="terms-conditions__link">Kebijakan Pengembalian Dana</Link> kami.</li>
+              <li className="terms-conditions__li">Pengembalian dana akan diproses sesuai dengan kebijakan <Link to="/topease/dashboard/refund-policy" className="terms-conditions__link">Kebijakan Pengembalian Dana</Link> kami.</li>
             </ul>
           </li>
           <li className="terms-conditions__main-li">

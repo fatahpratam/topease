@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Setting() {
   const { isLoggedIn } = useUserStorage();
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={!isLoggedIn()}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={!isLoggedIn()}>
       <div className="setting">
         <div className="setting__container">
           <h2 className="setting__h2">Pengaturan</h2>
@@ -93,7 +93,7 @@ function ChangePhoneNumber() {
   const handleSaveButton = () => {
     if (/^(\+62|62|0)8[1-9][0-9]{6,11}$/.test(phoneNumber)) {
       setEditMode(!editMode);
-      navigate('/otp/change-number', {
+      navigate('/topease/otp/change-number', {
         state: {
           userId: loginInfo.id,
           newPhoneNumber: phoneNumber
@@ -144,7 +144,7 @@ function ChangePassword() {
     { loginInfo } = useUserStorage()
 
   const handleOnClick = () => {
-    navigate('/otp/forgot-password', {
+    navigate('/topease/otp/forgot-password', {
       state: { phoneNumber: loginInfo.phoneNumber }
     });
   };
@@ -164,7 +164,7 @@ function DeleteAccount() {
     { loginInfo } = useUserStorage()
 
   const handleOnClick = () => {
-    navigate('/otp/delete-account', {
+    navigate('/topease/otp/delete-account', {
       state: { userId: loginInfo.id }
     });
   };

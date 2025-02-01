@@ -30,7 +30,7 @@ export default function OtpVerification() {
         if (history.length > 4)
           navigate(-3);
         else
-          navigate('/dashboard/home');
+          navigate('/topease/dashboard/home');
       }
       else if (purpose === 'forgot-password') {
         const { phoneNumber } = location.state;
@@ -39,12 +39,12 @@ export default function OtpVerification() {
       else if (purpose === 'change-number') {
         const { userId, newPhoneNumber } = location.state;
         changePhoneNumber(userId, newPhoneNumber);
-        navigate('/dashboard/setting');
+        navigate('/topease/dashboard/setting');
       }
       else if (purpose === 'delete-account') {
         const { userId } = location.state;
         deleteAccount(userId);
-        navigate('/dashboard/home');
+        navigate('/topease/dashboard/home');
       }
     }
     else {
@@ -53,7 +53,7 @@ export default function OtpVerification() {
   };
 
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={location.state === null}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={location.state === null}>
       <div className="otp">
         <div className="otp__container">
           <img src={pinIcon} alt="Ikon OTP" className="otp__icon" />

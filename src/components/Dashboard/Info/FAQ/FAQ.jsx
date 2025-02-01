@@ -44,14 +44,14 @@ export default function FAQ() {
             <h3 className="faq__h3">Saya sudah membayar tetapi belum menerima produk. Apa yang harus saya lakukan?</h3>
             <p className="faq__p">Jika Anda sudah melakukan pembayaran tetapi belum menerima produk, lakukan langkah-langkah berikut:</p>
             <ul className="faq__ul">
-              <li className="faq__li">Periksa kembali status pesanan di halaman <Link to={'/dashboard/history'} className="faq__link">Riwayat</Link>.</li>
+              <li className="faq__li">Periksa kembali status pesanan di halaman <Link to={'/topease/dashboard/history'} className="faq__link">Riwayat</Link>.</li>
               <li className="faq__li">Pastikan pembayaran telah berhasil dan sesuai dengan nominal yang ditentukan.</li>
               <li className="faq__li">Jika pesanan masih belum diproses setelah waktu yang ditentukan, silakan hubungi tim dukungan kami melalui <Link to="mailto:support@topease.com" className="faq__link">Email</Link> atau <Link to="tel:0812345678" className="faq__link">WhatsApp</Link>.</li>
             </ul>
           </li>
           <li className="faq__main-li">
             <h3 className="faq__h3">Apakah saya bisa membatalkan pesanan setelah pembayaran?</h3>
-            <p className="faq__p">Pesanan yang sudah dibayar umumnya tidak dapat dibatalkan, kecuali dalam kondisi tertentu seperti transaksi gagal atau kesalahan dari sistem TopEase. Silakan merujuk ke <Link to={'/dashboard/refund-policy'} className="faq__link">Kebijakan Pengembalian Dana</Link> untuk informasi lebih lanjut.</p>
+            <p className="faq__p">Pesanan yang sudah dibayar umumnya tidak dapat dibatalkan, kecuali dalam kondisi tertentu seperti transaksi gagal atau kesalahan dari sistem TopEase. Silakan merujuk ke <Link to={'/topease/dashboard/refund-policy'} className="faq__link">Kebijakan Pengembalian Dana</Link> untuk informasi lebih lanjut.</p>
           </li>
           <li className="faq__main-li">
             <h3 className="faq__h3">Bagaimana cara melihat riwayat transaksi saya?</h3>
@@ -59,14 +59,14 @@ export default function FAQ() {
             <ul className="faq__ul">
               <li className="faq__li">Pastikan Anda sudah login ke akun TopEase.</li>
               <li className="faq__li">Klik ikon <strong>Akun</strong> di bagian atas halaman.</li>
-              <li className="faq__li">Pilih <Link to={'/dashboard/history'} className="faq__link">Riwayat</Link> untuk melihat daftar transaksi Anda.</li>
+              <li className="faq__li">Pilih <Link to={'/topease/dashboard/history'} className="faq__link">Riwayat</Link> untuk melihat daftar transaksi Anda.</li>
             </ul>
           </li>
           <li className="faq__main-li">
             <h3 className="faq__h3">Bagaimana jika saya lupa kata sandi akun saya?</h3>
             <p className="faq__p">Jika Anda lupa kata sandi, ikuti langkah-langkah berikut:</p>
             <ul className="faq__ul">
-              <li className="faq__li">Klik tombol <Link to={'/login'} className="faq__link">Masuk</Link> di halaman utama.</li>
+              <li className="faq__li">Klik tombol <Link to={'/topease/login'} className="faq__link">Masuk</Link> di halaman utama.</li>
               <li className="faq__li">Pilih opsi <strong>Lupa Kata Sandi</strong>.</li>
               <li className="faq__li">Masukkan nomor WhatsApp yang terdaftar.</li>
               <li className="faq__li">Ikuti instruksi untuk mengatur ulang kata sandi Anda.</li>
@@ -74,7 +74,7 @@ export default function FAQ() {
           </li>
           <li className="faq__main-li">
             <h3 className="faq__h3">Apakah saya bisa mengubah informasi akun saya?</h3>
-            <p className="faq__p">Ya, Anda bisa mengubah informasi akun seperti nama, nomor WhatsApp, dan kata sandi melalui halaman <Link to={'/dashboard/setting'} className="faq__link">Pengaturan</Link>.</p>
+            <p className="faq__p">Ya, Anda bisa mengubah informasi akun seperti nama, nomor WhatsApp, dan kata sandi melalui halaman <Link to={'/topease/dashboard/setting'} className="faq__link">Pengaturan</Link>.</p>
           </li>
           <li className="faq__main-li">
             <h3 className="faq__h3">Bagaimana cara menghubungi tim dukungan TopEase?</h3>

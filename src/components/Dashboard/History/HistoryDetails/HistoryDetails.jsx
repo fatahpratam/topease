@@ -13,7 +13,7 @@ export default function HistoryDetails({ id }) {
     order = getOrder(id);
 
   if (!order || loginInfo.id !== order.userId) {
-    return <Navigate to={'/dashboard/history'} />
+    return <Navigate to={'/topease/dashboard/history'} />
   }
 
   const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }),

@@ -31,7 +31,7 @@ export default function ChangePassword() {
     const { phoneNumber } = location.state,
       newPassword = passwordRef.current.value;
     if (changePassword(phoneNumber, newPassword)) {
-      navigate('/login');
+      navigate('/topease/login');
     }
     else {
       triggerError('Anda tidak boleh menggunakan password lama.', 3000);
@@ -39,7 +39,7 @@ export default function ChangePassword() {
   };
 
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={location.state === null}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={location.state === null}>
       <div className="password">
         <div className="password__container">
           <img src={passwordIcon} alt="Ikon password" className="password__icon" />

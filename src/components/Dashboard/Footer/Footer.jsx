@@ -12,15 +12,15 @@ export default function Footer() {
         <section className="footer__section">
           <h2 className="footer__h2">Legal</h2>
           <ul className="footer__ul">
-            <li><Link to='/dashboard/privacy-policy' className="footer__link">Kebijakan Privasi</Link></li>
-            <li><Link to='/dashboard/terms-and-conditions' className="footer__link">Syarat dan Ketentuan</Link></li>
-            <li><Link to='/dashboard/refund-policy' className="footer__link">Kebijakan Pengembalian Dana</Link></li>
+            <li><Link to='/topease/dashboard/privacy-policy' className="footer__link">Kebijakan Privasi</Link></li>
+            <li><Link to='/topease/dashboard/terms-and-conditions' className="footer__link">Syarat dan Ketentuan</Link></li>
+            <li><Link to='/topease/dashboard/refund-policy' className="footer__link">Kebijakan Pengembalian Dana</Link></li>
           </ul>
         </section>
         <section className="footer__section">
           <h2 className="footer__h2">Pusat Bantuan</h2>
           <ul className="footer__ul">
-            <li><Link to='/dashboard/faq' className="footer__link">FAQ</Link></li>
+            <li><Link to='/topease/dashboard/faq' className="footer__link">FAQ</Link></li>
             <li><Link to='mailto:support@topease.com' className="footer__link">Email</Link></li>
             <li><Link to='tel:0812345678' className="footer__link">WhatsApp</Link></li>
           </ul>

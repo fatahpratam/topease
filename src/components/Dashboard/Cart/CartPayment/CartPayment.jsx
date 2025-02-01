@@ -136,7 +136,7 @@ function PaymentConfirmation({ cart, paymentMethod }) {
     e.preventDefault();
     const orderId = addOrder(loginInfo.id, paymentMethod.id, getCheckedCartItem());
     removeCheckedFromCart();
-    navigate(`/dashboard/order/${orderId}`);
+    navigate(`/topease/dashboard/order/${orderId}`);
   };
 
   return (

@@ -9,7 +9,7 @@ export default function CartPopup({ loginInfo, isLoggedIn }) {
     <div className="keranjang">
       <div className="keranjang__container">
         <h2>
-          <Link className="keranjang__h2" to={'/dashboard/cart'}>
+          <Link className="keranjang__h2" to={'/topease/dashboard/cart'}>
             Keranjang {length > 0 ? `(${length})` : ''}
             <img src={arrowForwardIcon} alt="Ikon panah maju" className="keranjang__icon" />
           </Link>
@@ -51,7 +51,7 @@ function CartItem({ cartItem }) {
     finalAmount = totalAmount - discountAmount;
   return (
     <li className="keranjang__li">
-      <Link className="keranjang__link" to={`/dashboard/product/${product.id}`}>
+      <Link className="keranjang__link" to={`/topease/dashboard/product/${product.id}`}>
         <img src={product.imgUrl} alt={product.name} className='keranjang__img' />
         <div className="keranjang__small-container">
           <h3 className="keranjang__h3">{product.name}</h3>

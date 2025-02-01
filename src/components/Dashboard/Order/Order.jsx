@@ -14,7 +14,7 @@ export default function Order() {
     order = getOrder(id);
 
   return (
-    <ProtectedRoute condition={!isLoggedIn() && loginInfo.id !== order.userId} to={'/dashboard/home'}>
+    <ProtectedRoute condition={!isLoggedIn() && loginInfo.id !== order.userId} to={'/topease/dashboard/home'}>
       <div className="order">
         <div className="order__container">
           <OrderProgress order={order} />

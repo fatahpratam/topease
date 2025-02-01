@@ -20,7 +20,7 @@ export default function Register() {
     if (isAccountExist(name, phoneNumber)) {
       triggerError('Nama atau Nomor WhatsApp sudah terpakai.');
     } else {
-      navigate('/otp/register', { state: { name, phoneNumber, password } });
+      navigate('/topease/otp/register', { state: { name, phoneNumber, password } });
     }
   };
 
@@ -36,7 +36,7 @@ export default function Register() {
   };
 
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn()}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={isLoggedIn()}>
       <div className="register">
         <div className="register__container">
           <h1 className="register__h1">Daftar</h1>
@@ -104,7 +104,7 @@ export default function Register() {
                 required
               />
               <label htmlFor="tos" className="register__label">
-                Saya setuju dengan <Link to='/dashboard/privacy-policy' className="register__link">Kebijakan Privasi</Link>
+                Saya setuju dengan <Link to='/topease/dashboard/privacy-policy' className="register__link">Kebijakan Privasi</Link>
                 dan memahami bagaimana data saya akan digunakan.*
               </label>
             </p>
@@ -116,7 +116,7 @@ export default function Register() {
                 required
               />
               <label htmlFor="sk" className="register__label">
-                Saya telah membaca dan setuju dengan <Link to='/dashboard/terms-and-conditions' className="register__link">Syarat dan Ketentuan</Link>.*
+                Saya telah membaca dan setuju dengan <Link to='/topease/dashboard/terms-and-conditions' className="register__link">Syarat dan Ketentuan</Link>.*
               </label>
             </p>
             <button
@@ -126,7 +126,7 @@ export default function Register() {
             <hr />
             <p className="register__p">
               Sudah punya akun?
-              <Link to='/login' className="register__link">Login!</Link>
+              <Link to='/topease/login' className="register__link">Login!</Link>
             </p>
           </form>
         </div>

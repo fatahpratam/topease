@@ -15,7 +15,7 @@ export default function Login() {
     const data = new FormData(formRef.current);
     const { phoneNumber, password } = Object.fromEntries(data);
     if (login(phoneNumber, password))
-      navigate('/dashboard/home');
+      navigate('/topease/dashboard/home');
     else
       triggerError('Nomor WhatsApp atau kata sandi Anda salah.');
   };
@@ -23,7 +23,7 @@ export default function Login() {
   const { errorMessage, triggerError } = useErrorBlockQuote();
 
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn()}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={isLoggedIn()}>
       <div className="login">
         <div className="login__container">
           <h1 className="login__h1">Masuk</h1>
@@ -71,13 +71,13 @@ export default function Login() {
                 />
                 <label htmlFor="remember" className="login__label">Remember me</label>
               </p>
-              <Link to='/forget-password' className="login__link">Lupa kata sandi?</Link>
+              <Link to='/topease/forget-password' className="login__link">Lupa kata sandi?</Link>
             </div>
             <button className="login__button" type="submit">Masuk</button>
             <hr />
             <p className="login__p">
               Belum punya akun?&nbsp;
-              <Link to='/register' className="login__link">Register</Link>!
+              <Link to='/topease/register' className="login__link">Register</Link>!
             </p>
           </form>
         </div>

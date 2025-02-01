@@ -64,7 +64,7 @@ export default function Header() {
   return (
     <div className="header">
       <h1 className="header__h1">
-        <Link to='./home' className='header__link'>TopEase</Link>
+        <Link to='/topease/dashboard/home' className='header__link'>TopEase</Link>
       </h1>
       <div className="header__container">
         <form className="header__form" onSubmit={event => event.preventDefault()}>

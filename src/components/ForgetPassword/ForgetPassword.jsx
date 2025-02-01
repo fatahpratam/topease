@@ -15,14 +15,14 @@ export default function ForgetPassword() {
     const data = new FormData(e.target);
     const { phoneNumber } = Object.fromEntries(data);
     if (isNumberExist(phoneNumber)) {
-      navigate('/otp/forgot-password', { state: { phoneNumber } });
+      navigate('/topease/otp/forgot-password', { state: { phoneNumber } });
     }
     else {
       triggerError('Nomor yang Anda masukkan tidak terdaftar di dalam sistem.', 3000);
     }
   };
   return (
-    <ProtectedRoute to={'/dashboard/home'} condition={isLoggedIn()}>
+    <ProtectedRoute to={'/topease/dashboard/home'} condition={isLoggedIn()}>
       <div className="forget">
         <div className="forget__container">
           <img src={smartphoneVariantIcon} alt="Ikon smartphone" className="forget__icon" />

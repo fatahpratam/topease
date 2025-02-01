@@ -177,11 +177,11 @@ function FinishTransaction({ order }) {
             Bukti transaksi
           </a>
           <div className="finish-transaction__container">
-            <button className="finish-transaction__button" onClick={() => navigate('/dashboard/home')}>
+            <button className="finish-transaction__button" onClick={() => navigate('/topease/dashboard/home')}>
               <img src={homeIcon} alt="Ikon beranda" className="finish-transaction__icon" />
               Beranda
             </button>
-            <button className="finish-transaction__button" onClick={() => navigate('/dashboard/history')}>
+            <button className="finish-transaction__button" onClick={() => navigate('/topease/dashboard/history')}>
               <img src={inventoryIcon} alt="Ikon transaksi" className="finish-transaction__icon" />
               Riwayat
             </button>

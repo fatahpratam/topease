@@ -103,7 +103,7 @@ function CartItem({ cartItem, handleCartItemChange }) {
           <p className="cart-details__p">{nominalOption.name}</p>
         </div>
         <p className="cart-details__p cart-details__p-total">{currencyFormatter.format(finalAmount)}</p>
-        <Link className="cart-details__link" to={`/dashboard/product/${product.id}`}>Lihat</Link>
+        <Link className="cart-details__link" to={`/topease/dashboard/product/${product.id}`}>Lihat</Link>
       </label>
     </li>
   )
