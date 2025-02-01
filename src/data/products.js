@@ -2,6 +2,7 @@ export const products = [
   {
     id: "fantasy-quest-123abc",
     name: "Fantasy Quest",
+    description: 'Fantasy Quest adalah game petualangan epik yang membawa pemain ke dunia fantasi penuh keajaiban. Kumpulkan pahlawan, hadapi musuh tangguh, dan selesaikan berbagai misi seru untuk meningkatkan level karakter. Dapatkan mata uang dalam game untuk membuka item eksklusif dan meningkatkan pengalaman bermain!',
     rating: {
       star: 4.8,
       count: 340,
@@ -27,6 +28,7 @@ export const products = [
   {
     id: "battle-of-legends-456def",
     name: "Battle of Legends",
+    description: 'Masuki medan pertempuran dalam Battle of Legends, game strategi real-time di mana Anda dapat mengendalikan pasukan legendaris dan bertarung melawan pemain lain secara online. Kembangkan strategi terbaik, kumpulkan hero unik, dan taklukkan lawan untuk menjadi legenda sejati!',
     rating: {
       star: 4.6,
       count: 290,
@@ -52,6 +54,7 @@ export const products = [
   {
     id: "daily-planner-pro-789ghi",
     name: "Daily Planner Pro",
+    description: 'Daily Planner Pro adalah aplikasi perencana harian yang membantu Anda mengatur jadwal dengan mudah. Buat daftar tugas, atur pengingat, dan tingkatkan produktivitas dengan fitur manajemen waktu yang canggih. Cocok untuk profesional, mahasiswa, dan siapa saja yang ingin tetap terorganisir!',
     rating: {
       star: 4.5,
       count: 150,
@@ -73,6 +76,7 @@ export const products = [
   {
     id: "fitness-tracker-321jkl",
     name: "Fitness Tracker",
+    description: 'Pantau kesehatan dan kebugaran Anda dengan Fitness Tracker! Aplikasi ini membantu Anda mencatat aktivitas harian, menghitung jumlah langkah, melacak kalori, serta memberikan rekomendasi latihan yang sesuai dengan tujuan Anda. Dapatkan gaya hidup lebih sehat dengan Fitness Tracker!',
     rating: {
       star: 4.7,
       count: 190,
@@ -94,6 +98,7 @@ export const products = [
   {
     id: "gopay-456mno",
     name: "GoPay",
+    description: 'GoPay adalah dompet digital serbaguna yang memudahkan transaksi online dan offline. Gunakan GoPay untuk pembayaran di berbagai merchant, isi saldo dengan mudah, serta nikmati promo eksklusif yang menguntungkan!',
     rating: {
       star: 4.9,
       count: 1500,
@@ -118,6 +123,7 @@ export const products = [
   {
     id: "ovo-789pqr",
     name: "OVO",
+    description: 'Dengan OVO, pengalaman transaksi menjadi lebih praktis dan aman! Top-up saldo, bayar tagihan, dan nikmati berbagai promo menarik. OVO juga menyediakan cashback dan reward bagi pengguna setia!',
     rating: {
       star: 4.8,
       count: 1400,
@@ -142,6 +148,7 @@ export const products = [
   {
     id: "telkomsel-50k-123stu",
     name: "Telkomsel 50K",
+    description: 'Isi ulang pulsa Telkomsel 50K dengan cepat dan mudah melalui TopEase. Nikmati jaringan berkualitas tinggi untuk panggilan, SMS, dan internet di mana saja tanpa ribet!',
     rating: {
       star: 4.6,
       count: 400,
@@ -165,6 +172,7 @@ export const products = [
   {
     id: "indosat-25k-456vwx",
     name: "Indosat 25K",
+    description: 'Dapatkan pulsa Indosat 25K dengan harga terbaik! Gunakan untuk kebutuhan komunikasi, paket data, dan layanan lainnya dengan koneksi yang stabil dan cepat.',
     rating: {
       star: 4.5,
       count: 350,

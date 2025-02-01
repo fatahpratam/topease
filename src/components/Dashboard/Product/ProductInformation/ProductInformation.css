@@ -31,6 +31,10 @@
   border-radius: 0.1rem;
 }
 
+.info__h3 {
+  color: var(--color-primary);
+}
+
 .info__link {
   color: var(--color-primary);
   text-decoration: none;

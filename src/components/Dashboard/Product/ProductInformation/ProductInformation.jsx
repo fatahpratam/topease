@@ -28,7 +28,7 @@ export default function ProductInformation({ product }) {
         </div>
       </div>
       <h3 className="info__h3">Deskripsi</h3>
-      <p className="info__p">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis quibusdam voluptas amet saepe officiis, dolores in illo sed quia et. Ea nobis eveniet odit inventore incidunt minima dolor labore alias eum quae sint accusantium molestias, vitae commodi qui ratione tempore voluptates eligendi omnis. Magni fuga dolore officia adipisci alias eum.</p>
+      <p className="info__p">{product.description}</p>
     </div>
   )
 }
